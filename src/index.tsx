@@ -1,15 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+import Router from './routes/Router';
 import reportWebVitals from './reportWebVitals';
+import GlobalStyle from './GlobalStyle.style';
+import './assets/fonts/font.css';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <GlobalStyle />
+    <Router></Router>
   </React.StrictMode>
 );
 
