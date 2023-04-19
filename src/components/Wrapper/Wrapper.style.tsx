@@ -16,12 +16,12 @@ const Wrapper = styled.div`
   }
 `;
 
-export const WrapperInner = styled.div`
+const WrapperInner = styled.div`
+  position: relative;
   left: 0rem;
   top: 12rem;
-
   width: 39rem;
-  height: 69.3rem;
+  height: 61.3rem;
   overflow-y: scroll;
   ::-webkit-scrollbar {
     display: none;
@@ -29,4 +29,4 @@ export const WrapperInner = styled.div`
   padding: 0 2rem;
 `;
 
-export { Wrapper };
+export { Wrapper, WrapperInner };

@@ -54,7 +54,7 @@ table {
 }
 html {
   font-size: 62.5%;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Pretendard'
 }
 a {
   text-decoration: none;
