@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Wrapper, WrapperInner } from '../../components/Wrapper/Wrapper.style';
 import Header from '../../components/Header/Header';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
@@ -10,8 +10,11 @@ import 본관 from '../../assets/schoolImage/본관.jpg';
 import 주년60 from '../../assets/schoolImage/60주년.jpg';
 import { buildingInfoType } from '../../type/Types';
 import downArrow from '../../assets/svg/downArrow.svg';
+import test from '../../api/test';
 
 ChartJS.register(Tooltip, Legend);
+
+const buildingCode: any = Object.freeze({ 본관: 1, '60주년': 2 });
 
 const data: any = {
   labels: [
@@ -33,13 +36,13 @@ const data: any = {
     {
       type: 'bar',
       backgroundColor: 'rgb(75, 192, 192)',
-      data: [100, 200, 353, 412, 533, 423, 1000, 732, 123, 423, 331, 256],
+      data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     },
   ],
 };
 
 const options = {
-  responsive: false,
+  reponsive: false,
   plugins: {
     legend: {
       display: false,
@@ -59,10 +62,10 @@ const options = {
   },
 };
 
-const Chart = ({ buildingName }: { buildingName: string }) => {
+const Chart = ({ chartState }: { chartState: any }) => {
   return (
     <S.Container>
-      <Line width="350" height="200" data={data} options={options}></Line>
+      <Line width="350" height="200" data={chartState} options={options}></Line>
     </S.Container>
   );
 };
@@ -76,6 +79,21 @@ const BuildingElectricity = () => {
   const [selectedBuilding, setSelectedBuilding] = useState<string>(
     buildingList[0].buildingName
   );
+  const [chartState, setChartState] = useState(data);
+
+  const testAPI = async (selectedBuilding: number) => {
+    const rData = await test(selectedBuilding);
+    console.log(rData);
+    // 깊은 복사를 하지 않으면 chartJS서 변동 감지를 못함 JSON.parse, JSON.stringify로 깊은 복사
+    const chartStateCopy = JSON.parse(JSON.stringify(chartState));
+    chartStateCopy.datasets[0].data = rData.result[0].usages;
+
+    setChartState(chartStateCopy);
+  };
+
+  useEffect(() => {
+    testAPI(buildingCode[selectedBuilding]);
+  }, [selectedBuilding]);
 
   return (
     <>
@@ -98,7 +116,7 @@ const BuildingElectricity = () => {
             </S.ChartTopFrame>
             <S.ChartIndicatorLine></S.ChartIndicatorLine>
           </S.ChartChangeFrame>
-          <Chart buildingName={selectedBuilding}></Chart>
+          <Chart chartState={chartState}></Chart>
         </WrapperInner>
         <NavigationBar></NavigationBar>
       </Wrapper>
