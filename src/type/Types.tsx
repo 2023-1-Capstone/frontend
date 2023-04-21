@@ -12,4 +12,9 @@ type homeCategoryType = {
   descriptBottom: string;
 };
 
-export type { navigationItemType, homeCategoryType };
+type buildingInfoType = {
+  buildingName: string;
+  src: string;
+};
+
+export type { navigationItemType, homeCategoryType, buildingInfoType };
