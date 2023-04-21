@@ -46,4 +46,6 @@ const buildingCode: any = Object.freeze({
   정석: 5,
 });
 
-export { buildingList, monthlyInitData, buildingCode };
+const category = ['월별 전기 사용량', '연별 전기 사용량', '동월 전기 사용량'];
+
+export { buildingList, monthlyInitData, buildingCode, category };

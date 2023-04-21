@@ -49,6 +49,14 @@ const ChartCategoryBox = styled.div`
   width: fit-content;
   height: fit-content;
 
+  &:hover {
+    background-color: #e7e7e7;
+  }
+
+  cursor: pointer;
+
+  border-radius: 0.3rem;
+
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
@@ -70,11 +78,17 @@ const ChartYearBox = styled.div`
   width: fit-content;
   height: fit-content;
 
+  &:hover {
+    background-color: #e7e7e7;
+  }
+
+  cursor: pointer;
+  border-radius: 0.3rem;
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
   font-size: 1.4rem;
-  line-height: 4rem;
+  line-height: 2rem;
   /* or 286% */
 
   display: flex;
