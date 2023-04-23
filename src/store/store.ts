@@ -46,6 +46,64 @@ const buildingCode: any = Object.freeze({
   정석: 5,
 });
 
-const category = ['월별 전기 사용량', '연별 전기 사용량', '동월 전기 사용량'];
+const electricityChartCategory = [
+  '월별 전기 사용량',
+  '연별 전기 사용량',
+  '동월 전기 사용량',
+];
 
-export { buildingList, monthlyInitData, buildingCode, category };
+const monthCategory = [
+  '1월',
+  '2월',
+  '3월',
+  '4월',
+  '5월',
+  '6월',
+  '7월',
+  '8월',
+  '9월',
+  '10월',
+  '11월',
+  '12월',
+];
+
+const yearCategory = [
+  '2023년',
+  '2022년',
+  '2021년',
+  '2020년',
+  '2019년',
+  '2018년',
+  '2017년',
+];
+
+const options = {
+  reponsive: false,
+  plugins: {
+    legend: {
+      display: false,
+    },
+  },
+  scales: {
+    x: {
+      grid: {
+        display: false,
+      },
+    },
+    y: {
+      grid: {
+        display: false,
+      },
+    },
+  },
+};
+
+export {
+  buildingList,
+  monthlyInitData,
+  buildingCode,
+  electricityChartCategory,
+  monthCategory,
+  options,
+  yearCategory,
+};
