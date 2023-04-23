@@ -7,6 +7,7 @@ type navigationItemType = {
 
 type homeCategoryType = {
   id: number;
+  route: string;
   src: string;
   descriptTop: string;
   descriptBottom: string;
