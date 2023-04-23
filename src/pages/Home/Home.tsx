@@ -1,12 +1,15 @@
 import React from 'react';
 import { Wrapper, WrapperInner } from '../../components/Wrapper/Wrapper.style';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
+import { useNavigate } from 'react-router-dom';
 import * as S from './Home.style';
 import Header from '../../components/Header/Header';
 import category from './HomeObject';
 import { homeCategoryType } from '../../type/Types';
 
 const HomePage = () => {
+  const navigate = useNavigate();
+
   return (
     <Wrapper>
       <Header></Header>
@@ -15,7 +18,10 @@ const HomePage = () => {
           {category?.map((item: homeCategoryType) => {
             return (
               <>
-                <S.HomeCategoryFrame key={item.id}>
+                <S.HomeCategoryFrame
+                  key={item.id}
+                  onClick={() => navigate(`/${item.route}`)}
+                >
                   <S.HomeCategoryInner>
                     <S.HomeCategoryIcon src={item.src}></S.HomeCategoryIcon>
                     <S.HomeCategoryDescriptionFrame>
@@ -33,7 +39,7 @@ const HomePage = () => {
           })}
         </S.HomeCategoryList>
       </WrapperInner>
-      <NavigationBar></NavigationBar>
+      <NavigationBar navigationStatus="home"></NavigationBar>
     </Wrapper>
   );
 };

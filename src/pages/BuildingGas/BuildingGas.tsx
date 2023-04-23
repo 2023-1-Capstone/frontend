@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Wrapper, WrapperInner } from '../../components/Wrapper/Wrapper.style';
 import Header from '../../components/Header/Header';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
-import * as S from './BuildingElectricity.style';
+import * as S from './BuildingGas.style';
 import { Chart as ChartJS, Tooltip, Legend } from 'chart.js/auto';
 import { Line } from 'react-chartjs-2';
 import Carousel from '../../components/Carousel/Carousel';
@@ -30,7 +30,7 @@ const Chart = ({ chartState }: { chartState: any }) => {
   );
 };
 
-const BuildingElectricity = () => {
+const BuildingGas = () => {
   const [selectedBuilding, setSelectedBuilding] = useState<string>(
     buildingList[0].buildingName
   );
@@ -136,10 +136,10 @@ const BuildingElectricity = () => {
             ></Dropdown>
           )}
         </WrapperInner>
-        <NavigationBar navigationStatus="electricity"></NavigationBar>
+        <NavigationBar navigationStatus="gas"></NavigationBar>
       </Wrapper>
     </>
   );
 };
 
-export default BuildingElectricity;
+export default BuildingGas;

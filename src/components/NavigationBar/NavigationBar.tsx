@@ -5,6 +5,7 @@ import gas from '../../assets/svg/gas.svg';
 import electricity from '../../assets/svg/eletricity.svg';
 import indicator from '../../assets/svg/indicator.svg';
 import { navigationItemType } from '../../type/Types';
+import { useNavigate } from 'react-router-dom';
 
 const SIDEBARITEMS: navigationItemType[] = [
   {
@@ -33,7 +34,9 @@ const SIDEBARITEMS: navigationItemType[] = [
   },
 ];
 
-const NavigationBar = () => {
+const NavigationBar = ({ navigationStatus }: { navigationStatus: string }) => {
+  const navigate = useNavigate();
+
   return (
     <>
       <S.NavigationFrame>
@@ -41,11 +44,18 @@ const NavigationBar = () => {
           {SIDEBARITEMS.map((sidebarItem: navigationItemType) => {
             return (
               <>
-                <S.NavigationItemFrame>
+                <S.NavigationItemFrame
+                  onClick={() => {
+                    navigate(`/${sidebarItem.status}`);
+                  }}
+                >
                   <S.NavigationItemIcon
+                    status={navigationStatus === sidebarItem.status}
                     src={sidebarItem.src}
                   ></S.NavigationItemIcon>
-                  <S.NavigationItemText>
+                  <S.NavigationItemText
+                    status={navigationStatus === sidebarItem.status}
+                  >
                     {sidebarItem.message}
                   </S.NavigationItemText>
                 </S.NavigationItemFrame>
