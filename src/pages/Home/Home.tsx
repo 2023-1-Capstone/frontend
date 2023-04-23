@@ -33,7 +33,7 @@ const HomePage = () => {
           })}
         </S.HomeCategoryList>
       </WrapperInner>
-      <NavigationBar></NavigationBar>
+      <NavigationBar navigationStatus="home"></NavigationBar>
     </Wrapper>
   );
 };

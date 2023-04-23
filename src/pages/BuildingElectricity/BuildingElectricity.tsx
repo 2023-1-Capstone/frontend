@@ -108,6 +108,7 @@ const BuildingElectricity = () => {
             </S.ChartTopFrame>
             <S.ChartIndicatorLine></S.ChartIndicatorLine>
           </S.ChartChangeFrame>
+
           <Chart chartState={chartState}></Chart>
           {isLeftDropdownOn && (
             <Dropdown
@@ -135,7 +136,7 @@ const BuildingElectricity = () => {
             ></Dropdown>
           )}
         </WrapperInner>
-        <NavigationBar></NavigationBar>
+        <NavigationBar navigationStatus="electricity"></NavigationBar>
       </Wrapper>
     </>
   );

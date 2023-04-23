@@ -41,15 +41,20 @@ const NavigationItemFrame = styled.div`
 
   /* Inside auto layout */
 
+  cursor: pointer;
+
   flex: none;
   order: 0;
   flex-grow: 0;
 `;
 
-const NavigationItemIcon = styled.img`
+const NavigationItemIcon = styled.img<{ status: boolean }>`
   width: 2.4rem;
   height: 2.4rem;
-
+  filter: ${(props) =>
+    props.status
+      ? 'invert(21%) sepia(100%) saturate(6823%) hue-rotate(196deg) brightness(96%) contrast(102%);'
+      : null}
   /* Inside auto layout */
   background: url(${(props) => props.src})
   flex: none;
@@ -57,7 +62,7 @@ const NavigationItemIcon = styled.img`
   flex-grow: 0;
 `;
 
-const NavigationItemText = styled.div`
+const NavigationItemText = styled.div<{ status: boolean }>`
   height: 1.8rem;
 
   font-family: 'Pretendard';
@@ -66,6 +71,8 @@ const NavigationItemText = styled.div`
   font-size: 1.1rem;
   line-height: 1.8rem;
   /* identical to box height, or 164% */
+
+  color: ${(props) => (props.status ? '#0065B3' : '#757575')};
 
   display: flex;
   align-items: center;
