@@ -8,36 +8,19 @@ import { Line } from 'react-chartjs-2';
 import Carousel from '../../components/Carousel/Carousel';
 import downArrow from '../../assets/svg/downArrow.svg';
 import { Dropdown } from '../../components/Dropdown/Dropdown';
+import { dropdownInfoCreater } from './util';
 import test from '../../api/test';
 import {
   monthlyInitData,
   buildingList,
   buildingCode,
-  category,
+  electricityChartCategory,
+  options,
+  monthCategory,
+  yearCategory,
 } from '../../store/store';
 
 ChartJS.register(Tooltip, Legend);
-
-const options = {
-  reponsive: false,
-  plugins: {
-    legend: {
-      display: false,
-    },
-  },
-  scales: {
-    x: {
-      grid: {
-        display: false,
-      },
-    },
-    y: {
-      grid: {
-        display: false,
-      },
-    },
-  },
-};
 
 const Chart = ({ chartState }: { chartState: any }) => {
   return (
@@ -54,7 +37,15 @@ const BuildingElectricity = () => {
   const [chartState, setChartState] = useState(monthlyInitData);
   const [chartCategory, setChartCategory] =
     useState<string>('월별 전기 사용량');
-  const [isCategoryModalOn, setIsCategoryModalOn] = useState<Boolean>(false);
+  const [rightCategory, setRightCategory] = useState<string>('2023년');
+  const [rightDropdown, setRightDropDown] = useState(yearCategory);
+  const [isLeftDropdownOn, setIsLeftDropDownOn] = useState<Boolean>(false);
+  const [isRightDropdownOn, setIsRightDropDownOn] = useState<Boolean>(false);
+
+  /**
+   * API 호출이 들어가야 할 부분
+   * @param selectedBuilding
+   */
   const testAPI = async (selectedBuilding: number) => {
     const rData = await test(selectedBuilding);
     // 깊은 복사를 하지 않으면 chartJS서 변동 감지를 못함 JSON.parse, JSON.stringify로 깊은 복사
@@ -63,18 +54,41 @@ const BuildingElectricity = () => {
     setChartState(chartStateCopy);
   };
 
-  const categorySelect = () => {
-    if (isCategoryModalOn) setIsCategoryModalOn(false);
-    else setIsCategoryModalOn(true);
+  const leftDropdownHandler = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    if (isLeftDropdownOn) setIsLeftDropDownOn(false);
+    else setIsLeftDropDownOn(true);
+  };
+
+  const rightDropdownHandler = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    if (isRightDropdownOn) setIsRightDropDownOn(false);
+    else setIsRightDropDownOn(true);
   };
 
   useEffect(() => {
     testAPI(buildingCode[selectedBuilding]);
   }, [selectedBuilding]);
 
+  useEffect(() => {
+    const matchChartCategory: any = {
+      '월별 전기 사용량': ['2023년', yearCategory],
+      '연별 전기 사용량': [null, null],
+      '동월 전기 사용량': ['12월', monthCategory],
+    };
+
+    setRightCategory(matchChartCategory[chartCategory][0]);
+    setRightDropDown(matchChartCategory[chartCategory][1]);
+  }, [chartCategory]);
+
   return (
     <>
-      <Wrapper>
+      <Wrapper
+        onClick={(e: React.MouseEvent<HTMLDivElement>) => {
+          setIsLeftDropDownOn(false);
+          setIsRightDropDownOn(false);
+        }}
+      >
         <Header></Header>
         <WrapperInner>
           <S.BuildingTitle>건물별 전기에너지를 확인해보세요!</S.BuildingTitle>
@@ -84,21 +98,40 @@ const BuildingElectricity = () => {
           ></Carousel>
           <S.ChartChangeFrame>
             <S.ChartTopFrame>
-              <S.ChartCategoryBox onClick={categorySelect}>
+              <S.ChartCategoryBox onClick={leftDropdownHandler}>
                 {chartCategory} &nbsp;<img src={downArrow}></img>
               </S.ChartCategoryBox>
-              <S.ChartYearBox>
-                2022년&nbsp;<img src={downArrow}></img>
+              <S.ChartYearBox onClick={rightDropdownHandler}>
+                {rightCategory}&nbsp;{' '}
+                {rightCategory && <img src={downArrow}></img>}
               </S.ChartYearBox>
             </S.ChartTopFrame>
             <S.ChartIndicatorLine></S.ChartIndicatorLine>
           </S.ChartChangeFrame>
           <Chart chartState={chartState}></Chart>
-          {isCategoryModalOn && (
+          {isLeftDropdownOn && (
             <Dropdown
-              category={category}
-              setChartCategory={setChartCategory}
-              setIsCategoryModalOn={setIsCategoryModalOn}
+              dropDownInfo={dropdownInfoCreater(
+                '9.6rem',
+                '3rem',
+                'large',
+                electricityChartCategory,
+                setChartCategory,
+                setIsLeftDropDownOn
+              )}
+            ></Dropdown>
+          )}
+
+          {isRightDropdownOn && (
+            <Dropdown
+              dropDownInfo={dropdownInfoCreater(
+                '9.6rem',
+                '29.5rem',
+                'middle',
+                rightDropdown,
+                setRightCategory,
+                setIsRightDropDownOn
+              )}
             ></Dropdown>
           )}
         </WrapperInner>

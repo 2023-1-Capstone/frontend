@@ -46,6 +46,8 @@ const ChartTopFrame = styled.div`
 `;
 
 const ChartCategoryBox = styled.div`
+  position: absolute;
+
   width: fit-content;
   height: fit-content;
 
@@ -54,6 +56,8 @@ const ChartCategoryBox = styled.div`
   }
 
   cursor: pointer;
+
+  left: 0.5rem;
 
   border-radius: 0.3rem;
 
@@ -75,6 +79,7 @@ const ChartCategoryBox = styled.div`
 `;
 
 const ChartYearBox = styled.div`
+  position: absolute;
   width: fit-content;
   height: fit-content;
 
@@ -83,6 +88,9 @@ const ChartYearBox = styled.div`
   }
 
   cursor: pointer;
+
+  left: 26rem;
+
   border-radius: 0.3rem;
   font-family: 'Pretendard';
   font-style: normal;

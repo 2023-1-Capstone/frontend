@@ -1,24 +1,23 @@
 import styled from 'styled-components';
 
-const DropdownFrame = styled.div`
+const DropdownFrame = styled.div<{ xCoordinate: string; height: string }>`
   box-sizing: border-box;
 
   position: absolute;
 
   /* Auto layout */
 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  overflow: hidden;
-
+  overflow-x: hidden;
+  overflow-y: auto;
   top: 26.2rem;
-  left: 3rem;
+  left: ${(props) => props.xCoordinate};
 
-  width: 121px;
-  height: fit-content;
+  width: fit-content;
+  height: ${(props) => props.height};
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 
   background: #f7f7f7;
 
@@ -33,15 +32,14 @@ const DropdownFrame = styled.div`
   flex-grow: 0;
 `;
 
-const DropdownItem = styled.div`
-  width: 121px;
+const DropdownItem = styled.div<{ size: string }>`
+  width: ${(props) => props.size};
   height: 3.2rem;
-
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 500;
   font-size: 1.4rem;
-  line-height: 4rem;
+
   /* or 286% */
 
   &:hover {
