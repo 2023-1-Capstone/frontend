@@ -4,7 +4,7 @@ import StartPage from '../pages/Start/Start';
 import HomePage from '../pages/Home/Home';
 import BuildingElectricity from '../pages/BuildingElectricity/BuildingElectricity';
 import BuildingGas from '../pages/BuildingGas/BuildingGas';
-import App from '../App';
+import Indicate from '../pages/Indicate/Indicate';
 
 const Router = () => {
   return (
@@ -15,6 +15,7 @@ const Router = () => {
           <Route path="/home" element={<HomePage />} />
           <Route path="/electricity" element={<BuildingElectricity />} />
           <Route path="/gas" element={<BuildingGas />} />
+          <Route path="/indicator" element={<Indicate />} />
         </Routes>
       </BrowserRouter>
     </>

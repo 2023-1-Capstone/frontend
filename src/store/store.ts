@@ -4,6 +4,9 @@ import 하이테크 from '../assets/schoolImage/하이테크.jpg';
 import 정석 from '../assets/schoolImage/정석.jpg';
 import 호관2 from '../assets/schoolImage/2호관.jpg';
 import { buildingInfoType } from '../type/Types';
+import electricityIcon from '../assets/svg/electricityCategory.svg';
+import gasIcon from '../assets/svg/gasCategory.svg';
+import carbon from '../assets/svg/carbon.svg';
 
 const monthlyInitData: any = {
   labels: [
@@ -98,6 +101,15 @@ const options = {
   },
 };
 
+const indicateCategory = [
+  { content: '계절별 전력사용 순위', src: electricityIcon },
+  { content: '계절별 가스사용 순위', src: electricityIcon },
+  { content: '면적당 전력사용 순위', src: electricityIcon },
+  { content: '면적당 가스사용 순위', src: electricityIcon },
+  { content: '건물별 탄소 배출량', src: electricityIcon },
+  { content: '연도별 탄소 배출량', src: electricityIcon },
+];
+
 export {
   buildingList,
   monthlyInitData,
@@ -106,4 +118,5 @@ export {
   monthCategory,
   options,
   yearCategory,
+  indicateCategory,
 };
