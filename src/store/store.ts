@@ -33,6 +33,18 @@ const monthlyInitData: any = {
   ],
 };
 
+const seasonInitData: any = {
+  labels: ['봄', '여름', '가을', '겨울'],
+
+  datasets: [
+    {
+      type: 'bar',
+      backgroundColor: 'rgb(75, 192, 192)',
+      data: [100, 400, 300, 200],
+    },
+  ],
+};
+
 const buildingList: buildingInfoType[] = [
   { buildingName: '본관', src: 본관 },
   { buildingName: '60주년', src: 주년60 },
@@ -119,4 +131,5 @@ export {
   options,
   yearCategory,
   indicateCategory,
+  seasonInitData,
 };

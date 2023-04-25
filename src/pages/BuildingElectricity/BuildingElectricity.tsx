@@ -48,6 +48,7 @@ const BuildingElectricity = () => {
    */
   const testAPI = async (selectedBuilding: number) => {
     const rData = await test(selectedBuilding);
+    console.log(rData);
     // 깊은 복사를 하지 않으면 chartJS서 변동 감지를 못함 JSON.parse, JSON.stringify로 깊은 복사
     const chartStateCopy = JSON.parse(JSON.stringify(chartState));
     chartStateCopy.datasets[0].data = rData.result[0].usages;
