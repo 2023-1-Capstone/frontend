@@ -1,12 +1,32 @@
 import styled from 'styled-components';
 
+const SeasonWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+`;
+
+const SeasonTitle = styled.div`
+  position: relative;
+  width: fit-content;
+  height: fit-content;
+
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 2.4rem;
+  line-height: 2.9rem;
+  margin-top: 3rem;
+  color: #000000;
+`;
+
 const ChartChangeFrame = styled.div`
   position: relative;
   width: fit-content;
   display: flex;
   flex-direction: column;
-  left: 50%;
-  transform: translateX(-50%);
+
   margin-top: 2rem;
   margin-bottom: 1rem;
 `;
@@ -101,8 +121,11 @@ const ChartIndicatorLine = styled.div`
 
 const BottomWrapper = styled.div`
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 29.8rem;
-  height: 32.5rem;
+  height: 30.5rem;
 
   background: #eeeeee;
   border-radius: 1rem;
@@ -111,7 +134,7 @@ const BottomWrapper = styled.div`
 const BottomTitle = styled.div`
   width: 26.5rem;
   height: 2.6rem;
-
+  margin-top: 1.2rem;
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
@@ -132,7 +155,7 @@ const BottomInfoBox = styled.div`
   gap: 1rem;
 
   position: relative;
-  width: 27.6rem;
+  width: 26.8rem;
   height: 7.3rem;
 
   /* Black/300 */
@@ -172,7 +195,7 @@ const BottomInfoTransWrapper = styled.div`
   padding: 0rem;
   gap: 0.6rem;
 
-  width: 30rem;
+  width: 26.8rem;
   height: fit-content;
 
   flex-wrap: wrap;
@@ -218,6 +241,7 @@ const BottomInfoTransText = styled.div`
 `;
 
 export {
+  SeasonWrapper,
   ChartCategoryBox,
   ChartIndicatorLine,
   ChartYearBox,
@@ -230,4 +254,5 @@ export {
   BottomInfoTransWrapper,
   BottomInfoTransItem,
   BottomInfoTransText,
+  SeasonTitle,
 };
