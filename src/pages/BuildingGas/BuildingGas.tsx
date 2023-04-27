@@ -115,6 +115,7 @@ const BuildingGas = () => {
               dropDownInfo={dropdownInfoCreater(
                 '9.6rem',
                 '3rem',
+                '26.2rem',
                 'large',
                 electricityChartCategory,
                 setChartCategory,
@@ -128,6 +129,7 @@ const BuildingGas = () => {
               dropDownInfo={dropdownInfoCreater(
                 '9.6rem',
                 '29.5rem',
+                '26.2rem',
                 'middle',
                 rightDropdown,
                 setRightCategory,

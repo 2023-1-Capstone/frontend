@@ -82,15 +82,7 @@ const monthCategory = [
   '12월',
 ];
 
-const yearCategory = [
-  '2023년',
-  '2022년',
-  '2021년',
-  '2020년',
-  '2019년',
-  '2018년',
-  '2017년',
-];
+const yearCategory = ['2023', '2022', '2021', '2020', '2019', '2018', '2017'];
 
 const options = {
   reponsive: false,

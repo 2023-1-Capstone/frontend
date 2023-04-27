@@ -1,6 +1,7 @@
 const dropdownInfoCreater = (
   height: string,
   xCoordinate: string,
+  yCoordinate: string,
   size: string,
   category: string[],
   setChartCategory: React.Dispatch<React.SetStateAction<string>>,
@@ -9,6 +10,7 @@ const dropdownInfoCreater = (
   return {
     height: height,
     xCoordinate: xCoordinate,
+    yCoordinate: yCoordinate,
     size: size,
     category: category,
     setChartCategory: setChartCategory,
