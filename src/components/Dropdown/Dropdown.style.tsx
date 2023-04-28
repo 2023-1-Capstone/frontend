@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
-const DropdownFrame = styled.div<{ xCoordinate: string; height: string }>`
+const DropdownFrame = styled.div<{
+  yCoordinate: string;
+  xCoordinate: string;
+  height: string;
+}>`
   box-sizing: border-box;
 
   position: absolute;
@@ -9,7 +13,7 @@ const DropdownFrame = styled.div<{ xCoordinate: string; height: string }>`
 
   overflow-x: hidden;
   overflow-y: auto;
-  top: 26.2rem;
+  top: ${(props) => props.yCoordinate};
   left: ${(props) => props.xCoordinate};
 
   width: fit-content;

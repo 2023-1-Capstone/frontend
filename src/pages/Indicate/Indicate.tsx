@@ -1,11 +1,14 @@
 import { Wrapper, WrapperInner } from '../../components/Wrapper/Wrapper.style';
 import Header from '../../components/Header/Header';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
+import { useNavigate } from 'react-router-dom';
 import * as S from './Indicate.style';
 import { indicateCategory } from '../../store/store';
 import crown from '../../assets/svg/crown.svg';
 
 const Indicate = () => {
+  const navigate = useNavigate();
+
   return (
     <>
       <Wrapper>
@@ -21,7 +24,7 @@ const Indicate = () => {
             <S.IndicateWrapper>
               {indicateCategory.map((item: any) => {
                 return (
-                  <S.IndicateItem>
+                  <S.IndicateItem onClick={() => navigate(item.route)}>
                     <S.IndicateItemInner>
                       <S.IndicateItemText>{item.content}</S.IndicateItemText>
                       <S.IndicateItemIcon src={item.src}></S.IndicateItemIcon>

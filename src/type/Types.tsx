@@ -21,6 +21,7 @@ type buildingInfoType = {
 type dropDonwInfoType = {
   height: string;
   xCoordinate: string;
+  yCoordinate: string;
   size: string;
   category: string[];
   setChartCategory: React.Dispatch<React.SetStateAction<string>>;

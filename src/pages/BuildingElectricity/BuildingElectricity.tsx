@@ -48,6 +48,7 @@ const BuildingElectricity = () => {
    */
   const testAPI = async (selectedBuilding: number) => {
     const rData = await test(selectedBuilding);
+    console.log(rData);
     // 깊은 복사를 하지 않으면 chartJS서 변동 감지를 못함 JSON.parse, JSON.stringify로 깊은 복사
     const chartStateCopy = JSON.parse(JSON.stringify(chartState));
     chartStateCopy.datasets[0].data = rData.result[0].usages;
@@ -115,6 +116,7 @@ const BuildingElectricity = () => {
               dropDownInfo={dropdownInfoCreater(
                 '9.6rem',
                 '3rem',
+                '26.2rem',
                 'large',
                 electricityChartCategory,
                 setChartCategory,
@@ -128,6 +130,7 @@ const BuildingElectricity = () => {
               dropDownInfo={dropdownInfoCreater(
                 '9.6rem',
                 '29.5rem',
+                '26.2rem',
                 'middle',
                 rightDropdown,
                 setRightCategory,

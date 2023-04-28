@@ -18,6 +18,7 @@ const Dropdown = ({ dropDownInfo }: { dropDownInfo: dropDonwInfoType }) => {
       <S.DropdownFrame
         height={dropDownInfo.height}
         xCoordinate={dropDownInfo.xCoordinate}
+        yCoordinate={dropDownInfo.yCoordinate}
       >
         {dropDownInfo.category.map((item: string) => {
           return (

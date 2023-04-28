@@ -33,6 +33,18 @@ const monthlyInitData: any = {
   ],
 };
 
+const seasonInitData: any = {
+  labels: ['봄', '여름', '가을', '겨울'],
+
+  datasets: [
+    {
+      type: 'bar',
+      backgroundColor: 'rgb(75, 192, 192)',
+      data: [100, 400, 300, 200],
+    },
+  ],
+};
+
 const buildingList: buildingInfoType[] = [
   { buildingName: '본관', src: 본관 },
   { buildingName: '60주년', src: 주년60 },
@@ -70,15 +82,7 @@ const monthCategory = [
   '12월',
 ];
 
-const yearCategory = [
-  '2023년',
-  '2022년',
-  '2021년',
-  '2020년',
-  '2019년',
-  '2018년',
-  '2017년',
-];
+const yearCategory = ['2023', '2022', '2021', '2020', '2019', '2018', '2017'];
 
 const options = {
   reponsive: false,
@@ -102,12 +106,36 @@ const options = {
 };
 
 const indicateCategory = [
-  { content: '계절별 전력사용 순위', src: electricityIcon },
-  { content: '계절별 가스사용 순위', src: electricityIcon },
-  { content: '면적당 전력사용 순위', src: electricityIcon },
-  { content: '면적당 가스사용 순위', src: electricityIcon },
-  { content: '건물별 탄소 배출량', src: electricityIcon },
-  { content: '연도별 탄소 배출량', src: electricityIcon },
+  {
+    content: '계절별 전력사용 순위',
+    src: electricityIcon,
+    route: '/indicator/season/electricity',
+  },
+  {
+    content: '계절별 가스사용 순위',
+    src: gasIcon,
+    route: '/indicator/season/gas',
+  },
+  {
+    content: '면적당 전력사용 순위',
+    src: electricityIcon,
+    route: '/indicator/area/electricity',
+  },
+  {
+    content: '면적당 가스사용 순위',
+    src: gasIcon,
+    route: '/indicator/area/gas',
+  },
+  {
+    content: '건물별 탄소 배출량',
+    src: carbon,
+    route: '/indicator/carbon/buildings',
+  },
+  {
+    content: '연도별 탄소 배출량',
+    src: carbon,
+    route: '/indicator/carbon/all',
+  },
 ];
 
 export {
@@ -119,4 +147,5 @@ export {
   options,
   yearCategory,
   indicateCategory,
+  seasonInitData,
 };
