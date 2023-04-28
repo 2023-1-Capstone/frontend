@@ -24,7 +24,7 @@ const Indicate = () => {
             <S.IndicateWrapper>
               {indicateCategory.map((item: any) => {
                 return (
-                  <S.IndicateItem onClick={() => navigate('/season')}>
+                  <S.IndicateItem onClick={() => navigate(item.route)}>
                     <S.IndicateItemInner>
                       <S.IndicateItemText>{item.content}</S.IndicateItemText>
                       <S.IndicateItemIcon src={item.src}></S.IndicateItemIcon>

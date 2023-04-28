@@ -3,17 +3,17 @@ import { useState } from 'react';
 import {
   Wrapper,
   WrapperInner,
-} from '../../../components/Wrapper/Wrapper.style';
-import Header from '../../../components/Header/Header';
-import NavigationBar from '../../../components/NavigationBar/NavigationBar';
+} from '../../../../components/Wrapper/Wrapper.style';
+import Header from '../../../../components/Header/Header';
+import NavigationBar from '../../../../components/NavigationBar/NavigationBar';
 import { Chart as ChartJS, Tooltip, Legend } from 'chart.js/auto';
 import { Line } from 'react-chartjs-2';
-import { options, seasonInitData } from '../../../store/store';
-import downArrow from '../../../assets/svg/downArrow.svg';
-import * as S from './Season.style';
-import { Dropdown } from '../../../components/Dropdown/Dropdown';
-import { yearCategory } from '../../../store/store';
-import { dropdownInfoCreater } from '../../BuildingElectricity/util';
+import { options, seasonInitData } from '../../../../store/store';
+import downArrow from '../../../../assets/svg/downArrow.svg';
+import * as S from './AreaElectricity.style';
+import { Dropdown } from '../../../../components/Dropdown/Dropdown';
+import { yearCategory } from '../../../../store/store';
+import { dropdownInfoCreater } from '../../../BuildingElectricity/util';
 
 ChartJS.register(Tooltip, Legend);
 
@@ -39,7 +39,7 @@ const Chart = () => {
           ></Dropdown>
         )}
         <S.ChartTopFrame>
-          <S.ChartCategoryBox>계절별 사용량</S.ChartCategoryBox>
+          <S.ChartCategoryBox>면적당 사용량</S.ChartCategoryBox>
           <S.ChartYearBox onClick={() => setIsDropdownOn(true)}>
             {curYear}년 &nbsp;<img src={downArrow}></img>
           </S.ChartYearBox>
@@ -69,9 +69,9 @@ const TransItem = ({ type, waste }: { type: string; waste: number }) => {
   );
 };
 
-const Season = () => {
+const AreaElectricity = () => {
   const [temp, setTempState] = useState([
-    '총 사용 가스량은 103020Nm3 입니다.',
+    '총 사용 전기량은 103020Kwh 입니다.',
     '예상 사용 요금은  120,200,000원 입니다.',
     '이 정도양의 탄소는 어느 정도의 영향이 있습니다.',
   ]);
@@ -89,10 +89,12 @@ const Season = () => {
         <Header></Header>
         <WrapperInner>
           <S.SeasonWrapper>
-            <S.SeasonTitle>👑계절별 전력 사용량 순위</S.SeasonTitle>
+            <S.SeasonTitle>👑면적당 전기 사용 순위</S.SeasonTitle>
             <Chart></Chart>
             <S.BottomWrapper>
-              <S.BottomTitle>해당년도 사용 1위는 '겨울' 입니다.</S.BottomTitle>
+              <S.BottomTitle>
+                해당시기 사용 1위는 '60주년' 입니다.
+              </S.BottomTitle>
               <S.BottomInfoBox>
                 <S.BottomInfoBoxInner>
                   {temp.map((val: string) => {
@@ -100,7 +102,7 @@ const Season = () => {
                   })}
                 </S.BottomInfoBoxInner>
               </S.BottomInfoBox>
-              <S.BottomTitle>이 가스 사용량으로...</S.BottomTitle>
+              <S.BottomTitle>이 전기 사용량으로...</S.BottomTitle>
               <S.BottomInfoTransWrapper>
                 {temp2.map((val: any) => {
                   return <TransItem waste={100000} type={val}></TransItem>;
@@ -115,4 +117,4 @@ const Season = () => {
   );
 };
 
-export default Season;
+export default AreaElectricity;

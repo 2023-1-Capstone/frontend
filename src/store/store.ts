@@ -106,12 +106,36 @@ const options = {
 };
 
 const indicateCategory = [
-  { content: '계절별 전력사용 순위', src: electricityIcon },
-  { content: '계절별 가스사용 순위', src: electricityIcon },
-  { content: '면적당 전력사용 순위', src: electricityIcon },
-  { content: '면적당 가스사용 순위', src: electricityIcon },
-  { content: '건물별 탄소 배출량', src: electricityIcon },
-  { content: '연도별 탄소 배출량', src: electricityIcon },
+  {
+    content: '계절별 전력사용 순위',
+    src: electricityIcon,
+    route: '/indicator/season/electricity',
+  },
+  {
+    content: '계절별 가스사용 순위',
+    src: gasIcon,
+    route: '/indicator/season/gas',
+  },
+  {
+    content: '면적당 전력사용 순위',
+    src: electricityIcon,
+    route: '/indicator/area/electricity',
+  },
+  {
+    content: '면적당 가스사용 순위',
+    src: gasIcon,
+    route: '/indicator/area/gas',
+  },
+  {
+    content: '건물별 탄소 배출량',
+    src: carbon,
+    route: '/indicator/carbon/buildings',
+  },
+  {
+    content: '연도별 탄소 배출량',
+    src: carbon,
+    route: '/indicator/carbon/all',
+  },
 ];
 
 export {
