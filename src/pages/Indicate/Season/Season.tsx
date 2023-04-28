@@ -51,6 +51,24 @@ const Chart = () => {
   );
 };
 
+const TransItem = ({ type, waste }: { type: string; waste: number }) => {
+  const data: any = {
+    빅맥: `${Math.floor(waste / 2)}개 먹기`,
+    아이폰: `${Math.floor(waste / 3)}개 구입`,
+    '주안역 511왕복': `${Math.floor(waste / 4)}회 왕복`,
+    '서호관 라면': `${Math.floor(waste / 5)}개 먹기`,
+  };
+
+  return (
+    <>
+      <S.BottomInfoTransItem>
+        <S.BottomInfoTransText>{type}</S.BottomInfoTransText>
+        <S.BottomInfoTransText>{data[type]}</S.BottomInfoTransText>
+      </S.BottomInfoTransItem>
+    </>
+  );
+};
+
 const Season = () => {
   const [temp, setTempState] = useState([
     '총 사용 가스량은 103020Nm3 입니다.',
@@ -59,12 +77,10 @@ const Season = () => {
   ]);
 
   const [temp2, setTempState2] = useState([
-    '빅맥 200개 먹기',
-    <div>
-      아이폰 <br></br>140대 구매
-    </div>,
-    '서호관 라면 5000그릇',
-    '주안역 511왕복 23425회',
+    '빅맥',
+    '아이폰',
+    '주안역 511왕복',
+    '서호관 라면',
   ]);
 
   return (
@@ -87,11 +103,7 @@ const Season = () => {
               <S.BottomTitle>이 가스 사용량으로...</S.BottomTitle>
               <S.BottomInfoTransWrapper>
                 {temp2.map((val: any) => {
-                  return (
-                    <S.BottomInfoTransItem>
-                      <S.BottomInfoTransText>{val}</S.BottomInfoTransText>
-                    </S.BottomInfoTransItem>
-                  );
+                  return <TransItem waste={100000} type={val}></TransItem>;
                 })}
               </S.BottomInfoTransWrapper>
             </S.BottomWrapper>

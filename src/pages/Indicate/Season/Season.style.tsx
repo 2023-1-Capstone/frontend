@@ -165,9 +165,8 @@ const BottomInfoBox = styled.div`
 `;
 
 const BottomInfoBoxInner = styled.div`
-  width: 26rem;
+  width: fit-content;
   height: 4.9rem;
-
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 400;
