@@ -12,6 +12,7 @@ import CarbonBuildings from '../pages/Indicate/Carbon/Buildings/CarbonBuildings'
 import AreaElectricity from '../pages/Indicate/Area/electricity/AreaElectricity';
 import AreaGas from '../pages/Indicate/Area/gas/AreaGas';
 
+
 const Router = () => {
   return (
     <>
