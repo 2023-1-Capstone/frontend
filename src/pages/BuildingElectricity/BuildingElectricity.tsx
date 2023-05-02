@@ -1,16 +1,16 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Wrapper, WrapperInner } from "../../components/Wrapper/Wrapper.style";
-import Header from "../../components/Header/Header";
-import NavigationBar from "../../components/NavigationBar/NavigationBar";
-import * as S from "./BuildingElectricity.style";
-import { Chart as ChartJS, Tooltip, Legend } from "chart.js/auto";
-import { Line } from "react-chartjs-2";
-import Carousel from "../../components/Carousel/Carousel";
-import downArrow from "../../assets/svg/downArrow.svg";
-import { Dropdown } from "../../components/Dropdown/Dropdown";
-import { dropdownInfoCreater } from "./util";
-import { chartInfoType, chartInfoUsageType } from "../../type/Types";
-import test from "../../api/test";
+import React, { useEffect, useRef, useState } from 'react';
+import { Wrapper, WrapperInner } from '../../components/Wrapper/Wrapper.style';
+import Header from '../../components/Header/Header';
+import NavigationBar from '../../components/NavigationBar/NavigationBar';
+import * as S from './BuildingElectricity.style';
+import { Chart as ChartJS, Tooltip, Legend } from 'chart.js/auto';
+import { Line } from 'react-chartjs-2';
+import Carousel from '../../components/Carousel/Carousel';
+import downArrow from '../../assets/svg/downArrow.svg';
+import { Dropdown } from '../../components/Dropdown/Dropdown';
+import { dropdownInfoCreater } from './util';
+import { chartInfoType, chartInfoUsageType } from '../../type/Types';
+import test from '../../api/test';
 import {
   monthlyInitData,
   buildingList,
@@ -19,7 +19,7 @@ import {
   options,
   monthCategory,
   yearCategory,
-} from "../../store/store";
+} from '../../store/store';
 
 ChartJS.register(Tooltip, Legend);
 
@@ -38,8 +38,8 @@ const BuildingElectricity = () => {
   const [chartData, setChartData] = useState<chartInfoType[]>([]);
   const [chartState, setChartState] = useState(monthlyInitData);
   const [chartCategory, setChartCategory] =
-    useState<string>("월별 전기 사용량");
-  const [rightCategory, setRightCategory] = useState<string>("2023");
+    useState<string>('월별 전기 사용량');
+  const [rightCategory, setRightCategory] = useState<string>('2023');
   const [rightDropdown, setRightDropDown] = useState(yearCategory);
   const [isLeftDropdownOn, setIsLeftDropDownOn] = useState<Boolean>(false);
   const [isRightDropdownOn, setIsRightDropDownOn] = useState<Boolean>(false);
@@ -60,8 +60,8 @@ const BuildingElectricity = () => {
 
     chartStateCopy.datasets[0].backgroundColor = rData.result[0].usages.map(
       (data: any) => {
-        if (!data.prediction) return "rgb(75, 192, 192)";
-        return "rgb(0,0,0,0.1)";
+        if (!data.prediction) return 'rgb(75, 192, 192)';
+        return 'rgb(0,0,0,0.1)';
       }
     );
 
@@ -101,9 +101,9 @@ const BuildingElectricity = () => {
     console.log(yearTotalWaste);
     const monthLabel = monthCategory;
     const matchChartCategory: any = {
-      "월별 전기 사용량": ["2023", yearData, monthLabel],
-      "연별 전기 사용량": [null, null, yearLabel, yearTotalWaste],
-      "동월 전기 사용량": ["12월", monthCategory, yearLabel],
+      '월별 전기 사용량': ['2023', yearData, monthLabel],
+      '연별 전기 사용량': [null, null, yearLabel, yearTotalWaste],
+      '동월 전기 사용량': ['12월', monthCategory, yearLabel],
     };
     setRightCategory(matchChartCategory[chartCategory][0]);
     setRightDropDown(matchChartCategory[chartCategory][1]);
@@ -117,7 +117,7 @@ const BuildingElectricity = () => {
   }, [chartCategory]);
 
   useEffect(() => {
-    if (chartCategory !== "연별 전기 사용량") {
+    if (chartCategory === '월별 전기 사용량') {
       const chartStateCopy = JSON.parse(JSON.stringify(chartState));
 
       // 오른쪽 카테고리를 통해 타겟을 탐색
@@ -130,10 +130,18 @@ const BuildingElectricity = () => {
 
       // 타겟이 예측인지 아닌지 뽑아내서 색깔 변경주기
       chartStateCopy.datasets[0].backgroundColor = target?.map((data: any) => {
-        if (!data.prediction) return "rgb(75, 192, 192)";
-        return "rgb(0,0,0,0.1)";
+        if (!data.prediction) return 'rgb(75, 192, 192)';
+        return 'rgb(0,0,0,0.1)';
       });
 
+      setChartState(chartStateCopy);
+    } else if (chartCategory === '동월 전기 사용량') {
+      const chartStateCopy = JSON.parse(JSON.stringify(chartState));
+      const curMonth = parseInt(rightCategory) - 1;
+      const target = chartData.map((item: any) => item.usages[curMonth]);
+      chartStateCopy.datasets[0].data = target?.map(
+        (item: chartInfoUsageType) => item.data
+      );
       setChartState(chartStateCopy);
     }
   }, [rightCategory]);
@@ -161,7 +169,7 @@ const BuildingElectricity = () => {
                 {chartCategory} &nbsp;<img src={downArrow}></img>
               </S.ChartCategoryBox>
               <S.ChartYearBox onClick={rightDropdownHandler}>
-                {rightCategory}&nbsp;{" "}
+                {rightCategory}&nbsp;{' '}
                 {rightCategory && <img src={downArrow}></img>}
               </S.ChartYearBox>
             </S.ChartTopFrame>
@@ -172,10 +180,10 @@ const BuildingElectricity = () => {
           {isLeftDropdownOn && (
             <Dropdown
               dropDownInfo={dropdownInfoCreater(
-                "9.6rem",
-                "3rem",
-                "26.2rem",
-                "large",
+                '9.6rem',
+                '3rem',
+                '26.2rem',
+                'large',
                 electricityChartCategory,
                 setChartCategory,
                 setIsLeftDropDownOn
@@ -186,10 +194,10 @@ const BuildingElectricity = () => {
           {isRightDropdownOn && (
             <Dropdown
               dropDownInfo={dropdownInfoCreater(
-                "9.6rem",
-                "29.5rem",
-                "26.2rem",
-                "middle",
+                '9.6rem',
+                '29.5rem',
+                '26.2rem',
+                'middle',
                 rightDropdown,
                 setRightCategory,
                 setIsRightDropDownOn
