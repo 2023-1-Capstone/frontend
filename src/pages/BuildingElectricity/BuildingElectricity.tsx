@@ -34,10 +34,11 @@ const BuildingElectricity = () => {
   const [selectedBuilding, setSelectedBuilding] = useState<string>(
     buildingList[0].buildingName
   );
+  const [chartData, setChartData] = useState<any[]>([]);
   const [chartState, setChartState] = useState(monthlyInitData);
   const [chartCategory, setChartCategory] =
     useState<string>('월별 전기 사용량');
-  const [rightCategory, setRightCategory] = useState<string>('2023년');
+  const [rightCategory, setRightCategory] = useState<string>('2023');
   const [rightDropdown, setRightDropDown] = useState(yearCategory);
   const [isLeftDropdownOn, setIsLeftDropDownOn] = useState<Boolean>(false);
   const [isRightDropdownOn, setIsRightDropDownOn] = useState<Boolean>(false);
@@ -48,10 +49,26 @@ const BuildingElectricity = () => {
    */
   const testAPI = async (selectedBuilding: number) => {
     const rData = await test(selectedBuilding);
-    console.log(rData);
+    setChartData(rData?.result);
     // 깊은 복사를 하지 않으면 chartJS서 변동 감지를 못함 JSON.parse, JSON.stringify로 깊은 복사
     const chartStateCopy = JSON.parse(JSON.stringify(chartState));
-    chartStateCopy.datasets[0].data = rData.result[0].usages;
+    chartStateCopy.datasets[0].data = rData.result[0].usages.map(
+      (data: any) => data.data
+    );
+    //   backgroundColor: ['rgb(75, 192, 192)'],
+
+    chartStateCopy.datasets[0].backgroundColor = rData.result[0].usages.map(
+      (data: any) => {
+        if (!data.prediction) return 'rgb(75, 192, 192)';
+        return 'rgb(0,0,0,0.1)';
+      }
+    );
+
+    const years = rData.result.map((val: any) => {
+      return val.year;
+    });
+
+    setRightDropDown(years);
     setChartState(chartStateCopy);
   };
 
@@ -73,7 +90,7 @@ const BuildingElectricity = () => {
 
   useEffect(() => {
     const matchChartCategory: any = {
-      '월별 전기 사용량': ['2023년', yearCategory],
+      '월별 전기 사용량': ['2023', yearCategory],
       '연별 전기 사용량': [null, null],
       '동월 전기 사용량': ['12월', monthCategory],
     };
@@ -81,6 +98,25 @@ const BuildingElectricity = () => {
     setRightCategory(matchChartCategory[chartCategory][0]);
     setRightDropDown(matchChartCategory[chartCategory][1]);
   }, [chartCategory]);
+
+  useEffect(() => {
+    const chartStateCopy = JSON.parse(JSON.stringify(chartState));
+
+    // 오른쪽 카테고리를 통해 타겟을 탐색
+    const target = chartData.filter((val: any) => val.year == rightCategory)[0]
+      ?.usages;
+
+    // 타겟의 데이터 뽑아내기
+    chartStateCopy.datasets[0].data = target?.map((val: any) => val.data);
+
+    // 타겟이 예측인지 아닌지 뽑아내서 색깔 변경주기
+    chartStateCopy.datasets[0].backgroundColor = target?.map((data: any) => {
+      if (!data.prediction) return 'rgb(75, 192, 192)';
+      return 'rgb(0,0,0,0.1)';
+    });
+
+    setChartState(chartStateCopy);
+  }, [rightCategory]);
 
   return (
     <>
