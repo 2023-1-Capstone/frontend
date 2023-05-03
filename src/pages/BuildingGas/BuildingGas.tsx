@@ -8,13 +8,14 @@ import { Line } from 'react-chartjs-2';
 import Carousel from '../../components/Carousel/Carousel';
 import downArrow from '../../assets/svg/downArrow.svg';
 import { Dropdown } from '../../components/Dropdown/Dropdown';
-import { dropdownInfoCreater } from './util';
-import test from '../../api/test';
+import { dropdownInfoCreater, createChartCategoryArray } from './util';
+import { chartInfoType, chartInfoUsageType } from '../../type/Types';
+import getBuildingGas from '../../api/getBuildingGas';
 import {
   monthlyInitData,
   buildingList,
   buildingCode,
-  electricityChartCategory,
+  gasChartCategory,
   options,
   monthCategory,
   yearCategory,
@@ -30,14 +31,15 @@ const Chart = ({ chartState }: { chartState: any }) => {
   );
 };
 
-const BuildingGas = () => {
+const BuildingElectricity = () => {
   const [selectedBuilding, setSelectedBuilding] = useState<string>(
     buildingList[0].buildingName
   );
+  const [chartData, setChartData] = useState<chartInfoType[]>([]);
   const [chartState, setChartState] = useState(monthlyInitData);
   const [chartCategory, setChartCategory] =
-    useState<string>('월별 전기 사용량');
-  const [rightCategory, setRightCategory] = useState<string>('2023년');
+    useState<string>('월별 가스 사용량');
+  const [rightCategory, setRightCategory] = useState<string>('2023');
   const [rightDropdown, setRightDropDown] = useState(yearCategory);
   const [isLeftDropdownOn, setIsLeftDropDownOn] = useState<Boolean>(false);
   const [isRightDropdownOn, setIsRightDropDownOn] = useState<Boolean>(false);
@@ -47,10 +49,27 @@ const BuildingGas = () => {
    * @param selectedBuilding
    */
   const testAPI = async (selectedBuilding: number) => {
-    const rData = await test(selectedBuilding);
+    const rData = await getBuildingGas(selectedBuilding);
+    setChartData(rData?.result);
     // 깊은 복사를 하지 않으면 chartJS서 변동 감지를 못함 JSON.parse, JSON.stringify로 깊은 복사
     const chartStateCopy = JSON.parse(JSON.stringify(chartState));
-    chartStateCopy.datasets[0].data = rData.result[0].usages;
+    chartStateCopy.datasets[0].data = rData.result[0].usages.map(
+      (data: any) => data.data
+    );
+    //   backgroundColor: ['rgb(75, 192, 192)'],
+
+    chartStateCopy.datasets[0].backgroundColor = rData.result[0].usages.map(
+      (data: any) => {
+        if (!data.prediction) return 'rgb(75, 192, 192)';
+        return 'rgb(0,0,0,0.1)';
+      }
+    );
+
+    const years = rData.result.map((val: any) => {
+      return val.year;
+    });
+
+    setRightDropDown(years);
     setChartState(chartStateCopy);
   };
 
@@ -66,20 +85,57 @@ const BuildingGas = () => {
     else setIsRightDropDownOn(true);
   };
 
-  useEffect(() => {
-    testAPI(buildingCode[selectedBuilding]);
-  }, [selectedBuilding]);
-
-  useEffect(() => {
-    const matchChartCategory: any = {
-      '월별 전기 사용량': ['2023년', yearCategory],
-      '연별 전기 사용량': [null, null],
-      '동월 전기 사용량': ['12월', monthCategory],
-    };
+  const setChartByCategory = () => {
+    const matchChartCategory = createChartCategoryArray(
+      chartData,
+      monthCategory
+    );
 
     setRightCategory(matchChartCategory[chartCategory][0]);
     setRightDropDown(matchChartCategory[chartCategory][1]);
-  }, [chartCategory]);
+
+    const chartStateCopy = JSON.parse(JSON.stringify(chartState));
+
+    chartStateCopy.labels = matchChartCategory[chartCategory][2];
+    chartStateCopy.datasets[0].data = matchChartCategory[chartCategory][3];
+    setChartState(chartStateCopy);
+  };
+
+  const setChartByDropdown = () => {
+    if (chartCategory === '월별 가스 사용량') {
+      const chartStateCopy = JSON.parse(JSON.stringify(chartState));
+
+      // 오른쪽 카테고리를 통해 타겟을 탐색
+      const target = chartData.filter(
+        (val: any) => val.year == rightCategory
+      )[0]?.usages;
+
+      // 타겟의 데이터 뽑아내기
+      chartStateCopy.datasets[0].data = target?.map((val: any) => val.data);
+
+      // 타겟이 예측인지 아닌지 뽑아내서 색깔 변경주기
+      chartStateCopy.datasets[0].backgroundColor = target?.map((data: any) => {
+        if (!data.prediction) return 'rgb(75, 192, 192)';
+        return 'rgb(0,0,0,0.1)';
+      });
+
+      setChartState(chartStateCopy);
+    } else if (chartCategory === '동월 가스 사용량') {
+      const chartStateCopy = JSON.parse(JSON.stringify(chartState));
+      const curMonth = parseInt(rightCategory) - 1;
+      const target = chartData.map((item: any) => item.usages[curMonth]);
+      chartStateCopy.datasets[0].data = target?.map(
+        (item: chartInfoUsageType) => item.data
+      );
+      setChartState(chartStateCopy);
+    }
+  };
+
+  useEffect(() => {
+    testAPI(buildingCode[selectedBuilding]);
+  }, [selectedBuilding]);
+  useEffect(setChartByCategory, [chartCategory]);
+  useEffect(setChartByDropdown, [rightCategory]);
 
   return (
     <>
@@ -91,7 +147,7 @@ const BuildingGas = () => {
       >
         <Header></Header>
         <WrapperInner>
-          <S.BuildingTitle>건물별 전기에너지를 확인해보세요!</S.BuildingTitle>
+          <S.BuildingTitle>건물별 가스에너지를 확인해보세요!</S.BuildingTitle>
           <Carousel
             buildingList={buildingList}
             setSelectedBuilding={setSelectedBuilding}
@@ -117,7 +173,7 @@ const BuildingGas = () => {
                 '3rem',
                 '26.2rem',
                 'large',
-                electricityChartCategory,
+                gasChartCategory,
                 setChartCategory,
                 setIsLeftDropDownOn
               )}
@@ -144,4 +200,4 @@ const BuildingGas = () => {
   );
 };
 
-export default BuildingGas;
+export default BuildingElectricity;

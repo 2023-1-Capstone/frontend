@@ -67,6 +67,12 @@ const electricityChartCategory = [
   '동월 전기 사용량',
 ];
 
+const gasChartCategory = [
+  '월별 가스 사용량',
+  '연별 가스 사용량',
+  '동월 가스 사용량',
+];
+
 const monthCategory = [
   '1월',
   '2월',
@@ -148,4 +154,5 @@ export {
   yearCategory,
   indicateCategory,
   seasonInitData,
+  gasChartCategory,
 };
