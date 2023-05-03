@@ -8,7 +8,7 @@ import { Line } from 'react-chartjs-2';
 import Carousel from '../../components/Carousel/Carousel';
 import downArrow from '../../assets/svg/downArrow.svg';
 import { Dropdown } from '../../components/Dropdown/Dropdown';
-import { dropdownInfoCreater } from './util';
+import { dropdownInfoCreater, createChartCategoryArray } from './util';
 import { chartInfoType, chartInfoUsageType } from '../../type/Types';
 import test from '../../api/test';
 import {
@@ -85,38 +85,23 @@ const BuildingElectricity = () => {
     else setIsRightDropDownOn(true);
   };
 
-  useEffect(() => {
-    testAPI(buildingCode[selectedBuilding]);
-  }, [selectedBuilding]);
-
-  useEffect(() => {
-    const yearData = chartData.map((item: chartInfoType) => item.year);
-    const yearLabel = yearData.map((year: any) => year.toString());
-    const yearTotalWaste = chartData.map((item: chartInfoType) =>
-      item.usages.reduce((acc: any, cur: any) => {
-        return acc + cur.data;
-      }, 0)
+  const setChartByCategory = () => {
+    const matchChartCategory = createChartCategoryArray(
+      chartData,
+      monthCategory
     );
 
-    console.log(yearTotalWaste);
-    const monthLabel = monthCategory;
-    const matchChartCategory: any = {
-      '월별 전기 사용량': ['2023', yearData, monthLabel],
-      '연별 전기 사용량': [null, null, yearLabel, yearTotalWaste],
-      '동월 전기 사용량': ['12월', monthCategory, yearLabel],
-    };
     setRightCategory(matchChartCategory[chartCategory][0]);
     setRightDropDown(matchChartCategory[chartCategory][1]);
 
     const chartStateCopy = JSON.parse(JSON.stringify(chartState));
-    console.log(chartStateCopy);
+
     chartStateCopy.labels = matchChartCategory[chartCategory][2];
     chartStateCopy.datasets[0].data = matchChartCategory[chartCategory][3];
-    console.log(chartStateCopy);
     setChartState(chartStateCopy);
-  }, [chartCategory]);
+  };
 
-  useEffect(() => {
+  const setChartByDropdown = () => {
     if (chartCategory === '월별 전기 사용량') {
       const chartStateCopy = JSON.parse(JSON.stringify(chartState));
 
@@ -144,9 +129,13 @@ const BuildingElectricity = () => {
       );
       setChartState(chartStateCopy);
     }
-  }, [rightCategory]);
+  };
 
-  useEffect(() => {}, [chartCategory]);
+  useEffect(() => {
+    testAPI(buildingCode[selectedBuilding]);
+  }, [selectedBuilding]);
+  useEffect(setChartByCategory, [chartCategory]);
+  useEffect(setChartByDropdown, [rightCategory]);
 
   return (
     <>
