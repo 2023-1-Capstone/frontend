@@ -28,9 +28,21 @@ type dropDonwInfoType = {
   setIsCategoryModalOn: React.Dispatch<React.SetStateAction<Boolean>>;
 };
 
+type chartInfoType = {
+  year: number;
+  usages: chartInfoType[];
+};
+
+type chartInfoUsageType = {
+  data: number;
+  prediction: boolean;
+};
+
 export type {
   navigationItemType,
   homeCategoryType,
   buildingInfoType,
   dropDonwInfoType,
+  chartInfoType,
+  chartInfoUsageType,
 };

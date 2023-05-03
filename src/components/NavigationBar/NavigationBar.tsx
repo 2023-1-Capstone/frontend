@@ -43,23 +43,22 @@ const NavigationBar = ({ navigationStatus }: { navigationStatus: string }) => {
         <S.NavigationItemTotalFrame>
           {SIDEBARITEMS.map((sidebarItem: navigationItemType) => {
             return (
-              <>
-                <S.NavigationItemFrame
-                  onClick={() => {
-                    navigate(`/${sidebarItem.status}`);
-                  }}
+              <S.NavigationItemFrame
+                key={sidebarItem.id}
+                onClick={() => {
+                  navigate(`/${sidebarItem.status}`);
+                }}
+              >
+                <S.NavigationItemIcon
+                  status={navigationStatus === sidebarItem.status}
+                  src={sidebarItem.src}
+                ></S.NavigationItemIcon>
+                <S.NavigationItemText
+                  status={navigationStatus === sidebarItem.status}
                 >
-                  <S.NavigationItemIcon
-                    status={navigationStatus === sidebarItem.status}
-                    src={sidebarItem.src}
-                  ></S.NavigationItemIcon>
-                  <S.NavigationItemText
-                    status={navigationStatus === sidebarItem.status}
-                  >
-                    {sidebarItem.message}
-                  </S.NavigationItemText>
-                </S.NavigationItemFrame>
-              </>
+                  {sidebarItem.message}
+                </S.NavigationItemText>
+              </S.NavigationItemFrame>
             );
           })}
         </S.NavigationItemTotalFrame>

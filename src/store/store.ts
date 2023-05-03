@@ -27,7 +27,7 @@ const monthlyInitData: any = {
   datasets: [
     {
       type: 'bar',
-      backgroundColor: 'rgb(75, 192, 192)',
+      backgroundColor: ['rgb(75, 192, 192)'],
       data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     },
   ],
@@ -65,6 +65,12 @@ const electricityChartCategory = [
   '월별 전기 사용량',
   '연별 전기 사용량',
   '동월 전기 사용량',
+];
+
+const gasChartCategory = [
+  '월별 가스 사용량',
+  '연별 가스 사용량',
+  '동월 가스 사용량',
 ];
 
 const monthCategory = [
@@ -148,4 +154,5 @@ export {
   yearCategory,
   indicateCategory,
   seasonInitData,
+  gasChartCategory,
 };
