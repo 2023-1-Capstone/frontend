@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { Wrapper, WrapperInner } from '../../components/Wrapper/Wrapper.style';
 import Header from '../../components/Header/Header';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
@@ -11,6 +12,7 @@ import { Dropdown } from '../../components/Dropdown/Dropdown';
 import { dropdownInfoCreater, createChartCategoryArray } from './util';
 import { chartInfoType, chartInfoUsageType } from '../../type/Types';
 import test from '../../api/test';
+import api from '../../api/api';
 import {
   monthlyInitData,
   buildingList,
@@ -43,6 +45,13 @@ const BuildingElectricity = () => {
   const [rightDropdown, setRightDropDown] = useState(yearCategory);
   const [isLeftDropdownOn, setIsLeftDropDownOn] = useState<Boolean>(false);
   const [isRightDropdownOn, setIsRightDropDownOn] = useState<Boolean>(false);
+  const { data: userInfo } = useQuery(['getProfile'], () =>
+    api('/api/buildings')
+  );
+
+  useEffect(() => {
+    console.log(userInfo?.data);
+  }, [userInfo]);
 
   /**
    * API 호출이 들어가야 할 부분
@@ -51,6 +60,7 @@ const BuildingElectricity = () => {
   const testAPI = async (selectedBuilding: number) => {
     const rData = await test(selectedBuilding);
     setChartData(rData?.result);
+    console.log(rData.result);
     // 깊은 복사를 하지 않으면 chartJS서 변동 감지를 못함 JSON.parse, JSON.stringify로 깊은 복사
     const chartStateCopy = JSON.parse(JSON.stringify(chartState));
     chartStateCopy.datasets[0].data = rData.result[0].usages.map(

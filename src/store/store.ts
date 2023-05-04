@@ -23,11 +23,12 @@ const monthlyInitData: any = {
     '11월',
     '12월',
   ],
-
   datasets: [
     {
       type: 'bar',
       backgroundColor: ['rgb(75, 192, 192)'],
+      maxBarThickness: 35,
+      borderRadius: 7,
       data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     },
   ],
@@ -90,11 +91,20 @@ const monthCategory = [
 
 const yearCategory = ['2023', '2022', '2021', '2020', '2019', '2018', '2017'];
 
-const options = {
-  reponsive: false,
+const options: any = {
+  reponsive: true,
   plugins: {
     legend: {
       display: false,
+    },
+    tooltip: {
+      callbacks: {
+        title: (context: any) => context[0].label,
+        label: (context: any) => {
+          let label = context.dataset.label + '' || '';
+          return context.parsed.y !== null ? context.parsed.y + 'kwh' : null;
+        },
+      },
     },
   },
   scales: {
@@ -106,6 +116,11 @@ const options = {
     y: {
       grid: {
         display: false,
+      },
+
+      title: {
+        display: true,
+        text: '단위 : kwh',
       },
     },
   },

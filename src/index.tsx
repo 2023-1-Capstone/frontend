@@ -5,14 +5,20 @@ import Router from './routes/Router';
 import reportWebVitals from './reportWebVitals';
 import GlobalStyle from './GlobalStyle.style';
 import './assets/fonts/font.css';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+const queryClient = new QueryClient();
+
 root.render(
   <React.StrictMode>
     <GlobalStyle />
-    <Router></Router>
+    <QueryClientProvider client={queryClient}>
+      <Router></Router>
+    </QueryClientProvider>
   </React.StrictMode>
 );
 
