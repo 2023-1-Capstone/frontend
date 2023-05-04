@@ -48,10 +48,23 @@ const seasonInitData: any = {
 
 const buildingList: buildingInfoType[] = [
   { buildingName: '본관', src: 본관 },
-  { buildingName: '60주년', src: 주년60 },
+  { buildingName: '하이테크', src: 주년60 },
   { buildingName: '하이테크', src: 하이테크 },
   { buildingName: '정석', src: 정석 },
   { buildingName: '2호관', src: 호관2 },
+];
+
+const buildingSrc = [
+  본관,
+  하이테크,
+  정석,
+  주년60,
+  하이테크,
+  하이테크,
+  하이테크,
+  하이테크,
+  하이테크,
+  하이테크,
 ];
 
 const buildingCode: any = Object.freeze({
