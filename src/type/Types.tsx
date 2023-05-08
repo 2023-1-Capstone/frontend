@@ -14,8 +14,12 @@ type homeCategoryType = {
 };
 
 type buildingInfoType = {
-  buildingName: string;
-  src: string;
+  id: number;
+  name: string;
+  elecArea: number;
+  elecDescription: number | null;
+  gasArea: number;
+  gasDescription: number | null;
 };
 
 type dropDonwInfoType = {
