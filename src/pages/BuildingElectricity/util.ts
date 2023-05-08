@@ -32,9 +32,23 @@ const createChartCategoryArray = (
     }, 0)
   );
   const monthLabel = monthCategory;
+
+  const yearBackgroundColor = chart.map((item: chartInfoType) => {
+    for (let i = 0; i < item.usages.length; i++) {
+      if (item.usages[i].prediction) return 'rgb(0,0,0,0.1)';
+    }
+    return 'rgb(75, 192, 192)';
+  });
+
   const matchChartCategory: any = {
     '월별 전기 사용량': ['2023', yearData, monthLabel],
-    '연별 전기 사용량': [null, null, yearLabel, yearTotalWaste],
+    '연별 전기 사용량': [
+      null,
+      null,
+      yearLabel,
+      yearTotalWaste,
+      yearBackgroundColor,
+    ],
     '동월 전기 사용량': ['12월', monthCategory, yearLabel],
   };
   return matchChartCategory;

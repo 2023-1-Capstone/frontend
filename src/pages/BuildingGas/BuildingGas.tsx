@@ -1,26 +1,26 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Wrapper, WrapperInner } from '../../components/Wrapper/Wrapper.style';
-import Header from '../../components/Header/Header';
-import NavigationBar from '../../components/NavigationBar/NavigationBar';
-import * as S from './BuildingGas.style';
-import { Chart as ChartJS, Tooltip, Legend } from 'chart.js/auto';
-import { Line } from 'react-chartjs-2';
-import Carousel from '../../components/Carousel/Carousel';
-import downArrow from '../../assets/svg/downArrow.svg';
-import { Dropdown } from '../../components/Dropdown/Dropdown';
-import { dropdownInfoCreater, createChartCategoryArray } from './util';
-import { chartInfoType, chartInfoUsageType } from '../../type/Types';
-import getBuildingGas from '../../api/getBuildingGas';
+import React, { useEffect, useRef, useState } from "react";
+import { Wrapper, WrapperInner } from "../../components/Wrapper/Wrapper.style";
+import { useQuery } from "@tanstack/react-query";
+import Header from "../../components/Header/Header";
+import NavigationBar from "../../components/NavigationBar/NavigationBar";
+import * as S from "./BuildingGas.style";
+import { Chart as ChartJS, Tooltip, Legend } from "chart.js/auto";
+import { Line } from "react-chartjs-2";
+import Carousel from "../../components/Carousel/Carousel";
+import downArrow from "../../assets/svg/downArrow.svg";
+import { Dropdown } from "../../components/Dropdown/Dropdown";
+import { dropdownInfoCreater, createChartCategoryArray } from "./util";
+import { chartInfoType, chartInfoUsageType } from "../../type/Types";
+import getBuildingGas from "../../api/getBuildingGas";
 import {
   monthlyInitData,
-  buildingList,
   buildingCode,
   gasChartCategory,
   options,
   monthCategory,
   yearCategory,
-} from '../../store/store';
-
+} from "../../store/store";
+import api from "../../api/api";
 ChartJS.register(Tooltip, Legend);
 
 const Chart = ({ chartState }: { chartState: any }) => {
@@ -32,18 +32,18 @@ const Chart = ({ chartState }: { chartState: any }) => {
 };
 
 const BuildingElectricity = () => {
-  const [selectedBuilding, setSelectedBuilding] = useState<string>(
-    buildingList[0].buildingName
-  );
+  const [selectedBuilding, setSelectedBuilding] = useState<string>("본관");
   const [chartData, setChartData] = useState<chartInfoType[]>([]);
   const [chartState, setChartState] = useState(monthlyInitData);
   const [chartCategory, setChartCategory] =
-    useState<string>('월별 가스 사용량');
-  const [rightCategory, setRightCategory] = useState<string>('2023');
+    useState<string>("월별 가스 사용량");
+  const [rightCategory, setRightCategory] = useState<string>("2023");
   const [rightDropdown, setRightDropDown] = useState(yearCategory);
   const [isLeftDropdownOn, setIsLeftDropDownOn] = useState<Boolean>(false);
   const [isRightDropdownOn, setIsRightDropDownOn] = useState<Boolean>(false);
-
+  const { data: userInfo } = useQuery(["getProfile"], () =>
+    api("/api/buildings")
+  );
   /**
    * API 호출이 들어가야 할 부분
    * @param selectedBuilding
@@ -60,8 +60,8 @@ const BuildingElectricity = () => {
 
     chartStateCopy.datasets[0].backgroundColor = rData.result[0].usages.map(
       (data: any) => {
-        if (!data.prediction) return 'rgb(75, 192, 192)';
-        return 'rgb(0,0,0,0.1)';
+        if (!data.prediction) return "rgb(75, 192, 192)";
+        return "rgb(0,0,0,0.1)";
       }
     );
 
@@ -102,7 +102,7 @@ const BuildingElectricity = () => {
   };
 
   const setChartByDropdown = () => {
-    if (chartCategory === '월별 가스 사용량') {
+    if (chartCategory === "월별 가스 사용량") {
       const chartStateCopy = JSON.parse(JSON.stringify(chartState));
 
       // 오른쪽 카테고리를 통해 타겟을 탐색
@@ -115,12 +115,12 @@ const BuildingElectricity = () => {
 
       // 타겟이 예측인지 아닌지 뽑아내서 색깔 변경주기
       chartStateCopy.datasets[0].backgroundColor = target?.map((data: any) => {
-        if (!data.prediction) return 'rgb(75, 192, 192)';
-        return 'rgb(0,0,0,0.1)';
+        if (!data.prediction) return "rgb(75, 192, 192)";
+        return "rgb(0,0,0,0.1)";
       });
 
       setChartState(chartStateCopy);
-    } else if (chartCategory === '동월 가스 사용량') {
+    } else if (chartCategory === "동월 가스 사용량") {
       const chartStateCopy = JSON.parse(JSON.stringify(chartState));
       const curMonth = parseInt(rightCategory) - 1;
       const target = chartData.map((item: any) => item.usages[curMonth]);
@@ -149,7 +149,7 @@ const BuildingElectricity = () => {
         <WrapperInner>
           <S.BuildingTitle>건물별 가스에너지를 확인해보세요!</S.BuildingTitle>
           <Carousel
-            buildingList={buildingList}
+            buildingList={userInfo?.data.result}
             setSelectedBuilding={setSelectedBuilding}
           ></Carousel>
           <S.ChartChangeFrame>
@@ -158,7 +158,7 @@ const BuildingElectricity = () => {
                 {chartCategory} &nbsp;<img src={downArrow}></img>
               </S.ChartCategoryBox>
               <S.ChartYearBox onClick={rightDropdownHandler}>
-                {rightCategory}&nbsp;{' '}
+                {rightCategory}&nbsp;{" "}
                 {rightCategory && <img src={downArrow}></img>}
               </S.ChartYearBox>
             </S.ChartTopFrame>
@@ -169,10 +169,10 @@ const BuildingElectricity = () => {
           {isLeftDropdownOn && (
             <Dropdown
               dropDownInfo={dropdownInfoCreater(
-                '9.6rem',
-                '3rem',
-                '26.2rem',
-                'large',
+                "9.6rem",
+                "3rem",
+                "26.2rem",
+                "large",
                 gasChartCategory,
                 setChartCategory,
                 setIsLeftDropDownOn
@@ -183,10 +183,10 @@ const BuildingElectricity = () => {
           {isRightDropdownOn && (
             <Dropdown
               dropDownInfo={dropdownInfoCreater(
-                '9.6rem',
-                '29.5rem',
-                '26.2rem',
-                'middle',
+                "9.6rem",
+                "29.5rem",
+                "26.2rem",
+                "middle",
                 rightDropdown,
                 setRightCategory,
                 setIsRightDropDownOn
