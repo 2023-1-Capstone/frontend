@@ -20,16 +20,15 @@ const Dropdown = ({ dropDownInfo }: { dropDownInfo: dropDonwInfoType }) => {
         xCoordinate={dropDownInfo.xCoordinate}
         yCoordinate={dropDownInfo.yCoordinate}
       >
-        {dropDownInfo.category.map((item: string) => {
+        {dropDownInfo.category.map((item: string, idx: number) => {
           return (
-            <>
-              <S.DropdownItem
-                size={sizeObj[dropDownInfo.size]}
-                onClick={clickCategory}
-              >
-                {item}
-              </S.DropdownItem>
-            </>
+            <S.DropdownItem
+              size={sizeObj[dropDownInfo.size]}
+              onClick={clickCategory}
+              key={idx}
+            >
+              {item}
+            </S.DropdownItem>
           );
         })}
       </S.DropdownFrame>

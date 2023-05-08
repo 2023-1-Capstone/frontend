@@ -34,7 +34,7 @@ type dropDonwInfoType = {
 
 type chartInfoType = {
   year: number;
-  usages: chartInfoType[];
+  usages: chartInfoUsageType[];
 };
 
 type chartInfoUsageType = {
