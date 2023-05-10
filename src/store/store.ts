@@ -15,18 +15,18 @@ import carbon from '../assets/svg/carbon.svg';
 
 const monthlyInitData: any = {
   labels: [
-    '1월',
-    '2월',
-    '3월',
-    '4월',
-    '5월',
-    '6월',
-    '7월',
-    '8월',
-    '9월',
-    '10월',
-    '11월',
-    '12월',
+    "1월",
+    "2월",
+    "3월",
+    "4월",
+    "5월",
+    "6월",
+    "7월",
+    "8월",
+    "9월",
+    "10월",
+    "11월",
+    "12월",
   ],
   datasets: [
     {
@@ -40,12 +40,12 @@ const monthlyInitData: any = {
 };
 
 const seasonInitData: any = {
-  labels: ['봄', '여름', '가을', '겨울'],
+  labels: ["봄", "여름", "가을", "겨울"],
 
   datasets: [
     {
-      type: 'bar',
-      backgroundColor: 'rgb(75, 192, 192)',
+      type: "bar",
+      backgroundColor: "rgb(75, 192, 192)",
       data: [100, 400, 300, 200],
     },
   ],
@@ -78,33 +78,33 @@ const buildingCode: any = Object.freeze({
 });
 
 const electricityChartCategory = [
-  '월별 전기 사용량',
-  '연별 전기 사용량',
-  '동월 전기 사용량',
+  "월별 전기 사용량",
+  "연별 전기 사용량",
+  "동월 전기 사용량",
 ];
 
 const gasChartCategory = [
-  '월별 가스 사용량',
-  '연별 가스 사용량',
-  '동월 가스 사용량',
+  "월별 가스 사용량",
+  "연별 가스 사용량",
+  "동월 가스 사용량",
 ];
 
 const monthCategory = [
-  '1월',
-  '2월',
-  '3월',
-  '4월',
-  '5월',
-  '6월',
-  '7월',
-  '8월',
-  '9월',
-  '10월',
-  '11월',
-  '12월',
+  "1월",
+  "2월",
+  "3월",
+  "4월",
+  "5월",
+  "6월",
+  "7월",
+  "8월",
+  "9월",
+  "10월",
+  "11월",
+  "12월",
 ];
 
-const yearCategory = ['2023', '2022', '2021', '2020', '2019', '2018', '2017'];
+const yearCategory = ["2023", "2022", "2021", "2020", "2019", "2018", "2017"];
 
 const options: any = {
   reponsive: true,
@@ -143,34 +143,34 @@ const options: any = {
 
 const indicateCategory = [
   {
-    content: '계절별 전력사용 순위',
+    content: "계절별 전력사용 순위",
     src: electricityIcon,
-    route: '/indicator/season/electricity',
+    route: "/indicator/season/electricity",
   },
   {
-    content: '계절별 가스사용 순위',
+    content: "계절별 가스사용 순위",
     src: gasIcon,
-    route: '/indicator/season/gas',
+    route: "/indicator/season/gas",
   },
   {
-    content: '면적당 전력사용 순위',
+    content: "면적당 전력사용 순위",
     src: electricityIcon,
-    route: '/indicator/area/electricity',
+    route: "/indicator/area/electricity",
   },
   {
-    content: '면적당 가스사용 순위',
+    content: "면적당 가스사용 순위",
     src: gasIcon,
-    route: '/indicator/area/gas',
+    route: "/indicator/area/gas",
   },
   {
-    content: '건물별 탄소 배출량',
+    content: "건물별 탄소 배출량",
     src: carbon,
-    route: '/indicator/carbon/buildings',
+    route: "/indicator/carbon/buildings",
   },
   {
-    content: '연도별 탄소 배출량',
+    content: "연도별 탄소 배출량",
     src: carbon,
-    route: '/indicator/carbon/all',
+    route: "/indicator/carbon/all",
   },
 ];
 

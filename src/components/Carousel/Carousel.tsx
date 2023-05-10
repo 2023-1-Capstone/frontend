@@ -6,8 +6,9 @@ import 'swiper/swiper.min.css';
 import * as S from './Carousel.style';
 import { buildingInfoType } from '../../type/Types';
 import { buildingSrc } from '../../store/store';
+        
 const style = {
-  width: '25rem',
+  width: "25rem",
 };
 
 const Carousel = ({
@@ -27,8 +28,8 @@ const Carousel = ({
         slidesPerView={1}
         scrollbar={{ draggable: true }}
         navigation={{
-          prevEl: '.swiper-button-prev',
-          nextEl: '.swiper-button-next',
+          prevEl: ".swiper-button-prev",
+          nextEl: ".swiper-button-next",
         }}
         pagination={{ clickable: true }}
         onSlideChangeTransitionEnd={(e) =>
