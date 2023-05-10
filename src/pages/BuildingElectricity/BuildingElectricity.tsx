@@ -50,7 +50,7 @@ const BuildingElectricity = () => {
    * API 호출이 들어가야 할 부분
    * @param selectedBuilding
    */
-  const testAPI = async (selectedBuilding: number) => {
+  const getBuildingData = async (selectedBuilding: number) => {
     setRightCategory('2023');
     setChartCategory('월별 전기 사용량');
     const rData = await test(selectedBuilding);
@@ -59,7 +59,10 @@ const BuildingElectricity = () => {
     const chartStateCopy = JSON.parse(JSON.stringify(chartState));
     chartStateCopy.datasets[0].data = rData.result[
       rData.result.length - 1
-    ].usages.map((data: any) => data.data);
+    ].usages.map((data: any) => {
+      if (data.prediction) return data.prediction;
+      return data.data;
+    });
     //   backgroundColor: ['rgb(75, 192, 192)'],
 
     chartStateCopy.datasets[0].backgroundColor = rData.result[
@@ -121,12 +124,14 @@ const BuildingElectricity = () => {
       )[0]?.usages;
 
       // 타겟의 데이터 뽑아내기
-      chartStateCopy.datasets[0].data = target?.map((val: any) => val.data);
+      chartStateCopy.datasets[0].data = target?.map((val: chartInfoUsageType) =>
+        val.data ? val.data : val.prediction
+      );
 
       // 타겟이 예측인지 아닌지 뽑아내서 색깔 변경주기
       chartStateCopy.datasets[0].backgroundColor = target?.map((data: any) => {
-        if (!data.prediction) return 'rgb(75, 192, 192)';
-        return 'rgb(0,0,0,0.1)';
+        if (data.prediction) return 'rgb(0,0,0,0.1)';
+        return 'rgb(75, 192, 192)';
       });
 
       setChartState(chartStateCopy);
@@ -135,12 +140,13 @@ const BuildingElectricity = () => {
       const curMonth = parseInt(rightCategory) - 1;
       const target = chartData.map((item: any) => item.usages[curMonth]);
       const backgroundColor = chartData.map((item: chartInfoType) => {
-        if (!item.usages[parseInt(rightCategory) - 1].prediction)
-          return 'rgb(75, 192, 192)';
-        return 'rgb(0,0,0,0.1)';
+        if (item.usages[parseInt(rightCategory) - 1].prediction)
+          return 'rgb(0,0,0,0.1)';
+        return 'rgb(75, 192, 192)';
       });
       chartStateCopy.datasets[0].data = target?.map(
-        (item: chartInfoUsageType) => item.data
+        (item: chartInfoUsageType) =>
+          item.prediction ? item.prediction : item.data
       );
       chartStateCopy.datasets[0].backgroundColor = backgroundColor;
       setChartState(chartStateCopy);
@@ -148,7 +154,7 @@ const BuildingElectricity = () => {
   };
 
   useEffect(() => {
-    testAPI(buildingCode[selectedBuilding]);
+    getBuildingData(buildingCode[selectedBuilding]);
     if (chartCategory === '월별 전기 사용량') setRightCategory('2023');
     else if (chartCategory === '동월 전기 사용량') setRightCategory('12월');
   }, [selectedBuilding]);
