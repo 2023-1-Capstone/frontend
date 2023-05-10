@@ -28,7 +28,8 @@ const createChartCategoryArray = (
   const yearLabel = yearData.map((year: any) => year.toString());
   const yearTotalWaste = chart.map((item: chartInfoType) =>
     item.usages.reduce((acc: any, cur: any) => {
-      return acc + cur.data;
+      if (!cur.prediction) return acc + cur.data;
+      return acc + cur.prediction;
     }, 0)
   );
   const monthLabel = monthCategory;

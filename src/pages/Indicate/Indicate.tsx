@@ -22,9 +22,12 @@ const Indicate = () => {
               학교의 에너지 사용 내역을 다양하게 살펴보세요!
             </S.IndicateDescription>
             <S.IndicateWrapper>
-              {indicateCategory.map((item: any) => {
+              {indicateCategory.map((item: any, idx: number) => {
                 return (
-                  <S.IndicateItem onClick={() => navigate(item.route)}>
+                  <S.IndicateItem
+                    onClick={() => navigate(item.route)}
+                    key={idx}
+                  >
                     <S.IndicateItemInner>
                       <S.IndicateItemText>{item.content}</S.IndicateItemText>
                       <S.IndicateItemIcon src={item.src}></S.IndicateItemIcon>

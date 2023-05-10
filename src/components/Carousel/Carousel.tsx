@@ -1,11 +1,12 @@
-import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Navigation, Pagination } from "swiper";
-import prev from "../../assets/svg/prev.svg";
-import next from "../../assets/svg/next.svg";
-import "swiper/swiper.min.css";
-import * as S from "./Carousel.style";
-import { buildingInfoType } from "../../type/Types";
-import { buildingSrc } from "../../store/store";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, { Navigation, Pagination } from 'swiper';
+import prev from '../../assets/svg/prev.svg';
+import next from '../../assets/svg/next.svg';
+import 'swiper/swiper.min.css';
+import * as S from './Carousel.style';
+import { buildingInfoType } from '../../type/Types';
+import { buildingSrc } from '../../store/store';
+        
 const style = {
   width: "25rem",
 };
@@ -31,7 +32,7 @@ const Carousel = ({
           nextEl: ".swiper-button-next",
         }}
         pagination={{ clickable: true }}
-        onSlideChange={(e) =>
+        onSlideChangeTransitionEnd={(e) =>
           setSelectedBuilding(buildingList[e.activeIndex].name)
         }
       >

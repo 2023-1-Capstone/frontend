@@ -1,12 +1,17 @@
-import 본관 from "../assets/schoolImage/본관.jpg";
-import 주년60 from "../assets/schoolImage/60주년.jpg";
-import 하이테크 from "../assets/schoolImage/하이테크.jpg";
-import 정석 from "../assets/schoolImage/정석.jpg";
-import 호관2 from "../assets/schoolImage/2호관.jpg";
-import { buildingInfoType } from "../type/Types";
-import electricityIcon from "../assets/svg/electricityCategory.svg";
-import gasIcon from "../assets/svg/gasCategory.svg";
-import carbon from "../assets/svg/carbon.svg";
+import 본관 from '../assets/schoolImage/본관.jpg';
+import 주년60 from '../assets/schoolImage/60주년.jpg';
+import 하이테크 from '../assets/schoolImage/하이테크.jpg';
+import 정석 from '../assets/schoolImage/정석.jpg';
+import 호관2 from '../assets/schoolImage/2호관.jpg';
+import 호관5 from '../assets/schoolImage/5호관.jpg';
+import 호관6 from '../assets/schoolImage/6호관.jpg';
+import 로스쿨관 from '../assets/schoolImage/로스쿨관.jpg';
+import 서호관 from '../assets/schoolImage/서호관.jpg';
+import 학생회관 from '../assets/schoolImage/학생회관.jpg';
+import { buildingInfoType } from '../type/Types';
+import electricityIcon from '../assets/svg/electricityCategory.svg';
+import gasIcon from '../assets/svg/gasCategory.svg';
+import carbon from '../assets/svg/carbon.svg';
 
 const monthlyInitData: any = {
   labels: [
@@ -25,8 +30,8 @@ const monthlyInitData: any = {
   ],
   datasets: [
     {
-      type: "bar",
-      backgroundColor: ["rgb(75, 192, 192)"],
+      type: 'bar',
+      backgroundColor: ['rgb(75, 192, 192)'],
       maxBarThickness: 35,
       borderRadius: 7,
       data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
@@ -51,22 +56,22 @@ const buildingSrc = [
   하이테크,
   정석,
   주년60,
-  하이테크,
-  하이테크,
-  하이테크,
-  하이테크,
-  하이테크,
-  하이테크,
+  호관2,
+  호관5,
+  호관6,
+  학생회관,
+  서호관,
+  로스쿨관,
 ];
 
 const buildingCode: any = Object.freeze({
   본관: 1,
   하이테크관: 2,
   정석학술정보관: 3,
-  "60주년기념관": 4,
-  "2,4호관": 5,
-  "5호관": 6,
-  "6,9호관": 7,
+  '60주년기념관': 4,
+  '2,4호관': 5,
+  '5호관': 6,
+  '6,9호관': 7,
   학생회관: 8,
   서호관: 9,
   로스쿨관: 10,
@@ -111,8 +116,8 @@ const options: any = {
       callbacks: {
         title: (context: any) => context[0].label,
         label: (context: any) => {
-          let label = context.dataset.label + "" || "";
-          return context.parsed.y !== null ? context.parsed.y + "kwh" : null;
+          let label = context.dataset.label + '' || '';
+          return context.parsed.y !== null ? context.parsed.y + 'kwh' : null;
         },
       },
     },
@@ -130,7 +135,7 @@ const options: any = {
 
       title: {
         display: true,
-        text: "단위 : kwh",
+        text: '단위 : kwh',
       },
     },
   },
