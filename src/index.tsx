@@ -1,14 +1,14 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import "./index.css";
-import Router from "./routes/Router";
-import reportWebVitals from "./reportWebVitals";
-import GlobalStyle from "./GlobalStyle.style";
-import "./assets/fonts/font.css";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import Router from './routes/Router';
+import reportWebVitals from './reportWebVitals';
+import GlobalStyle from './GlobalStyle.style';
+import './assets/fonts/font.css';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
+  document.getElementById('root') as HTMLElement
 );
 
 const queryClient = new QueryClient({
@@ -20,12 +20,12 @@ const queryClient = new QueryClient({
 });
 
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
+  <QueryClientProvider client={queryClient}>
     <GlobalStyle />
-    <QueryClientProvider client={queryClient}>
-      <Router></Router>
-    </QueryClientProvider>
-  </React.StrictMode>
+    <Router></Router>
+  </QueryClientProvider>
+  //</React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
