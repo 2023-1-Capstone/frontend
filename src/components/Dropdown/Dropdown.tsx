@@ -20,7 +20,7 @@ const Dropdown = ({ dropDownInfo }: { dropDownInfo: dropDonwInfoType }) => {
         xCoordinate={dropDownInfo.xCoordinate}
         yCoordinate={dropDownInfo.yCoordinate}
       >
-        {dropDownInfo.category.map((item: string, idx: number) => {
+        {dropDownInfo?.category?.map((item: string, idx: number) => {
           return (
             <S.DropdownItem
               size={sizeObj[dropDownInfo.size]}
