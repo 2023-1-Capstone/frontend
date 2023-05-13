@@ -45,6 +45,7 @@ const seasonInitData: any = {
   datasets: [
     {
       type: 'bar',
+      maxBarThickness: 35,
       backgroundColor: 'rgb(75, 192, 192)',
       data: [100, 400, 300, 200],
     },
@@ -117,7 +118,7 @@ const options: any = {
         title: (context: any) => context[0].label,
         label: (context: any) => {
           let label = context.dataset.label + '' || '';
-          return context.parsed.y !== null ? context.parsed.y + 'kwh' : null;
+          return context.parsed.y !== null ? context.parsed.y + 'Mwh' : null;
         },
       },
     },
@@ -135,7 +136,42 @@ const options: any = {
 
       title: {
         display: true,
-        text: '단위 : kwh',
+        text: '단위 : Mwh',
+      },
+    },
+  },
+};
+
+const optionsGas: any = {
+  reponsive: true,
+  plugins: {
+    legend: {
+      display: false,
+    },
+    tooltip: {
+      callbacks: {
+        title: (context: any) => context[0].label,
+        label: (context: any) => {
+          let label = context.dataset.label + '' || '';
+          return context.parsed.y !== null ? context.parsed.y + 'm3' : null;
+        },
+      },
+    },
+  },
+  scales: {
+    x: {
+      grid: {
+        display: false,
+      },
+    },
+    y: {
+      grid: {
+        display: false,
+      },
+
+      title: {
+        display: true,
+        text: '단위 : m3',
       },
     },
   },
@@ -181,6 +217,13 @@ const seasonIdx = [
   [11, 0, 1],
 ];
 
+const stuffPrice = {
+  빅맥: 7000,
+  '주안역 511왕복': 1900,
+  아이폰: 1400000,
+  '서호관 라면': 500,
+};
+
 const season = ['봄', '여름', '가을', '겨울'];
 export {
   monthlyInitData,
@@ -195,4 +238,6 @@ export {
   buildingSrc,
   seasonIdx,
   season,
+  stuffPrice,
+  optionsGas,
 };
