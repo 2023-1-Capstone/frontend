@@ -1,18 +1,10 @@
 import { seasonIdx } from '../../../store/store';
 
 const getAverageFee = (targetFeeArray: any, targetSeasonIdx: number) => {
-  return (
-    seasonIdx[targetSeasonIdx]?.reduce((acc: number, cur: number) => {
-      if (targetFeeArray)
-        return (
-          acc +
-          Math.floor(
-            targetFeeArray[cur]?.fee / (targetFeeArray[cur]?.usages * 1000)
-          )
-        );
-      return 0;
-    }, 0) / 3
-  );
+  return seasonIdx[targetSeasonIdx]?.reduce((acc: number, cur: number) => {
+    if (targetFeeArray) return acc + targetFeeArray[cur]?.fee;
+    return 0;
+  }, 0);
 };
 
 const findMostWasteIdx = (chart: any) => {
