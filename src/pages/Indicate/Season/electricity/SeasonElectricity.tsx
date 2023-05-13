@@ -160,10 +160,7 @@ const SeasonElectricity = () => {
                   </li>
                   <li>
                     예상 사용 요금은 &nbsp;
-                    {Math.floor(
-                      infoData.fee * infoData.watt * 1000
-                    ).toLocaleString('ko-KR')}
-                    원 입니다.
+                    {Math.floor(infoData.fee).toLocaleString('ko-KR')}원 입니다.
                   </li>
                   <li>
                     계절 평균 대비 &nbsp;
@@ -181,7 +178,7 @@ const SeasonElectricity = () => {
               </S.BottomTitle>
               <S.BottomInfoTransWrapper>
                 <TransItem
-                  waste={infoData.fee * infoData.watt * 1000}
+                  waste={infoData.fee}
                   randomIdxList={randomIdxList}
                 ></TransItem>
               </S.BottomInfoTransWrapper>
