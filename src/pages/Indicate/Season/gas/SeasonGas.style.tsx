@@ -142,14 +142,14 @@ const BottomTitle = styled.div`
   line-height: 1.8rem;
   display: flex;
   align-items: center;
-
+  justify-content: space-between;
   color: #000000;
 `;
 
 const BottomInfoBox = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   padding: 1.2rem 1.6rem;
   gap: 1rem;
@@ -200,43 +200,10 @@ const BottomInfoTransWrapper = styled.div`
   flex-wrap: wrap;
 `;
 
-const BottomInfoTransItem = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 0.8rem 1.6rem;
-  gap: 1rem;
-
-  width: 13.1rem;
-  height: 6.2rem;
-
-  background: #d9d9d9;
-  border-radius: 1.1rem;
-
-  /* Inside auto layout */
-
-  flex: none;
-  order: 0;
-  flex-grow: 0;
-`;
-
-const BottomInfoTransText = styled.div`
-  width: fit-content;
-  height: fit-content;
-
-  font-family: 'Pretendard';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 1.6rem;
-  line-height: 1.9rem;
-
-  color: #000000;
-
-  /* Inside auto layout */
-
-  flex: none;
-  order: 1;
-  flex-grow: 0;
+const RefreshButton = styled.img`
+  width: 2.5rem;
+  height: 2.5rem;
+  cursor: pointer;
 `;
 
 export {
@@ -251,7 +218,6 @@ export {
   BottomInfoBox,
   BottomInfoBoxInner,
   BottomInfoTransWrapper,
-  BottomInfoTransItem,
-  BottomInfoTransText,
   SeasonTitle,
+  RefreshButton,
 };
