@@ -142,14 +142,14 @@ const BottomTitle = styled.div`
   line-height: 1.8rem;
   display: flex;
   align-items: center;
-
+  justify-content: space-between;
   color: #000000;
 `;
 
 const BottomInfoBox = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   padding: 1.2rem 1.6rem;
   gap: 1rem;
@@ -200,6 +200,12 @@ const BottomInfoTransWrapper = styled.div`
   flex-wrap: wrap;
 `;
 
+const RefreshButton = styled.img`
+  width: 2.5rem;
+  height: 2.5rem;
+  cursor: pointer;
+`;
+
 export {
   SeasonWrapper,
   ChartCategoryBox,
@@ -213,4 +219,5 @@ export {
   BottomInfoBoxInner,
   BottomInfoTransWrapper,
   SeasonTitle,
+  RefreshButton,
 };

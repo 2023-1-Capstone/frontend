@@ -14,9 +14,11 @@ import * as S from './SeasonElectricity.style';
 import { Dropdown } from '../../../../components/Dropdown/Dropdown';
 import { dropdownInfoCreater } from '../../../BuildingElectricity/util';
 import { useQuery } from '@tanstack/react-query';
-import { getAverageFee } from '../util';
+import { getAverageFee, findMostWasteIdx } from '../util';
 import api from '../../../../api/api';
 import TransItem from '../Component/TransItem';
+import refreshSVG from '../../../../assets/svg/refresh.svg';
+import { getUniqueNumberList } from '../util';
 
 ChartJS.register(Tooltip, Legend);
 
@@ -38,6 +40,20 @@ const SeasonElectricity = () => {
   const [isDropdownOn, setIsDropdownOn] = useState<Boolean>(false);
   const [curYear, setCurYear] = useState<string>('2023');
   const [infoData, setInfoData] = useState({ watt: 0, fee: 0 });
+  const [randomIdxList, setRandomIdxList] = useState<number[]>(
+    getUniqueNumberList(4, 6)
+  );
+
+  const getPercent = (usageArr: number[], targetUsage: number) => {
+    let numOfNotNullSeason = 0;
+    const averageWatt = Math.floor(
+      usageArr.reduce((acc: number, cur: number) => {
+        if (cur !== 0) numOfNotNullSeason++;
+        return acc + cur;
+      }, 0) / numOfNotNullSeason
+    );
+    return ((targetUsage / averageWatt) * 10).toFixed(2);
+  };
 
   useEffect(() => {
     const chartRes = chartDatas?.data.result;
@@ -49,11 +65,7 @@ const SeasonElectricity = () => {
       setChartData(chartDataCopy);
 
       // 가장 사용을 많이 한 계절 인덱스 탐색
-      const targetSeasonIdx = chartRes[chartRes.length - 1].usages.reduce(
-        (iMax: number, x: number, idx: number, arr: number[]) =>
-          x > arr[iMax] ? idx : iMax,
-        0
-      );
+      const targetSeasonIdx = findMostWasteIdx(chartRes);
 
       // 요금 정보 세팅
       const target = feeRes.filter((item: any) => item.year === curYear)[0]
@@ -79,6 +91,7 @@ const SeasonElectricity = () => {
     if (target) {
       const chartDataCopy = JSON.parse(JSON.stringify(chartData));
       chartDataCopy.datasets[0].data = target;
+
       const targetSeasonIdx = target?.reduce(
         (iMax: number, x: number, idx: number, arr: number[]) =>
           x > arr[iMax] ? idx : iMax,
@@ -98,13 +111,6 @@ const SeasonElectricity = () => {
       }));
     }
   }, [curYear]);
-
-  const [temp2, setTempState2] = useState([
-    '빅맥',
-    '아이폰',
-    '주안역 511왕복',
-    '서호관 라면',
-  ]);
 
   return (
     <>
@@ -149,24 +155,35 @@ const SeasonElectricity = () => {
                 <S.BottomInfoBoxInner>
                   <li>
                     총 사용 전기량은 &nbsp;
-                    {infoData.watt}
+                    {infoData.watt.toLocaleString('ko-KR')}
                     Mwh 입니다.
                   </li>
                   <li>
-                    {' '}
-                    예상 사용 요금은 {infoData.fee * infoData.watt * 1000}원
-                    입니다.
+                    예상 사용 요금은 &nbsp;
+                    {Math.floor(
+                      infoData.fee * infoData.watt * 1000
+                    ).toLocaleString('ko-KR')}
+                    원 입니다.
                   </li>
-                  <li>이 정도양의 탄소는 어느 정도의 영향이 있습니다.</li>
+                  <li>
+                    계절 평균 대비 &nbsp;
+                    {getPercent(chartData?.datasets[0].data, infoData?.watt)}%가
+                    높습니다.
+                  </li>
                 </S.BottomInfoBoxInner>
               </S.BottomInfoBox>
-              <S.BottomTitle>이 전기 사용량으로...</S.BottomTitle>
+              <S.BottomTitle>
+                이 전기 사용량으로...
+                <S.RefreshButton
+                  src={refreshSVG}
+                  onClick={() => setRandomIdxList(getUniqueNumberList(4, 6))}
+                ></S.RefreshButton>
+              </S.BottomTitle>
               <S.BottomInfoTransWrapper>
-                {temp2.map((val: any, idx: number) => {
-                  return (
-                    <TransItem waste={100000} type={val} key={idx}></TransItem>
-                  );
-                })}
+                <TransItem
+                  waste={infoData.fee * infoData.watt * 1000}
+                  randomIdxList={randomIdxList}
+                ></TransItem>
               </S.BottomInfoTransWrapper>
             </S.BottomWrapper>
           </S.SeasonWrapper>
