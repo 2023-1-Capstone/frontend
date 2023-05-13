@@ -21,13 +21,13 @@ const BottomInfoTransItem = styled.div`
 `;
 
 const BottomInfoTransText = styled.div`
-  width: fit-content;
+  width: 12rem;
   height: fit-content;
 
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
-  font-size: 1.6rem;
+  font-size: 1.3rem;
   line-height: 1.9rem;
 
   color: #000000;
