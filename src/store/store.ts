@@ -52,6 +52,30 @@ const seasonInitData: any = {
   ],
 };
 
+const areaInitData: any = {
+  labels: [
+    '본관',
+    '하이테크관',
+    '정석학술정보관',
+    '60주년기념관',
+    '2,4호관',
+    '5호관',
+    '6,9호관',
+    '학생회관',
+    '서호관',
+    '로스쿨관',
+  ],
+
+  datasets: [
+    {
+      type: 'bar',
+      maxBarThickness: 35,
+      backgroundColor: 'rgb(75, 192, 192)',
+      data: [0],
+    },
+  ],
+};
+
 const buildingSrc = [
   본관,
   하이테크,
@@ -240,4 +264,5 @@ export {
   season,
   stuffPrice,
   optionsGas,
+  areaInitData,
 };
