@@ -54,6 +54,7 @@ const BuildingElectricity = () => {
     setRightCategory('2023');
     setChartCategory('월별 전기 사용량');
     const rData = await test(selectedBuilding);
+    console.log(rData);
     setChartData(rData?.result);
     // 깊은 복사를 하지 않으면 chartJS서 변동 감지를 못함 JSON.parse, JSON.stringify로 깊은 복사
     const chartStateCopy = JSON.parse(JSON.stringify(chartState));
