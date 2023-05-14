@@ -56,8 +56,8 @@ const areaInitData: any = {
   labels: [
     '본관',
     '하이테크관',
-    '정석학술정보관',
-    '60주년기념관',
+    '정석',
+    '60주년',
     '2,4호관',
     '5호관',
     '6,9호관',
@@ -102,6 +102,19 @@ const buildingCode: any = Object.freeze({
   로스쿨관: 10,
 });
 
+const buildingByIdx = [
+  '본관',
+  '하이테크관',
+  '정석',
+  '60주년',
+  '2,4호관',
+  '5호관',
+  '6,9호관',
+  '학생회관',
+  '서호관',
+  '로스쿨관',
+];
+
 const electricityChartCategory = [
   '월별 전기 사용량',
   '연별 전기 사용량',
@@ -115,18 +128,18 @@ const gasChartCategory = [
 ];
 
 const monthCategory = [
-  '1월',
-  '2월',
-  '3월',
-  '4월',
-  '5월',
-  '6월',
-  '7월',
-  '8월',
-  '9월',
-  '10월',
-  '11월',
-  '12월',
+  '1',
+  '2',
+  '3',
+  '4',
+  '5',
+  '6',
+  '7',
+  '8',
+  '9',
+  '10',
+  '11',
+  '12',
 ];
 
 const yearCategory = ['2023', '2022', '2021', '2020', '2019', '2018', '2017'];
@@ -162,6 +175,39 @@ const options: any = {
         display: true,
         text: '단위 : Mwh',
       },
+    },
+  },
+};
+
+const optionsArea: any = {
+  reponsive: false,
+  indexAxis: 'y',
+  plugins: {
+    legend: {
+      display: false,
+    },
+    tooltip: {
+      callbacks: {
+        title: (context: any) => context[0].label,
+        label: (context: any) => {
+          let label = context.dataset.label + '' || '';
+          return context.parsed.y !== null ? context.parsed.x + 'Kwh/㎡' : null;
+        },
+      },
+    },
+  },
+  scales: {
+    x: {
+      grid: {
+        display: false,
+      },
+    },
+    y: {
+      grid: {
+        display: false,
+      },
+
+      title: {},
     },
   },
 };
@@ -265,4 +311,6 @@ export {
   stuffPrice,
   optionsGas,
   areaInitData,
+  optionsArea,
+  buildingByIdx,
 };

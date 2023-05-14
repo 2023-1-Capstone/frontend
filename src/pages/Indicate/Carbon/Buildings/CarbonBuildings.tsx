@@ -46,7 +46,7 @@ const Chart = () => {
         </S.ChartTopFrame>
         <S.ChartIndicatorLine></S.ChartIndicatorLine>
       </S.ChartChangeFrame>
-      <Line width="350" height="200" data={chartData} options={options}></Line>
+      <Line width="330" height="200" data={chartData} options={options}></Line>
     </>
   );
 };
