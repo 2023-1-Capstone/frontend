@@ -212,8 +212,41 @@ const optionsArea: any = {
   },
 };
 
+const optionsAreaGas: any = {
+  reponsive: false,
+  indexAxis: 'y',
+  plugins: {
+    legend: {
+      display: false,
+    },
+    tooltip: {
+      callbacks: {
+        title: (context: any) => context[0].label,
+        label: (context: any) => {
+          let label = context.dataset.label + '' || '';
+          return context.parsed.y !== null ? context.parsed.x + 'm3/㎡' : null;
+        },
+      },
+    },
+  },
+  scales: {
+    x: {
+      grid: {
+        display: false,
+      },
+    },
+    y: {
+      grid: {
+        display: false,
+      },
+
+      title: {},
+    },
+  },
+};
+
 const optionsGas: any = {
-  reponsive: true,
+  reponsive: false,
   plugins: {
     legend: {
       display: false,
@@ -313,4 +346,5 @@ export {
   areaInitData,
   optionsArea,
   buildingByIdx,
+  optionsAreaGas,
 };
