@@ -42,6 +42,11 @@ type chartInfoUsageType = {
   prediction: boolean;
 };
 
+type areaDataType = {
+  name: string;
+  usagesList: chartInfoType[];
+};
+
 export type {
   navigationItemType,
   homeCategoryType,
@@ -49,4 +54,5 @@ export type {
   dropDonwInfoType,
   chartInfoType,
   chartInfoUsageType,
+  areaDataType,
 };

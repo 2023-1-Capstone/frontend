@@ -1,6 +1,6 @@
 import * as S from './TransItem.style';
-import { stuffPrice } from '../../../../store/store';
-import { getUniqueNumberList } from '../util';
+import { stuffPrice } from '../../../store/store';
+import { getUniqueNumberList } from '../Season/util';
 
 const TransItem = ({
   waste,
@@ -38,14 +38,12 @@ const TransItem = ({
 
   return (
     <>
-      {randomIdxList.map((item: number) => {
+      {randomIdxList.map((item: number, idx: number) => {
         return (
-          <>
-            <S.BottomInfoTransItem>
-              <S.BottomInfoTransText>{data[item].type}</S.BottomInfoTransText>
-              <S.BottomInfoTransText>{data[item].value}</S.BottomInfoTransText>
-            </S.BottomInfoTransItem>
-          </>
+          <S.BottomInfoTransItem key={idx}>
+            <S.BottomInfoTransText>{data[item].type}</S.BottomInfoTransText>
+            <S.BottomInfoTransText>{data[item].value}</S.BottomInfoTransText>
+          </S.BottomInfoTransItem>
         );
       })}
     </>
