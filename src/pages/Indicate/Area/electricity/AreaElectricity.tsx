@@ -161,9 +161,15 @@ const AreaElectricity = () => {
                     1㎡당 {chartData?.datasets[0].data[mostWasteIdx]}Kwh를
                     사용하였습니다.
                   </li>
-                  <li>해당 건물은 학교 전체 연면적의 5%입니다.</li>
                   <li>
-                    평균 면적 사용량 대비 &nbsp;
+                    1㎡당{' '}
+                    {(
+                      chartData?.datasets[0].data[mostWasteIdx] * 7000
+                    ).toLocaleString('ko-KR')}
+                    원 정도를 사용하였습니다.
+                  </li>
+                  <li>
+                    평균 면적 사용량 대비{' '}
                     {getPercentage(
                       chartData?.datasets[0].data[mostWasteIdx],
                       getAverageWaste(chartData?.datasets[0].data)

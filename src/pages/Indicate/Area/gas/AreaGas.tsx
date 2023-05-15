@@ -20,6 +20,8 @@ import api from '../../../../api/api';
 
 ChartJS.register(Tooltip, Legend);
 
+const MJ = 43.181;
+const mjPerWon = 22;
 const AreaElectricity = () => {
   const { data: buildingData }: { data: any } = useQuery(
     ['getBuildingData'],
@@ -161,7 +163,18 @@ const AreaElectricity = () => {
                     1㎡당 {chartData?.datasets[0].data[mostWasteIdx]}m3를
                     사용하였습니다.
                   </li>
-                  <li>해당 건물은 학교 전체 연면적의 5%입니다.</li>
+                  <li>
+                    1㎡당{' '}
+                    {parseFloat(
+                      (
+                        chartData?.datasets[0].data[mostWasteIdx] *
+                        MJ *
+                        mjPerWon *
+                        1.1
+                      ).toFixed(2)
+                    ).toLocaleString('ko-KR')}
+                    원 정도를 사용하였습니다.
+                  </li>
                   <li>
                     평균 사용량 대비 &nbsp;
                     {getPercentage(

@@ -33,11 +33,8 @@ const getBuildingTargetDataGas = (
       (usage) => usage.year === parseInt(year)
     )[0].usages[parseInt(month) - 1];
     if (targetYearData.prediction)
-      return (
-        (targetYearData.prediction * 100) /
-        buildingData[idx].elecArea
-      ).toFixed(2);
-    return ((targetYearData.data * 100) / buildingData[idx].gasArea).toFixed(2);
+      return (targetYearData.prediction / buildingData[idx].gasArea).toFixed(2);
+    return (targetYearData.data / buildingData[idx].gasArea).toFixed(2);
   });
   return targetUsage;
 };
