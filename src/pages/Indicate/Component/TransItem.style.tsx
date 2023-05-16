@@ -3,14 +3,14 @@ import styled from 'styled-components';
 const BottomInfoTransItem = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  padding: 0.8rem 1.6rem;
-  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
 
-  width: 13.1rem;
-  height: 6.2rem;
+  width: 13.7rem;
+  height: 11.2rem;
 
-  background: #d9d9d9;
+  background: #ffffff;
   border-radius: 1.1rem;
 
   /* Inside auto layout */
@@ -21,7 +21,7 @@ const BottomInfoTransItem = styled.div`
 `;
 
 const BottomInfoTransText = styled.div`
-  width: 12rem;
+  width: fit-content;
   height: fit-content;
 
   font-family: 'Pretendard';
@@ -39,4 +39,34 @@ const BottomInfoTransText = styled.div`
   flex-grow: 0;
 `;
 
-export { BottomInfoTransItem, BottomInfoTransText };
+const BottomInfoTrasnImage = styled.img`
+  width: 6.8rem;
+  height: 6.8rem;
+  border-radius: 1.1rem;
+  background: url(${(props) => props.src});
+  /* Inside auto layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+`;
+
+const BottomInfoTransWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  padding: 0rem;
+  gap: 0.6rem;
+  position: relative;
+  width: 28.8rem;
+  height: fit-content;
+  left: 0.4rem;
+  flex-wrap: wrap;
+`;
+
+export {
+  BottomInfoTransItem,
+  BottomInfoTransText,
+  BottomInfoTransWrapper,
+  BottomInfoTrasnImage,
+};

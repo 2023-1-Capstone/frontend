@@ -176,12 +176,11 @@ const SeasonGas = () => {
                   onClick={() => setRandomIdxList(getUniqueNumberList(4, 6))}
                 ></S.RefreshButton>
               </S.BottomTitle>
-              <S.BottomInfoTransWrapper>
-                <TransItem
-                  waste={infoData.fee}
-                  randomIdxList={randomIdxList}
-                ></TransItem>
-              </S.BottomInfoTransWrapper>
+              <TransItem
+                type={'resource'}
+                waste={infoData.fee}
+                randomIdxList={randomIdxList}
+              ></TransItem>
             </S.BottomWrapper>
           </S.SeasonWrapper>
         </WrapperInner>

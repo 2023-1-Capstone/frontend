@@ -124,8 +124,8 @@ const BottomWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 29.8rem;
-  height: 30.5rem;
+  width: 34.8rem;
+  height: 39.5rem;
 
   background: #eeeeee;
   border-radius: 1rem;
@@ -194,7 +194,7 @@ const BottomInfoTransWrapper = styled.div`
   padding: 0rem;
   gap: 0.6rem;
 
-  width: 26.8rem;
+  width: 28.8rem;
   height: fit-content;
 
   flex-wrap: wrap;
