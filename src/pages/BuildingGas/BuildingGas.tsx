@@ -218,7 +218,7 @@ const BuildingElectricity = () => {
             ></Dropdown>
           )}
         </WrapperInner>
-        <NavigationBar navigationStatus="electricity"></NavigationBar>
+        <NavigationBar navigationStatus="gas"></NavigationBar>
       </Wrapper>
     </>
   );
