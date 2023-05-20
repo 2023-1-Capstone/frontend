@@ -12,7 +12,7 @@ const TreeTransItem = ({ carbonWaste }: { carbonWaste: number }) => {
     },
     {
       treeName: '잣나무',
-      value: '10그루',
+      value: `${Math.floor(carbonWaste / 180.8)}그루`,
       src: koreanPineTree,
     },
     {

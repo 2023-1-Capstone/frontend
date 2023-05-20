@@ -7,7 +7,7 @@ import {
 import Header from '../../../../components/Header/Header';
 import NavigationBar from '../../../../components/NavigationBar/NavigationBar';
 import { Chart as ChartJS, Tooltip, Legend } from 'chart.js/auto';
-import { Line } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 import { options, monthlyInitData, season } from '../../../../store/store';
 import downArrow from '../../../../assets/svg/downArrow.svg';
 import * as S from './CarbonAll.style';
@@ -23,15 +23,44 @@ import TreeTransItem from '../../Component/TreeTransItem/TreeTransItem';
 
 ChartJS.register(Tooltip, Legend);
 
-const SeasonElectricity = () => {
+const CarbonAll = () => {
+  const { data: carbonData } = useQuery(['getCarbonData'], () =>
+    api('/api/carbon/year').then((data: any) => data?.data.result)
+  );
+
   const [mostWasteSeasonIdx, setMostWasteSeasonIdx] = useState<number>(0);
   const [chartData, setChartData] = useState(monthlyInitData);
   const [isDropdownOn, setIsDropdownOn] = useState<Boolean>(false);
   const [curYear, setCurYear] = useState<string>('2023');
   const [infoData, setInfoData] = useState({ watt: 0, fee: 0 });
+  const [totalCarbon, setTotalCarbon] = useState(0);
   const [randomIdxList, setRandomIdxList] = useState<number[]>(
     getUniqueNumberList(4, 8)
   );
+
+  const setCurYearChart = (chartInfo: any) => {
+    const chartCopyData = JSON.parse(JSON.stringify(chartData));
+    const usages = chartInfo?.filter(
+      (item: any) => item.year === parseInt(curYear)
+    )[0].usages;
+    chartCopyData.datasets[0].data = usages;
+    const totalUsage = usages?.reduce(
+      (acc: number, cur: number) => acc + cur,
+      0
+    );
+    setTotalCarbon(totalUsage);
+    setChartData(chartCopyData);
+  };
+
+  useEffect(() => {
+    if (carbonData) {
+      setCurYearChart(carbonData);
+    }
+  }, [carbonData]);
+
+  useEffect(() => {
+    setCurYearChart(carbonData);
+  }, [curYear]);
 
   return (
     <>
@@ -48,7 +77,7 @@ const SeasonElectricity = () => {
                     '26.2rem',
                     '2.3rem',
                     'middle',
-                    ['1,', '2', '3'],
+                    carbonData?.map((item: any) => item.year),
                     setCurYear,
                     setIsDropdownOn
                   )}
@@ -62,21 +91,24 @@ const SeasonElectricity = () => {
               </S.ChartTopFrame>
               <S.ChartIndicatorLine></S.ChartIndicatorLine>
             </S.ChartChangeFrame>
-            <Line
+            <Bar
               width="350"
-              height="200"
+              height="250"
               data={chartData}
               options={options}
-            ></Line>
+            ></Bar>
             <S.BottomWrapper>
               <S.BottomTitle>
                 해당년도 사용 1위는 '{season[mostWasteSeasonIdx]}' 입니다.
               </S.BottomTitle>
               <S.BottomInfoBox>
                 <S.BottomInfoBoxInner>
-                  <li>3월에 100kg로 가장 많은 양의 탄소를 배출했습니다.</li>
+                  <li>
+                    {curYear}년 총 탄소 배출량은{' '}
+                    {totalCarbon?.toLocaleString('ko-KR')}kg입니다.
+                  </li>
                   <li>사회적 탄소 배출 비용은 123,123,223원 입니다.</li>
-                  <li>탄소 흡수를 위해 몇 300그루의 나무를 심어야 합니다.</li>
+                  <li>3월에 100kg로 가장 많은 양의 탄소를 배출했습니다.</li>
                 </S.BottomInfoBoxInner>
               </S.BottomInfoBox>
               <S.BottomTitle>
@@ -88,10 +120,10 @@ const SeasonElectricity = () => {
               </S.BottomTitle>
               <TransItem
                 type={'carbon'}
-                waste={10000}
+                waste={totalCarbon}
                 randomIdxList={randomIdxList}
               ></TransItem>
-              <TreeTransItem carbonWaste={10000}></TreeTransItem>
+              <TreeTransItem carbonWaste={totalCarbon}></TreeTransItem>
             </S.BottomWrapper>
           </S.SeasonWrapper>
         </WrapperInner>
@@ -101,4 +133,4 @@ const SeasonElectricity = () => {
   );
 };
 
-export default SeasonElectricity;
+export default CarbonAll;
