@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Container = styled.div`
-  width: 35rem;
+  width: 33rem;
 `;
 
 const BuildingTitle = styled.div`

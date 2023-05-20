@@ -5,14 +5,20 @@ import Header from '../../components/Header/Header';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
 import * as S from './BuildingElectricity.style';
 import { Chart as ChartJS, Tooltip, Legend } from 'chart.js/auto';
-import { Line } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 import Carousel from '../../components/Carousel/Carousel';
 import downArrow from '../../assets/svg/downArrow.svg';
 import { Dropdown } from '../../components/Dropdown/Dropdown';
-import { dropdownInfoCreater, createChartCategoryArray } from './util';
+import BuildingMoreInfo from '../../components/BuildingMoreInfo/BuildingMoreInfo';
+import {
+  dropdownInfoCreater,
+  createChartCategoryArray,
+  findMostWasteIdx,
+} from './util';
 import { chartInfoType, chartInfoUsageType } from '../../type/Types';
 import test from '../../api/test';
 import api from '../../api/api';
+
 import {
   monthlyInitData,
   buildingCode,
@@ -23,14 +29,6 @@ import {
 } from '../../store/store';
 
 ChartJS.register(Tooltip, Legend);
-
-const Chart = ({ chartState }: { chartState: any }) => {
-  return (
-    <S.Container>
-      <Line width="350" height="250" data={chartState} options={options}></Line>
-    </S.Container>
-  );
-};
 
 const BuildingElectricity = () => {
   const [selectedBuilding, setSelectedBuilding] = useState<string>('본관');
@@ -54,21 +52,21 @@ const BuildingElectricity = () => {
     setRightCategory('2023');
     setChartCategory('월별 전기 사용량');
     const rData = await test(selectedBuilding);
-    console.log(rData);
     setChartData(rData?.result);
     // 깊은 복사를 하지 않으면 chartJS서 변동 감지를 못함 JSON.parse, JSON.stringify로 깊은 복사
+
+    // 첫번째로 세팅할 target 데이터 뽑기
+    const target = rData.result[rData.result.length - 1].usages;
     const chartStateCopy = JSON.parse(JSON.stringify(chartState));
-    chartStateCopy.datasets[0].data = rData.result[
-      rData.result.length - 1
-    ].usages.map((data: any) => {
+    const usageArr = target.map((data: any) => {
       if (data.prediction) return data.prediction;
       return data.data;
     });
+    chartStateCopy.datasets[0].data = usageArr;
+
     //   backgroundColor: ['rgb(75, 192, 192)'],
 
-    chartStateCopy.datasets[0].backgroundColor = rData.result[
-      rData.result.length - 1
-    ].usages.map((data: any) => {
+    chartStateCopy.datasets[0].backgroundColor = target.map((data: any) => {
       if (!data.prediction) return 'rgb(75, 192, 192)';
       else return 'rgb(0,0,0,0.1)';
     });
@@ -189,8 +187,19 @@ const BuildingElectricity = () => {
             </S.ChartTopFrame>
             <S.ChartIndicatorLine></S.ChartIndicatorLine>
           </S.ChartChangeFrame>
-
-          <Chart chartState={chartState}></Chart>
+          <S.Container>
+            <Bar
+              width="350"
+              height="250"
+              data={chartState}
+              options={options}
+            ></Bar>
+          </S.Container>
+          <BuildingMoreInfo
+            categoryState={chartCategory}
+            chartState={chartState}
+            curYear={rightCategory}
+          ></BuildingMoreInfo>
           {isLeftDropdownOn && (
             <Dropdown
               dropDownInfo={dropdownInfoCreater(
