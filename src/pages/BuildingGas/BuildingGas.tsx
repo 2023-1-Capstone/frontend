@@ -5,7 +5,7 @@ import Header from '../../components/Header/Header';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
 import * as S from './BuildingGas.style';
 import { Chart as ChartJS, Tooltip, Legend } from 'chart.js/auto';
-import { Line } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 import Carousel from '../../components/Carousel/Carousel';
 import downArrow from '../../assets/svg/downArrow.svg';
 import { Dropdown } from '../../components/Dropdown/Dropdown';
@@ -17,17 +17,23 @@ import {
   monthlyInitData,
   buildingCode,
   gasChartCategory,
-  options,
+  optionsGas,
   monthCategory,
   yearCategory,
 } from '../../store/store';
+import BuildingMoreInfoGas from '../../components/BuildingMoreInfo/BuildingMoreInfoGas';
 
 ChartJS.register(Tooltip, Legend);
 
 const Chart = ({ chartState }: { chartState: any }) => {
   return (
     <S.Container>
-      <Line width="350" height="250" data={chartState} options={options}></Line>
+      <Bar
+        width="350"
+        height="250"
+        data={chartState}
+        options={optionsGas}
+      ></Bar>
     </S.Container>
   );
 };
@@ -190,6 +196,11 @@ const BuildingElectricity = () => {
           </S.ChartChangeFrame>
 
           <Chart chartState={chartState}></Chart>
+          <BuildingMoreInfoGas
+            chartState={chartState}
+            categoryState={chartCategory}
+            curYear={rightCategory}
+          ></BuildingMoreInfoGas>
           {isLeftDropdownOn && (
             <Dropdown
               dropDownInfo={dropdownInfoCreater(

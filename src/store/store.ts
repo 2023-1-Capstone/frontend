@@ -30,7 +30,31 @@ const monthlyInitData: any = {
   ],
   datasets: [
     {
-      type: 'bar',
+      backgroundColor: ['rgb(75, 192, 192)'],
+      maxBarThickness: 35,
+      borderRadius: 7,
+      data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    },
+  ],
+};
+
+const monthlyInitDatas: any = {
+  labels: [
+    '1월',
+    '2월',
+    '3월',
+    '4월',
+    '5월',
+    '6월',
+    '7월',
+    '8월',
+    '9월',
+    '10월',
+    '11월',
+    '12월',
+  ],
+  datasets: [
+    {
       backgroundColor: ['rgb(75, 192, 192)'],
       maxBarThickness: 35,
       borderRadius: 7,
@@ -128,25 +152,28 @@ const gasChartCategory = [
 ];
 
 const monthCategory = [
-  '1',
-  '2',
-  '3',
-  '4',
-  '5',
-  '6',
-  '7',
-  '8',
-  '9',
-  '10',
-  '11',
-  '12',
+  '1월',
+  '2월',
+  '3월',
+  '4월',
+  '5월',
+  '6월',
+  '7월',
+  '8월',
+  '9월',
+  '10월',
+  '11월',
+  '12월',
 ];
 
 const yearCategory = ['2023', '2022', '2021', '2020', '2019', '2018', '2017'];
 
 const options: any = {
-  reponsive: true,
+  reponsive: false,
   plugins: {
+    datalabels: {
+      display: false,
+    },
     legend: {
       display: false,
     },
@@ -175,6 +202,31 @@ const options: any = {
         display: true,
         text: '단위 : Mwh',
       },
+    },
+  },
+};
+
+const optionsDoughnut: any = {
+  plugins: {
+    title: {
+      display: true,
+      text: '월별 에너지 사용량 비율',
+    },
+    tooltips: {
+      callbacks: {
+        title: (context: any) => context[0].label + '월',
+      },
+    },
+    datalabels: {
+      formatter: function (value: any, context: any) {
+        return `${Math.round(
+          (value / context.chart.getDatasetMeta(0).total) * 100
+        )}%`;
+      },
+      color: '#fff',
+    },
+    legend: {
+      font: {},
     },
   },
 };
@@ -248,6 +300,9 @@ const optionsAreaGas: any = {
 const optionsGas: any = {
   reponsive: false,
   plugins: {
+    datalabels: {
+      display: false,
+    },
     legend: {
       display: false,
     },
@@ -327,9 +382,25 @@ const stuffPrice = {
   '서호관 라면': 500,
 };
 
+const doughnutColor = [
+  'rgb(255, 0, 0, 0.5)',
+  'rgb(255, 94, 0, 0.5)',
+  'rgb(255, 187, 0, 0.5)',
+  'rgb(255, 228, 0, 0.5)',
+  'rgb(171, 242, 0, 0.5)',
+  'rgb(29, 219, 22, 0.5)',
+  'rgb(0, 216, 255, 0.5)',
+  'rgb(0, 84, 255, 0.5)',
+  'rgb(1, 0, 255, 0.5)',
+  'rgb(95, 0, 255, 0.5)',
+  'rgb(255, 0, 221, 0.5)',
+  'rgb(255, 0, 127, 0.5)',
+];
+
 const season = ['봄', '여름', '가을', '겨울'];
 export {
   monthlyInitData,
+  monthlyInitDatas,
   buildingCode,
   electricityChartCategory,
   monthCategory,
@@ -347,4 +418,6 @@ export {
   optionsArea,
   buildingByIdx,
   optionsAreaGas,
+  optionsDoughnut,
+  doughnutColor,
 };
