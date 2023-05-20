@@ -16,7 +16,7 @@ import { dropdownInfoCreater } from '../../../BuildingElectricity/util';
 import { useQuery } from '@tanstack/react-query';
 import { getAverageFee, findMostWasteIdx } from '../util';
 import api from '../../../../api/api';
-import TransItem from '../../Component/TransItem';
+import TransItem from '../../Component/TrasnItem/TransItem';
 import refreshSVG from '../../../../assets/svg/refresh.svg';
 import { getUniqueNumberList } from '../util';
 
@@ -176,12 +176,11 @@ const SeasonGas = () => {
                   onClick={() => setRandomIdxList(getUniqueNumberList(4, 6))}
                 ></S.RefreshButton>
               </S.BottomTitle>
-              <S.BottomInfoTransWrapper>
-                <TransItem
-                  waste={infoData.fee}
-                  randomIdxList={randomIdxList}
-                ></TransItem>
-              </S.BottomInfoTransWrapper>
+              <TransItem
+                type={'resource'}
+                waste={infoData.fee}
+                randomIdxList={randomIdxList}
+              ></TransItem>
             </S.BottomWrapper>
           </S.SeasonWrapper>
         </WrapperInner>

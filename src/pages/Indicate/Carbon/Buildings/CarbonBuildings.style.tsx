@@ -125,7 +125,7 @@ const BottomWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   width: 29.8rem;
-  height: 30.5rem;
+  height: fit-content;
 
   background: #eeeeee;
   border-radius: 1rem;

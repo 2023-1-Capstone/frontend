@@ -20,6 +20,14 @@ const dropdownInfoCreater = (
   };
 };
 
+const findMostWasteIdx = (chart: any) => {
+  return chart?.reduce(
+    (iMax: number, x: number, idx: number, arr: number[]) =>
+      x > arr[iMax] ? idx : iMax,
+    0
+  );
+};
+
 const createChartCategoryArray = (
   chart: chartInfoType[],
   monthCategory: any
@@ -55,4 +63,4 @@ const createChartCategoryArray = (
   return matchChartCategory;
 };
 
-export { dropdownInfoCreater, createChartCategoryArray };
+export { dropdownInfoCreater, createChartCategoryArray, findMostWasteIdx };

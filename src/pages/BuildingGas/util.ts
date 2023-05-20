@@ -28,13 +28,28 @@ const createChartCategoryArray = (
   const yearLabel = yearData.map((year: any) => year.toString());
   const yearTotalWaste = chart.map((item: chartInfoType) =>
     item.usages.reduce((acc: any, cur: any) => {
-      return acc + cur.data;
+      if (!cur.prediction) return acc + cur.data;
+      return acc + cur.prediction;
     }, 0)
   );
   const monthLabel = monthCategory;
+
+  const yearBackgroundColor = chart.map((item: chartInfoType) => {
+    for (let i = 0; i < item.usages.length; i++) {
+      if (item.usages[i].prediction) return 'rgb(0,0,0,0.1)';
+    }
+    return 'rgb(75, 192, 192)';
+  });
+
   const matchChartCategory: any = {
     '월별 가스 사용량': ['2023', yearData, monthLabel],
-    '연별 가스 사용량': [null, null, yearLabel, yearTotalWaste],
+    '연별 가스 사용량': [
+      null,
+      null,
+      yearLabel,
+      yearTotalWaste,
+      yearBackgroundColor,
+    ],
     '동월 가스 사용량': ['12월', monthCategory, yearLabel],
   };
   return matchChartCategory;
