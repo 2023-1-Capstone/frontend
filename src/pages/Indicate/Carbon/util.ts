@@ -15,6 +15,14 @@ const findMostWasteIdx = (chart: any) => {
   );
 };
 
+const findMostWasteIdxArr = (chart: any) => {
+  return chart?.reduce(
+    (iMax: number, x: number, idx: number, arr: number[]) =>
+      x > arr[iMax] ? idx : iMax,
+    0
+  );
+};
+
 const getRandomNumber = (max: number, min = 0) => {
   return Math.floor(Math.random() * max) + min;
 };
@@ -29,4 +37,9 @@ const getUniqueNumberList = (count: number, max: number, min = 0) => {
   return Array.from(list);
 };
 
-export { getAverageFee, findMostWasteIdx, getUniqueNumberList };
+export {
+  getAverageFee,
+  findMostWasteIdx,
+  findMostWasteIdxArr,
+  getUniqueNumberList,
+};

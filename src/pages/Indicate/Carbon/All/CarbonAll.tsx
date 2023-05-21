@@ -8,13 +8,17 @@ import Header from '../../../../components/Header/Header';
 import NavigationBar from '../../../../components/NavigationBar/NavigationBar';
 import { Chart as ChartJS, Tooltip, Legend } from 'chart.js/auto';
 import { Bar } from 'react-chartjs-2';
-import { options, monthlyInitData, season } from '../../../../store/store';
+import {
+  optionsCarbon,
+  monthlyInitData,
+  season,
+} from '../../../../store/store';
 import downArrow from '../../../../assets/svg/downArrow.svg';
 import * as S from './CarbonAll.style';
 import { Dropdown } from '../../../../components/Dropdown/Dropdown';
 import { dropdownInfoCreater } from '../../../BuildingElectricity/util';
 import { useQuery } from '@tanstack/react-query';
-import { getAverageFee, findMostWasteIdx } from '../util';
+import { getAverageFee, findMostWasteIdxArr } from '../util';
 import api from '../../../../api/api';
 import TransItem from '../../Component/TrasnItem/TransItem';
 import refreshSVG from '../../../../assets/svg/refresh.svg';
@@ -29,6 +33,7 @@ const CarbonAll = () => {
   );
 
   const [mostWasteSeasonIdx, setMostWasteSeasonIdx] = useState<number>(0);
+  const [mostWaste, setMostWaste] = useState<number>(0);
   const [chartData, setChartData] = useState(monthlyInitData);
   const [isDropdownOn, setIsDropdownOn] = useState<Boolean>(false);
   const [curYear, setCurYear] = useState<string>('2023');
@@ -48,6 +53,9 @@ const CarbonAll = () => {
       (acc: number, cur: number) => acc + cur,
       0
     );
+    const mostWasteIdx = findMostWasteIdxArr(usages);
+    setMostWasteSeasonIdx(mostWasteIdx);
+    setMostWaste(usages ? usages[mostWasteIdx] : 0);
     setTotalCarbon(totalUsage);
     setChartData(chartCopyData);
   };
@@ -95,7 +103,7 @@ const CarbonAll = () => {
               width="350"
               height="250"
               data={chartData}
-              options={options}
+              options={optionsCarbon}
             ></Bar>
             <S.BottomWrapper>
               <S.BottomTitle>
@@ -107,8 +115,18 @@ const CarbonAll = () => {
                     {curYear}년 총 탄소 배출량은{' '}
                     {totalCarbon?.toLocaleString('ko-KR')}kg입니다.
                   </li>
-                  <li>사회적 탄소 배출 비용은 123,123,223원 입니다.</li>
-                  <li>3월에 100kg로 가장 많은 양의 탄소를 배출했습니다.</li>
+                  <li>
+                    사회적 탄소 배출 비용은{' '}
+                    {Math.floor((totalCarbon * 55400) / 1000).toLocaleString(
+                      'ko-KR'
+                    )}
+                    원 입니다.
+                  </li>
+                  <li>
+                    {mostWasteSeasonIdx + 1}월에{' '}
+                    {mostWaste.toLocaleString('ko-KR')}kg로 가장 많은 양의
+                    탄소를 배출했습니다.
+                  </li>
                 </S.BottomInfoBoxInner>
               </S.BottomInfoBox>
               <S.BottomTitle>
