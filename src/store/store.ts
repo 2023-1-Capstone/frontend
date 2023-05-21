@@ -335,6 +335,44 @@ const optionsGas: any = {
   },
 };
 
+const optionsCarbon: any = {
+  reponsive: false,
+  plugins: {
+    datalabels: {
+      display: false,
+    },
+    legend: {
+      display: false,
+    },
+    tooltip: {
+      callbacks: {
+        title: (context: any) => context[0].label,
+        label: (context: any) => {
+          let label = context.dataset.label + '' || '';
+          return context.parsed.y !== null ? context.parsed.y + 'kg' : null;
+        },
+      },
+    },
+  },
+  scales: {
+    x: {
+      grid: {
+        display: false,
+      },
+    },
+    y: {
+      grid: {
+        display: false,
+      },
+
+      title: {
+        display: true,
+        text: '단위 : kg',
+      },
+    },
+  },
+};
+
 const indicateCategory = [
   {
     content: '계절별 전력사용 순위',
@@ -420,4 +458,5 @@ export {
   optionsAreaGas,
   optionsDoughnut,
   doughnutColor,
+  optionsCarbon,
 };
