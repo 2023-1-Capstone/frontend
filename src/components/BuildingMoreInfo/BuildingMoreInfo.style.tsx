@@ -54,7 +54,7 @@ const BuildingMoreInfoSummary = styled.div`
   letter-spacing: 0.02rem;
   margin-top: 2rem;
   position: relative;
-  margin-left: 1rem;
+
   /* Black/600 */
   gap: 0.8rem;
   color: #757575;
@@ -67,7 +67,10 @@ const BuildingMoreInfoSummary = styled.div`
 `;
 
 const Container = styled.div`
-  width: 30rem;
+  width: 28rem;
+
+  border-radius: 1rem;
+  border: 0.3rem solid #fff;
 `;
 
 export {
