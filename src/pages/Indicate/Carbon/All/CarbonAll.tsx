@@ -24,6 +24,7 @@ import TransItem from '../../Component/TrasnItem/TransItem';
 import refreshSVG from '../../../../assets/svg/refresh.svg';
 import { getUniqueNumberList } from '../util';
 import TreeTransItem from '../../Component/TreeTransItem/TreeTransItem';
+import CarbonAllMoreInfo from './Component/CarbonAllMoreInfo';
 
 ChartJS.register(Tooltip, Legend);
 
@@ -106,6 +107,7 @@ const CarbonAll = () => {
               options={optionsCarbon}
             ></Bar>
             <S.BottomWrapper>
+              <CarbonAllMoreInfo chartState={chartData}></CarbonAllMoreInfo>
               <S.BottomTitle>
                 해당년도 사용 1위는 '{season[mostWasteSeasonIdx]}' 입니다.
               </S.BottomTitle>

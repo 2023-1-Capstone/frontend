@@ -14,6 +14,21 @@ import gasIcon from '../assets/svg/gasCategory.svg';
 import carbon from '../assets/svg/carbon.svg';
 import 'chartjs-plugin-doughnutlabel-rebourne';
 
+const doughnutColor = [
+  'rgb(255, 0, 0, 0.4)',
+  'rgb(255, 94, 0, 0.4)',
+  'rgb(255, 187, 0, 0.4)',
+  'rgb(255, 228, 0, 0.4)',
+  'rgb(171, 242, 0, 0.4)',
+  'rgb(29, 219, 22, 0.4)',
+  'rgb(0, 216, 255, 0.4)',
+  'rgb(0, 84, 255, 0.4)',
+  'rgb(1, 0, 255, 0.4)',
+  'rgb(95, 0, 255, 0.4)',
+  'rgb(255, 0, 221, 0.4)',
+  'rgb(255, 0, 127, 0.4)',
+];
+
 const plugin = {
   id: 'emptyDoughnut',
   afterDraw(chart: any, args: any, options: any) {
@@ -96,7 +111,7 @@ const monthlyInitData: any = {
   ],
   datasets: [
     {
-      backgroundColor: ['rgb(75, 192, 192)'],
+      backgroundColor: doughnutColor,
       maxBarThickness: 35,
       borderRadius: 3,
       data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
@@ -690,21 +705,6 @@ const stuffPrice = {
   아이폰: 1400000,
   '서호관 라면': 500,
 };
-
-const doughnutColor = [
-  'rgb(255, 0, 0, 0.4)',
-  'rgb(255, 94, 0, 0.4)',
-  'rgb(255, 187, 0, 0.4)',
-  'rgb(255, 228, 0, 0.4)',
-  'rgb(171, 242, 0, 0.4)',
-  'rgb(29, 219, 22, 0.4)',
-  'rgb(0, 216, 255, 0.4)',
-  'rgb(0, 84, 255, 0.4)',
-  'rgb(1, 0, 255, 0.4)',
-  'rgb(95, 0, 255, 0.4)',
-  'rgb(255, 0, 221, 0.4)',
-  'rgb(255, 0, 127, 0.4)',
-];
 
 const season = ['봄', '여름', '가을', '겨울'];
 export {
