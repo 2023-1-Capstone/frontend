@@ -23,6 +23,30 @@ const findMostWasteIdxArr = (chart: any) => {
   );
 };
 
+const findLessWasteIdxArr = (chart: any) => {
+  return chart?.reduce(
+    (iMax: number, x: number, idx: number, arr: number[]) =>
+      x < arr[iMax] ? idx : iMax,
+    0
+  );
+};
+
+const getTargetBuildingsUsageArray = (
+  curYear: any,
+  curMonth: any,
+  chartData: any
+) => {
+  const targetArr = chartData?.map((item: any) => {
+    const targetYearData: any = item?.usagesList.filter(
+      (usage: any) => usage.year === parseInt(curYear)
+    )[0].usages[parseInt(curMonth) - 1];
+    if (targetYearData?.data) return targetYearData?.data;
+    return targetYearData?.prediction;
+  });
+
+  return targetArr;
+};
+
 const getRandomNumber = (max: number, min = 0) => {
   return Math.floor(Math.random() * max) + min;
 };
@@ -42,4 +66,6 @@ export {
   findMostWasteIdx,
   findMostWasteIdxArr,
   getUniqueNumberList,
+  getTargetBuildingsUsageArray,
+  findLessWasteIdxArr,
 };
