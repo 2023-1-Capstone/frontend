@@ -29,6 +29,40 @@ const doughnutColor = [
   'rgb(255, 0, 127, 0.4)',
 ];
 
+const carbonAllPlugin = {
+  id: 'centerText',
+  afterDraw(chart: any, args: any, options: any) {
+    const {
+      ctx,
+      chartArea: { top, bottom, left, right, width, height },
+    } = chart;
+
+    let total = 0;
+
+    chart.data.datasets.forEach((dataset: any, idx: number) => {
+      total = dataset.data?.reduce((acc: number, cur: number) => acc + cur, 0);
+    });
+
+    // const total = chart.data?.dataset[0].data.reduce(
+    //   (acc: number, cur: number) => acc + cur,
+    //   0
+    // );
+    ctx.save();
+    const xCoor = chart.getDatasetMeta(0).data[0]?.x;
+    const yCoor = chart.getDatasetMeta(0).data[0]?.y;
+    ctx.fillStyle = '#000';
+    ctx.textAlign = 'center';
+    ctx.textBaseLine = 'middle';
+    ctx.font = 'bold 15px Pretendard';
+    ctx.fillStyle = '#92C111';
+    ctx.fillText('총 탄소 배출량', xCoor, yCoor - 10);
+    ctx.font = 'bold 20px Pretendard';
+    ctx.borderColor = '#757575';
+    ctx.fillStyle = '#757575';
+    ctx.fillText(total.toLocaleString('ko-KR') + 'kg', xCoor, yCoor + 20);
+  },
+};
+
 const plugin = {
   id: 'emptyDoughnut',
   afterDraw(chart: any, args: any, options: any) {
@@ -370,6 +404,7 @@ const optionsDoughnut: any = {
       bottom: 30,
     },
   },
+  cutout: '65%',
   plugins: {
     title: {
       display: false,
@@ -734,4 +769,5 @@ export {
   optionsDoughnutCarbon,
   plugin,
   carbonBuildingInitData,
+  carbonAllPlugin,
 };

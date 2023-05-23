@@ -124,11 +124,23 @@ const BottomWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 34.8rem;
-  height: fit-content;
+  height: 90rem;
 
   background: #eeeeee;
   border-radius: 1rem;
+`;
+
+const BottomInner = styled.div`
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  display: flex;
+  width: 31.9rem;
+  height: 86.9rem;
+  background: #e0e0e0;
+  border-radius: 0.7rem;
 `;
 
 const BottomTitle = styled.div`
@@ -153,24 +165,24 @@ const BottomInfoBox = styled.div`
   align-items: center;
   padding: 1.2rem 1.6rem;
   gap: 1rem;
-
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   position: relative;
   width: fit-content;
   height: 7.3rem;
-
+  left: 0.5rem;
   /* Black/300 */
 
-  background: #e0e0e0;
   border-radius: 1.6rem;
 `;
 
 const BottomInfoBoxInner = styled.div`
-  width: fit-content;
+  width: 29rem;
   height: 4.9rem;
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 400;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   line-height: 1.8rem;
   /* or 164% */
 
@@ -220,4 +232,5 @@ export {
   BottomInfoTransWrapper,
   SeasonTitle,
   RefreshButton,
+  BottomInner,
 };

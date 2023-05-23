@@ -107,43 +107,42 @@ const CarbonAll = () => {
               options={optionsCarbon}
             ></Bar>
             <S.BottomWrapper>
-              <CarbonAllMoreInfo chartState={chartData}></CarbonAllMoreInfo>
-              <S.BottomTitle>
-                해당년도 사용 1위는 '{season[mostWasteSeasonIdx]}' 입니다.
-              </S.BottomTitle>
-              <S.BottomInfoBox>
-                <S.BottomInfoBoxInner>
-                  <li>
-                    {curYear}년 총 탄소 배출량은{' '}
-                    {totalCarbon?.toLocaleString('ko-KR')}kg입니다.
-                  </li>
-                  <li>
-                    사회적 탄소 배출 비용은{' '}
-                    {Math.floor((totalCarbon * 55400) / 1000).toLocaleString(
-                      'ko-KR'
-                    )}
-                    원 입니다.
-                  </li>
-                  <li>
-                    {mostWasteSeasonIdx + 1}월에{' '}
-                    {mostWaste.toLocaleString('ko-KR')}kg로 가장 많은 양의
-                    탄소를 배출했습니다.
-                  </li>
-                </S.BottomInfoBoxInner>
-              </S.BottomInfoBox>
-              <S.BottomTitle>
-                이 탄소 배출량은...
-                <S.RefreshButton
-                  src={refreshSVG}
-                  onClick={() => setRandomIdxList(getUniqueNumberList(4, 8))}
-                ></S.RefreshButton>
-              </S.BottomTitle>
-              <TransItem
-                type={'carbon'}
-                waste={totalCarbon}
-                randomIdxList={randomIdxList}
-              ></TransItem>
-              <TreeTransItem carbonWaste={totalCarbon}></TreeTransItem>
+              <S.BottomInner>
+                <CarbonAllMoreInfo chartState={chartData}></CarbonAllMoreInfo>
+                <S.BottomInfoBox>
+                  <S.BottomInfoBoxInner>
+                    <li>
+                      {curYear}년 총 탄소 배출량은{' '}
+                      {totalCarbon?.toLocaleString('ko-KR')}kg입니다.
+                    </li>
+                    <li>
+                      사회적 탄소 배출 비용은{' '}
+                      {Math.floor((totalCarbon * 55400) / 1000).toLocaleString(
+                        'ko-KR'
+                      )}
+                      원 입니다.
+                    </li>
+                    <li>
+                      {mostWasteSeasonIdx + 1}월에{' '}
+                      {mostWaste.toLocaleString('ko-KR')}kg로 가장 많은 양의
+                      탄소를 배출했습니다.
+                    </li>
+                  </S.BottomInfoBoxInner>
+                </S.BottomInfoBox>
+                <S.BottomTitle>
+                  이 탄소 배출량은...
+                  <S.RefreshButton
+                    src={refreshSVG}
+                    onClick={() => setRandomIdxList(getUniqueNumberList(4, 8))}
+                  ></S.RefreshButton>
+                </S.BottomTitle>
+                <TransItem
+                  type={'carbon'}
+                  waste={totalCarbon}
+                  randomIdxList={randomIdxList}
+                ></TransItem>
+                <TreeTransItem carbonWaste={totalCarbon}></TreeTransItem>
+              </S.BottomInner>
             </S.BottomWrapper>
           </S.SeasonWrapper>
         </WrapperInner>

@@ -46,7 +46,6 @@ const BuildingMoreInfoSummary = styled.div`
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 400;
-  font-size: 1.3rem;
   /* or 164% */
 
   border: 2px solid #fff;
@@ -92,9 +91,11 @@ const BuildingMoreInfoChartInfo = styled.div`
 `;
 
 const Container = styled.div`
+  top: 0.5rem;
   position: relative;
-  width: 35rem;
-  top: -7rem;
+  width: 27.4rem;
+  border: 3px solid white;
+  border-radius: 1rem;
 `;
 
 const ChartIndicatorLine = styled.div`
@@ -124,6 +125,20 @@ const RefreshButton = styled.img`
   cursor: pointer;
 `;
 
+const ChartDescription = styled.div`
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0.8rem;
+  font-family: 'Pretendard';
+  width: 15rem;
+  font-style: normal;
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: #757575;
+  margin-bottom: 0.3rem;
+`;
+
 export {
   BuildingMoreInfoTitle,
   BuildingMoreInfoFrame,
@@ -134,4 +149,5 @@ export {
   BuildingMoreInfoChartInfo,
   BottomTitle,
   RefreshButton,
+  ChartDescription,
 };
