@@ -88,7 +88,41 @@ const ChartYearBox = styled.div`
 
   cursor: pointer;
 
-  left: 26rem;
+  left: 20rem;
+
+  border-radius: 0.3rem;
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.4rem;
+  line-height: 2rem;
+  /* or 286% */
+
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  color: #000000;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+`;
+
+const ChartMonthBox = styled.div`
+  position: absolute;
+  width: fit-content;
+  height: fit-content;
+
+  &:hover {
+    background-color: #e7e7e7;
+  }
+
+  cursor: pointer;
+
+  left: 28rem;
 
   border-radius: 0.3rem;
   font-family: 'Pretendard';
@@ -122,11 +156,11 @@ const ChartIndicatorLine = styled.div`
 const BottomWrapper = styled.div`
   position: relative;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  width: 29.8rem;
+  justify-content: center;
+  width: 34.8rem;
   height: fit-content;
-
   background: #eeeeee;
   border-radius: 1rem;
 `;
@@ -142,14 +176,14 @@ const BottomTitle = styled.div`
   line-height: 1.8rem;
   display: flex;
   align-items: center;
-
+  justify-content: space-between;
   color: #000000;
 `;
 
 const BottomInfoBox = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   padding: 1.2rem 1.6rem;
   gap: 1rem;
@@ -239,11 +273,22 @@ const BottomInfoTransText = styled.div`
   flex-grow: 0;
 `;
 
+const RefreshButton = styled.img`
+  width: 2.5rem;
+  height: 2.5rem;
+  cursor: pointer;
+`;
+
+const Container = styled.div`
+  width: 30rem;
+`;
+
 export {
   SeasonWrapper,
   ChartCategoryBox,
   ChartIndicatorLine,
   ChartYearBox,
+  ChartMonthBox,
   ChartTopFrame,
   ChartChangeFrame,
   BottomWrapper,
@@ -254,4 +299,6 @@ export {
   BottomInfoTransItem,
   BottomInfoTransText,
   SeasonTitle,
+  RefreshButton,
+  Container,
 };

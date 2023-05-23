@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import {
   Wrapper,
@@ -7,107 +7,120 @@ import {
 import Header from '../../../../components/Header/Header';
 import NavigationBar from '../../../../components/NavigationBar/NavigationBar';
 import { Chart as ChartJS, Tooltip, Legend } from 'chart.js/auto';
-import { Line } from 'react-chartjs-2';
-import { options, seasonInitData } from '../../../../store/store';
+import { Bar, Doughnut } from 'react-chartjs-2';
+import { optionsCarbonBuilding, areaInitData } from '../../../../store/store';
 import downArrow from '../../../../assets/svg/downArrow.svg';
 import * as S from './CarbonBuildings.style';
 import { Dropdown } from '../../../../components/Dropdown/Dropdown';
-import { yearCategory } from '../../../../store/store';
+import { monthCategory } from '../../../../store/store';
 import { dropdownInfoCreater } from '../../../BuildingElectricity/util';
+import { useQuery } from '@tanstack/react-query';
+import { getTargetBuildingsUsageArray } from '../util';
+import api from '../../../../api/api';
+import refreshSVG from '../../../../assets/svg/refresh.svg';
+import { getUniqueNumberList } from '../util';
+import TransItem from '../../Component/TrasnItem/TransItem';
+import TreeTransItem from '../../Component/TreeTransItem/TreeTransItem';
+import CarbonBuildingMoreInfo from './Component/CarbonBuildingMoreInfo';
+import DoughnutLabel from 'chartjs-plugin-doughnutlabel-rebourne';
 
-ChartJS.register(Tooltip, Legend);
+ChartJS.register(Tooltip, Legend, DoughnutLabel);
+const AreaElectricity = () => {
+  const { data: carbonData }: { data: any } = useQuery(['getAreaData'], () =>
+    api('/api/carbon/area').then((data: any) => data.data.result)
+  );
 
-const Chart = () => {
-  const [chartData, setChartData] = useState(seasonInitData);
-  const [isDropdownOn, setIsDropdownOn] = useState<Boolean>(false);
+  const [chartData, setChartData] = useState(areaInitData);
+  const [isYearDropdownOn, setIsYearDropdownOn] = useState<Boolean>(false);
+  const [isMonthDropdownOn, setIsMonthDropdownOn] = useState<Boolean>(false);
   const [curYear, setCurYear] = useState<string>('2023');
-
-  return (
-    <>
-      <S.ChartChangeFrame>
-        {isDropdownOn && (
-          <Dropdown
-            dropDownInfo={dropdownInfoCreater(
-              '10rem',
-              '26.2rem',
-              '2.3rem',
-              'middle',
-              yearCategory,
-              setCurYear,
-              setIsDropdownOn
-            )}
-          ></Dropdown>
-        )}
-        <S.ChartTopFrame>
-          <S.ChartCategoryBox>탄소 배출량</S.ChartCategoryBox>
-          <S.ChartYearBox onClick={() => setIsDropdownOn(true)}>
-            {curYear}년 &nbsp;<img src={downArrow}></img>
-          </S.ChartYearBox>
-        </S.ChartTopFrame>
-        <S.ChartIndicatorLine></S.ChartIndicatorLine>
-      </S.ChartChangeFrame>
-      <Line width="330" height="200" data={chartData} options={options}></Line>
-    </>
+  const [curMonth, setCurMonth] = useState<string>('1월');
+  const [mostWasteIdx, setMostWasteIdx] = useState<number>(-1);
+  const [randomIdxList, setRandomIdxList] = useState<number[]>(
+    getUniqueNumberList(4, 8)
   );
-};
 
-const TransItem = ({ type, waste }: { type: string; waste: number }) => {
-  const data: any = {
-    빅맥: `${Math.floor(waste / 2)}개 먹기`,
-    아이폰: `${Math.floor(waste / 3)}개 구입`,
-    '주안역 511왕복': `${Math.floor(waste / 4)}회 왕복`,
-    '서호관 라면': `${Math.floor(waste / 5)}개 먹기`,
-  };
-
-  return (
-    <>
-      <S.BottomInfoTransItem>
-        <S.BottomInfoTransText>{type}</S.BottomInfoTransText>
-        <S.BottomInfoTransText>{data[type]}</S.BottomInfoTransText>
-      </S.BottomInfoTransItem>
-    </>
-  );
-};
-
-const CarbonBuildings = () => {
-  const [temp, setTempState] = useState([
-    '총 사용 전기량은 103020Kwh 입니다.',
-    '예상 사용 요금은  120,200,000원 입니다.',
-    '이 정도양의 탄소는 어느 정도의 영향이 있습니다.',
-  ]);
-
-  const [temp2, setTempState2] = useState([
-    '빅맥',
-    '아이폰',
-    '주안역 511왕복',
-    '서호관 라면',
-  ]);
+  useEffect(() => {
+    const chartDataCopy = JSON.parse(JSON.stringify(chartData));
+    const newChartData = getTargetBuildingsUsageArray(
+      curYear,
+      curMonth,
+      carbonData
+    );
+    chartDataCopy.datasets[0].data = newChartData;
+    setChartData(chartDataCopy);
+  }, [carbonData, curYear, curMonth]);
 
   return (
     <>
-      <Wrapper>
+      <Wrapper
+        onClick={(e: React.MouseEvent<HTMLDivElement>) => {
+          setIsMonthDropdownOn(false);
+          setIsYearDropdownOn(false);
+        }}
+      >
         <Header></Header>
         <WrapperInner>
           <S.SeasonWrapper>
-            <S.SeasonTitle>👑건물별 탄소 배출 순위</S.SeasonTitle>
-            <Chart></Chart>
+            <S.SeasonTitle>건물별 탄소 배출 현황</S.SeasonTitle>
+            <S.ChartChangeFrame>
+              {isYearDropdownOn && (
+                <Dropdown
+                  dropDownInfo={dropdownInfoCreater(
+                    '10rem',
+                    '20.2rem',
+                    '2.3rem',
+                    'middle',
+                    carbonData[0]?.usagesList.map((item: any) => item.year),
+                    setCurYear,
+                    setIsYearDropdownOn
+                  )}
+                ></Dropdown>
+              )}
+              {isMonthDropdownOn && (
+                <Dropdown
+                  dropDownInfo={dropdownInfoCreater(
+                    '10rem',
+                    '27.2rem',
+                    '2.3rem',
+                    'middle',
+                    monthCategory,
+                    setCurMonth,
+                    setIsMonthDropdownOn
+                  )}
+                ></Dropdown>
+              )}
+              <S.ChartTopFrame>
+                <S.ChartCategoryBox>탄소 배출량</S.ChartCategoryBox>
+                <S.ChartYearBox
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsYearDropdownOn(true);
+                  }}
+                >
+                  {curYear}년 &nbsp;<img src={downArrow}></img>
+                </S.ChartYearBox>
+                <S.ChartMonthBox
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsMonthDropdownOn(true);
+                  }}
+                >
+                  {curMonth} &nbsp;<img src={downArrow}></img>
+                </S.ChartMonthBox>
+              </S.ChartTopFrame>
+              <S.ChartIndicatorLine></S.ChartIndicatorLine>
+            </S.ChartChangeFrame>
+            <Bar
+              data={chartData}
+              options={optionsCarbonBuilding}
+              width="270"
+              height="250"
+            ></Bar>
             <S.BottomWrapper>
-              <S.BottomTitle>
-                해당년도 사용 1위는 '60주년' 입니다.
-              </S.BottomTitle>
-              <S.BottomInfoBox>
-                <S.BottomInfoBoxInner>
-                  {temp.map((val: string) => {
-                    return <li>{val}</li>;
-                  })}
-                </S.BottomInfoBoxInner>
-              </S.BottomInfoBox>
-              <S.BottomTitle>이 탄소 배출량은...</S.BottomTitle>
-              <S.BottomInfoTransWrapper>
-                {temp2.map((val: any) => {
-                  return <TransItem waste={100000} type={val}></TransItem>;
-                })}
-              </S.BottomInfoTransWrapper>
+              <CarbonBuildingMoreInfo
+                chartState={chartData}
+              ></CarbonBuildingMoreInfo>
             </S.BottomWrapper>
           </S.SeasonWrapper>
         </WrapperInner>
@@ -117,4 +130,4 @@ const CarbonBuildings = () => {
   );
 };
 
-export default CarbonBuildings;
+export default AreaElectricity;
