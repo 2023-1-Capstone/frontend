@@ -54,6 +54,7 @@ const MonthlyMoreInfo = ({
     if (chartState) {
       const chartStateCopy = JSON.parse(JSON.stringify(chartState));
       chartStateCopy.datasets[0].backgroundColor = doughnutColor;
+      chartStateCopy.datasets[0].borderColor = doughnutColor;
       const usageArr = chartStateCopy.datasets[0].data;
       const mostWasteMonth = findMostWasteIdx(usageArr) + 1;
       const totalWatt = usageArr?.reduce(
