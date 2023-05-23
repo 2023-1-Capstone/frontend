@@ -7,10 +7,11 @@ import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import api from '../../../../../api/api';
 import { findMostWasteIdxArr, findLessWasteIdxArr } from '../../util';
-import { plugin, carbonBuildingInitData } from '../../../../../store/store';
+import { plugin, monthlyInitDatas } from '../../../../../store/store';
 import TransItem from '../../../Component/TrasnItem/TransItem';
 import { getUniqueNumberList } from '../../util';
 import refreshSVG from '../../../../../assets/svg/refresh.svg';
+import { doughnutColor } from '../../../../../store/store';
 
 ChartJS.register(Tooltip, Legend, ChartDataLabels);
 
@@ -19,7 +20,7 @@ const CarbonAllMoreInfo = ({ chartState }: { chartState: any }) => {
     api('/api/buildings').then((data) => data.data.result)
   );
 
-  const [chartData, setChartData] = useState(carbonBuildingInitData);
+  const [chartData, setChartData] = useState(monthlyInitDatas);
   const [moreInfo, setMoreInfo] = useState({
     lessWasteBuilding: 0,
     averageWaste: '',
@@ -30,6 +31,7 @@ const CarbonAllMoreInfo = ({ chartState }: { chartState: any }) => {
   useEffect(() => {
     const chartDataCopy = JSON.parse(JSON.stringify(chartData));
     chartDataCopy.datasets[0] = chartState.datasets[0];
+    chartDataCopy.datasets[0].backgroundColor = doughnutColor;
     const areaArr = buildingData?.map((item: any) =>
       item.elecArea >= item.gasArea ? item.elecArea : item.gasArea
     );

@@ -111,7 +111,7 @@ const monthlyInitData: any = {
   ],
   datasets: [
     {
-      backgroundColor: doughnutColor,
+      backgroundColor: ['rgb(75, 192, 192)'],
       maxBarThickness: 35,
       borderRadius: 3,
       data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
@@ -136,7 +136,7 @@ const monthlyInitDatas: any = {
   ],
   datasets: [
     {
-      backgroundColor: ['rgb(75, 192, 192)'],
+      backgroundColor: doughnutColor,
       data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     },
   ],
