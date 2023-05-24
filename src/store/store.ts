@@ -43,10 +43,6 @@ const carbonAllPlugin = {
       total = dataset.data?.reduce((acc: number, cur: number) => acc + cur, 0);
     });
 
-    // const total = chart.data?.dataset[0].data.reduce(
-    //   (acc: number, cur: number) => acc + cur,
-    //   0
-    // );
     ctx.save();
     const xCoor = chart.getDatasetMeta(0).data[0]?.x;
     const yCoor = chart.getDatasetMeta(0).data[0]?.y;
@@ -653,7 +649,7 @@ const optionsCarbonBuilding: any = {
   plugins: {
     datalabels: {
       formatter: (value: any, context: any) => {
-        return value.toLocaleString('ko-KR') + 'kg';
+        return value?.toLocaleString('ko-KR') + 'kg';
       },
       color: '#fff',
     },
@@ -692,6 +688,67 @@ const optionsCarbonBuilding: any = {
       title: {},
     },
   },
+};
+
+const optionsAreaStacked: any = {
+  responsive: false,
+  indexAxis: 'y',
+  plugins: {
+    title: {
+      display: false,
+      text: 'Chart.js Bar Chart - Stacked',
+    },
+    legend: {
+      labesl: {
+        boxWidth: 10,
+      },
+    },
+    datalabels: {
+      display: false,
+    },
+  },
+  scales: {
+    x: {
+      stacked: true,
+      grid: {
+        display: false,
+      },
+    },
+    y: {
+      stacked: true,
+      grid: {
+        display: false,
+      },
+    },
+  },
+};
+
+const areaStackedInitData: any = {
+  labels: [
+    '본관',
+    '하이테크관',
+    '정석',
+    '60주년',
+    '2,4호관',
+    '5호관',
+    '6,9호관',
+    '학생회관',
+    '서호관',
+    '로스쿨관',
+  ],
+
+  datasets: [
+    {
+      label: '감소값',
+      data: [1, 2, 3, 4, 5],
+      backgroundColor: ['rgb(138, 200, 240)'],
+    },
+    {
+      label: '실제 사용량',
+      data: [1, 2, 3, 4, 5],
+      backgroundColor: ['rgb(214, 214, 214)'],
+    },
+  ],
 };
 
 const indicateCategory = [
@@ -770,4 +827,6 @@ export {
   plugin,
   carbonBuildingInitData,
   carbonAllPlugin,
+  areaStackedInitData,
+  optionsAreaStacked,
 };

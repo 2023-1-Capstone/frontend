@@ -7,16 +7,21 @@ import {
 import Header from '../../../../components/Header/Header';
 import NavigationBar from '../../../../components/NavigationBar/NavigationBar';
 import { Chart as ChartJS, Tooltip, Legend } from 'chart.js/auto';
-import { Line } from 'react-chartjs-2';
-import { optionsArea, areaInitData } from '../../../../store/store';
+import { Bar } from 'react-chartjs-2';
+import {
+  optionsArea,
+  areaInitData,
+  optionsAreaStacked,
+} from '../../../../store/store';
 import downArrow from '../../../../assets/svg/downArrow.svg';
 import * as S from './AreaElectricity.style';
 import { Dropdown } from '../../../../components/Dropdown/Dropdown';
-import { monthCategory, buildingByIdx } from '../../../../store/store';
+import { monthCategory } from '../../../../store/store';
 import { dropdownInfoCreater } from '../../../BuildingElectricity/util';
 import { useQuery } from '@tanstack/react-query';
 import { getBuildingTargetDataElectricity, findMostWasteIdx } from '../util';
 import api from '../../../../api/api';
+import AreaElectricityMoreInfo from './Component/AreaElectricityMoreInfo';
 
 ChartJS.register(Tooltip, Legend);
 
@@ -39,24 +44,11 @@ const AreaElectricity = () => {
   const [isMonthDropdownOn, setIsMonthDropdownOn] = useState<Boolean>(false);
   const [curYear, setCurYear] = useState<string>('2023');
   const [curMonth, setCurMonth] = useState<string>('1');
-  const [mostWasteIdx, setMostWasteIdx] = useState<number>(-1);
 
   const createNewChartData = (newData: number[]) => {
     const chartCopyState = JSON.parse(JSON.stringify(chartData));
     chartCopyState.datasets[0].data = newData;
     return chartCopyState;
-  };
-
-  const getPercentage = (target: number, average: number) => {
-    return ((target / average) * 100 - 100).toFixed(2);
-  };
-
-  const getAverageWaste = (arr: any) => {
-    return (
-      arr?.reduce((acc: number, cur: string) => {
-        return acc + parseFloat(cur);
-      }, 0) / 10
-    );
   };
 
   useEffect(() => {
@@ -67,7 +59,6 @@ const AreaElectricity = () => {
         curYear,
         curMonth
       );
-      setMostWasteIdx(findMostWasteIdx(initData));
       setChartData(createNewChartData(initData));
     }
   }, [areaData]);
@@ -80,7 +71,6 @@ const AreaElectricity = () => {
         curYear,
         curMonth
       );
-      setMostWasteIdx(findMostWasteIdx(changedData));
       setChartData(createNewChartData(changedData));
     }
   }, [curMonth, curYear]);
@@ -145,40 +135,19 @@ const AreaElectricity = () => {
               </S.ChartTopFrame>
               <S.ChartIndicatorLine></S.ChartIndicatorLine>
             </S.ChartChangeFrame>
-            <Line
+            <Bar
               data={chartData}
               options={optionsArea}
               width="270"
               height="200"
-            ></Line>
-            <S.BottomWrapper>
-              <S.BottomTitle>
-                해당시기 사용 1위는 '{buildingByIdx[mostWasteIdx]}' 입니다.
-              </S.BottomTitle>
-              <S.BottomInfoBox>
-                <S.BottomInfoBoxInner>
-                  <li>
-                    1㎡당 {chartData?.datasets[0].data[mostWasteIdx]}Kwh를
-                    사용하였습니다.
-                  </li>
-                  <li>
-                    1㎡당{' '}
-                    {(
-                      chartData?.datasets[0].data[mostWasteIdx] * 7000
-                    ).toLocaleString('ko-KR')}
-                    원 정도를 사용하였습니다.
-                  </li>
-                  <li>
-                    평균 면적 사용량 대비{' '}
-                    {getPercentage(
-                      chartData?.datasets[0].data[mostWasteIdx],
-                      getAverageWaste(chartData?.datasets[0].data)
-                    )}
-                    % 높은 수치입니다.
-                  </li>
-                </S.BottomInfoBoxInner>
-              </S.BottomInfoBox>
-            </S.BottomWrapper>
+            ></Bar>
+            <AreaElectricityMoreInfo
+              chartState={chartData}
+              buildingData={buildingData}
+              areaData={areaData}
+              curYear={curYear}
+              curMonth={curMonth}
+            ></AreaElectricityMoreInfo>
           </S.SeasonWrapper>
         </WrapperInner>
         <NavigationBar navigationStatus="indicator"></NavigationBar>
