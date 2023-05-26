@@ -11,7 +11,7 @@ import CarbonAll from '../pages/Indicate/Carbon/All/CarbonAll';
 import CarbonBuildings from '../pages/Indicate/Carbon/Buildings/CarbonBuildings';
 import AreaElectricity from '../pages/Indicate/Area/electricity/AreaElectricity';
 import AreaGas from '../pages/Indicate/Area/gas/AreaGas';
-
+import SignUp from '../pages/SignUp/SignUp';
 
 const Router = () => {
   return (
@@ -19,6 +19,7 @@ const Router = () => {
       <BrowserRouter>
         <Routes>
           <Route path="" element={<StartPage />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/electricity" element={<BuildingElectricity />} />
           <Route path="/gas" element={<BuildingGas />} />
