@@ -177,7 +177,7 @@ const LoginButton = styled.div`
   align-items: center;
   /* identical to box height */
   cursor: pointer;
-  color: #0065b3;
+  color: #99bfcf;
   top: 1rem;
   background: #ffffff;
   border-radius: 4px;
