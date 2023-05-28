@@ -11,32 +11,34 @@ const biggerEffect = keyframes`
 
 export const CarouselWrapper = styled.div`
   position: relative;
+  width: fit-content;
   animation: ${biggerEffect} 0.2s;
 `;
 
 export const CarouselItem = styled.img`
-  width: 25rem;
-  height: 15rem;
+  width: 36rem;
+  height: 16rem;
   border-radius: 1.2rem;
+  border: 0.2rem solid #e7e7e7;
 `;
 
 export const NavigatePrev = styled.img`
   position: absolute;
-  left: -1rem;
-  top: 10rem;
+  left: -2.3rem;
+  top: 6rem;
   z-index: 2;
-  width: 8rem;
-  height: 8rem;
+  width: 6rem;
+  height: 6rem;
   cursor: pointer;
 `;
 
 export const NavigateNext = styled.img`
   position: absolute;
-  top: 10rem;
-  right: -1rem;
+  top: 6rem;
+  right: -2.1rem;
   z-index: 2;
-  width: 8rem;
-  height: 8rem;
+  width: 6rem;
+  height: 6rem;
   cursor: pointer;
 `;
 
@@ -48,7 +50,7 @@ export const CarouselBuildingName = styled.div`
   font-size: 2rem;
   line-height: 2.9rem;
   left: 1.5rem;
-  top: 0.5rem;
+  top: 11.5rem;
 
   color: #ffffff;
 
