@@ -28,8 +28,10 @@ const FindPassword = () => {
 
   const FindPassword = async () => {
     const data = await findPasswordAPI();
-    alert('인증 메일을 발송했습니다.');
-    navigator('/');
+    if (data?.status) {
+      alert('인증 메일을 발송했습니다.');
+      navigator('/');
+    }
   };
 
   const onValid = () => {

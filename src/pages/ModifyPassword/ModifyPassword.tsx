@@ -28,7 +28,7 @@ const ModifyPassword = () => {
 
   const FindPassword = async () => {
     const data = await modifyPasswordAPI();
-    window.location.href = 'http://localhost:3000';
+    if (data?.status === 200) window.location.href = 'http://localhost:3000';
   };
 
   const onValid = () => {
