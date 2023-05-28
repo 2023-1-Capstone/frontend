@@ -12,10 +12,6 @@ const signUpKey = ['username', 'password', 'email', 'name'];
 const SignUp = () => {
   const navigator = useNavigate();
 
-  const goHomePage = () => {
-    navigator('/home');
-  };
-
   const {
     register,
     handleSubmit,
@@ -32,17 +28,15 @@ const SignUp = () => {
       signUpInfo[item] = watch(item);
     });
     const data = await postSignUp(signUpInfo);
-    console.log(data);
+    if (data?.status === 200) {
+      alert('인증 메일을 발송했습니다.');
+
+      navigator('/');
+    }
   };
 
-  const passwordCheck = (pwd: string, pwdCheck: string) => {
-    return pwd === pwdCheck;
-  };
-
-  const test = () => {
-    alert('인증 메일을 발송했습니다.');
+  const onValid = () => {
     signUpAPI();
-    // navigator('/');
   };
 
   const errorHandler = () => {
@@ -58,7 +52,7 @@ const SignUp = () => {
       <S.StartInner>
         <S.LoginWrapper>
           <S.SignUpTitle>회원가입</S.SignUpTitle>
-          <S.Form onSubmit={handleSubmit(test, errorHandler)}>
+          <S.Form onSubmit={handleSubmit(onValid, errorHandler)}>
             <S.TopInput
               placeholder={'학번'}
               color={errors.username?.message ? '#ff3f3f' : '#e7e7e7'}
@@ -66,7 +60,7 @@ const SignUp = () => {
               {...register('username', {
                 required: {
                   value: true,
-                  message: '비밀번호를 입력해주세요',
+                  message: '학번을 입력해주세요',
                 },
               })}
             ></S.TopInput>
@@ -77,7 +71,7 @@ const SignUp = () => {
               {...register('email', {
                 required: {
                   value: true,
-                  message: '비밀번호를 입력해주세요',
+                  message: '이메일을 입력해주세요',
                 },
               })}
             ></S.MiddleInput>
@@ -91,6 +85,10 @@ const SignUp = () => {
                   value: true,
                   message: '비밀번호를 입력해주세요',
                 },
+                pattern: {
+                  value: /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/,
+                  message: '8자리 이상의 영문 숫자 조합이 아니에요.',
+                },
               })}
             ></S.MiddleInput>
             <S.BottomInput
@@ -100,7 +98,11 @@ const SignUp = () => {
               {...register('name', {
                 required: {
                   value: true,
-                  message: '비밀번호를 입력해주세요',
+                  message: '이름을 입력해주세요',
+                },
+                minLength: {
+                  value: 2,
+                  message: '이름이 너무 짧아요',
                 },
               })}
             ></S.BottomInput>
