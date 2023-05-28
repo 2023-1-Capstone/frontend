@@ -78,11 +78,14 @@ const HeaderBackArrow = styled.img`
 
 const HeaderMenu = styled.img`
   /* Black/600 */
+  position: relative;
+  right: 1.5rem;
+  width: 3rem;
 
   background: url(${(props) => props.src});
 
   /* Inside auto layout */
-
+  cursor: pointer;
   flex: none;
   order: 2;
   flex-grow: 0;
@@ -93,7 +96,7 @@ const HeaderIndicator = styled.div`
   width: 39rem;
   height: 0px;
   left: 0px;
-  top: 11.7rem;
+  top: 11.9rem;
 
   border: 0.1rem solid #757575;
 `;
