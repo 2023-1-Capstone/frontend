@@ -78,11 +78,9 @@ const MonthlyMoreInfo = ({
 
   return (
     <S.BuildingMoreInfoFrame>
-      <S.BuildingMoreInfoInner>
-        <S.BuildingMoreInfoTitle>요약 정보</S.BuildingMoreInfoTitle>
-        <S.Container>
-          <Doughnut data={chartData} options={optionsDoughnut}></Doughnut>
-        </S.Container>
+      <S.BuildingMoreInfoTitle>요약 정보</S.BuildingMoreInfoTitle>
+      <S.Container>
+        <Doughnut data={chartData} options={optionsDoughnut}></Doughnut>
         <S.BuildingMoreInfoSummary>
           <li>
             {curYear}년 총 {checkThisYear(parseInt(curYear)) ? '예상 ' : null}
@@ -107,7 +105,7 @@ const MonthlyMoreInfo = ({
             </li>
           )}
         </S.BuildingMoreInfoSummary>
-      </S.BuildingMoreInfoInner>
+      </S.Container>
     </S.BuildingMoreInfoFrame>
   );
 };
