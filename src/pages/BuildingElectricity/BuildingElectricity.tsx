@@ -202,7 +202,7 @@ const BuildingElectricity = () => {
                   options={options}
                 ></Bar>
               </S.ChartContainer>
-              <S.ChartTitle>정석학술정보관</S.ChartTitle>
+              <S.ChartTitle>{selectedBuilding}</S.ChartTitle>
             </S.Container>
             <BuildingMoreInfo
               categoryState={chartCategory}
