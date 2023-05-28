@@ -1,14 +1,14 @@
 import api from './api';
 
-const postSignUp = async (signUpInfo: any) => {
+const patchModifyPassword = async (modifyInfo: any) => {
   try {
     const response = await api({
       headers: {
         'Content-Type': 'application/json',
       },
-      url: `/api/user/join`,
-      method: 'POST',
-      data: JSON.stringify(signUpInfo),
+      url: `/api/user/password`,
+      method: 'PATCH',
+      data: JSON.stringify(modifyInfo),
     });
     return response;
   } catch (error) {
@@ -16,4 +16,4 @@ const postSignUp = async (signUpInfo: any) => {
   }
 };
 
-export default postSignUp;
+export default patchModifyPassword;

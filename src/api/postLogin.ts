@@ -8,9 +8,14 @@ const postLogin = async (signUpInfo: any) => {
       },
       url: `/api/user/login`,
       method: 'POST',
-      data: signUpInfo,
+      data: JSON.stringify(signUpInfo),
     });
-    return response.data;
+
+    console.log(response.headers['authorization']);
+
+    localStorage.setItem('accessToken', response.headers['authorization']);
+
+    return response;
   } catch (error) {
     console.log(error);
   }
