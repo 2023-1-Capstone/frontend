@@ -68,7 +68,7 @@ const AreaElectricity = () => {
                 <Dropdown
                   dropDownInfo={dropdownInfoCreater(
                     '10rem',
-                    '20.2rem',
+                    '-17rem',
                     '2.3rem',
                     'middle',
                     carbonData[0]?.usagesList.map((item: any) => item.year),
@@ -81,7 +81,7 @@ const AreaElectricity = () => {
                 <Dropdown
                   dropDownInfo={dropdownInfoCreater(
                     '10rem',
-                    '27.2rem',
+                    '10.2rem',
                     '2.3rem',
                     'middle',
                     monthCategory,
@@ -90,8 +90,9 @@ const AreaElectricity = () => {
                   )}
                 ></Dropdown>
               )}
+            </S.ChartChangeFrame>
+            <S.Container>
               <S.ChartTopFrame>
-                <S.ChartCategoryBox>탄소 배출량</S.ChartCategoryBox>
                 <S.ChartYearBox
                   onClick={(e) => {
                     e.stopPropagation();
@@ -109,14 +110,14 @@ const AreaElectricity = () => {
                   {curMonth} &nbsp;<img src={downArrow}></img>
                 </S.ChartMonthBox>
               </S.ChartTopFrame>
-              <S.ChartIndicatorLine></S.ChartIndicatorLine>
-            </S.ChartChangeFrame>
-            <Bar
-              data={chartData}
-              options={optionsCarbonBuilding}
-              width="270"
-              height="250"
-            ></Bar>
+              <Bar
+                data={chartData}
+                options={optionsCarbonBuilding}
+                width="270"
+                height="250"
+              ></Bar>
+            </S.Container>
+
             <S.BottomWrapper>
               <CarbonBuildingMoreInfo
                 chartState={chartData}

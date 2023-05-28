@@ -7,7 +7,8 @@ import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import api from '../../../../../api/api';
 import { findMostWasteIdxArr, findLessWasteIdxArr } from '../../util';
-import { plugin, carbonBuildingInitData } from '../../../../../store/store';
+import { carbonBuildingInitData } from '../../../../../store/store';
+import { plugin } from '../../../../../store/chartPlugin';
 import TransItem from '../../../Component/TrasnItem/TransItem';
 import { getUniqueNumberList } from '../../util';
 import refreshSVG from '../../../../../assets/svg/refresh.svg';
@@ -69,13 +70,9 @@ const CarbonBuildingMoreInfo = ({ chartState }: { chartState: any }) => {
           ></Doughnut>
         </S.Container>
         <S.BuildingMoreInfoSummary>
-          <li>
-            가장 많은 탄소를 배출한 건물은 '{moreInfo.mostWasteBuilding}'입니다.
-          </li>
-          <li>
-            가장 적은 탄소를 배출한 건물은 '{moreInfo.lessWasteBuilding}'입니다.
-          </li>
-          <li>건물 평균 {moreInfo.averageWaste}kg를 배출하였습니다.</li>
+          <li>가장 많은 탄소를 배출한 건물은 '123'입니다.</li>
+          <li>가장 적은 탄소를 배출한 건물은 '123'입니다.</li>
+          <li>건물 평균 123kg를 배출하였습니다.</li>
         </S.BuildingMoreInfoSummary>
         <S.BottomTitle>
           해당 시기 탄소 배출량은...
