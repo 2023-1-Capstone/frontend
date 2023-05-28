@@ -11,12 +11,13 @@ const postLogin = async (signUpInfo: any) => {
       data: JSON.stringify(signUpInfo),
     });
 
-    console.log(response.headers['authorization']);
+    if (response?.status)
+      localStorage.setItem('accessToken', response.headers['authorization']);
 
-    localStorage.setItem('accessToken', response.headers['authorization']);
+    console.log(response);
 
     return response;
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
   }
 };

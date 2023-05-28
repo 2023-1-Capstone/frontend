@@ -6,9 +6,14 @@ const getFindPassword = async (userInfo: any) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      url: `/api/user/password?username=${userInfo.username}&name=${userInfo.name}`,
-      method: 'GET',
+      url: `/api/user/password`,
+      method: 'POST',
+      data: JSON.stringify({
+        username: userInfo.username,
+        name: userInfo.name,
+      }),
     });
+    console.log('응답 객체 : ', response);
     return response;
   } catch (error) {
     console.log(error);

@@ -10,6 +10,7 @@ const patchModifyPassword = async (modifyInfo: any) => {
       method: 'PATCH',
       data: JSON.stringify(modifyInfo),
     });
+    console.log(response);
     return response;
   } catch (error) {
     console.log(error);

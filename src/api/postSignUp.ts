@@ -10,10 +10,9 @@ const postSignUp = async (signUpInfo: any) => {
       method: 'POST',
       data: JSON.stringify(signUpInfo),
     });
+    console.log('응답 객체 : ', response);
     return response;
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 };
 
 export default postSignUp;
