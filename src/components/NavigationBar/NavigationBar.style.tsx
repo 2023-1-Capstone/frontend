@@ -110,6 +110,15 @@ const NavigationIndicatorLine = styled.div`
   border-radius: 10rem;
 `;
 
+const HeaderIndicator = styled.div`
+  position: absolute;
+  width: 39rem;
+  height: 0px;
+  left: 0px;
+  top: -2.3rem;
+  border: 0.1rem solid #757575;
+`;
+
 export {
   NavigationFrame,
   NavigationItemTotalFrame,
@@ -118,4 +127,5 @@ export {
   NavigationItemText,
   NavigationIndicator,
   NavigationIndicatorLine,
+  HeaderIndicator,
 };
