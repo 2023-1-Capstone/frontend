@@ -12,6 +12,8 @@ import CarbonBuildings from '../pages/Indicate/Carbon/Buildings/CarbonBuildings'
 import AreaElectricity from '../pages/Indicate/Area/electricity/AreaElectricity';
 import AreaGas from '../pages/Indicate/Area/gas/AreaGas';
 import SignUp from '../pages/SignUp/SignUp';
+import FindPassword from '../pages/FindPassword/FindPassword';
+import ModifyPassword from '../pages/ModifyPassword/ModifyPassword';
 
 const Router = () => {
   return (
@@ -24,6 +26,8 @@ const Router = () => {
           <Route path="/electricity" element={<BuildingElectricity />} />
           <Route path="/gas" element={<BuildingGas />} />
           <Route path="/indicator" element={<Indicate />} />
+          <Route path="/findPassword" element={<FindPassword />} />
+          <Route path="/modifyPassword" element={<ModifyPassword />} />
           <Route
             path="/indicator/season/electricity"
             element={<SeasonEletricity />}
