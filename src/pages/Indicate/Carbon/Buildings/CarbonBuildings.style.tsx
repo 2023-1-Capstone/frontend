@@ -14,11 +14,11 @@ const SeasonTitle = styled.div`
 
   font-family: 'Pretendard';
   font-style: normal;
-  font-weight: 700;
+  font-weight: 400;
   font-size: 2.4rem;
   line-height: 2.9rem;
   margin-top: 3rem;
-  color: #000000;
+  color: #ffffff;
 `;
 
 const ChartChangeFrame = styled.div`
@@ -26,21 +26,20 @@ const ChartChangeFrame = styled.div`
   width: fit-content;
   display: flex;
   flex-direction: column;
-
-  margin-top: 2rem;
-  margin-bottom: 1rem;
 `;
 
 const ChartTopFrame = styled.div`
+  position: relative;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   padding: 0px;
-  gap: 15rem;
-  left: 5px;
-  position: relative;
-  width: 33rem;
+
+  width: 36rem;
+  padding-top: 1rem;
+  margin-bottom: 2rem;
+  left: 0.2rem;
   height: 2.3rem;
 `;
 
@@ -48,22 +47,23 @@ const ChartCategoryBox = styled.div`
   position: absolute;
 
   width: fit-content;
-  height: fit-content;
+  height: 2.7rem;
 
   &:hover {
     background-color: #e7e7e7;
   }
+  border: 1px solid #e7e7e7;
 
   cursor: pointer;
 
-  left: 0.5rem;
-
+  left: -0.5rem;
+  padding: 5px;
   border-radius: 0.3rem;
 
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   line-height: 1.7rem;
   display: flex;
   align-items: center;
@@ -80,21 +80,24 @@ const ChartCategoryBox = styled.div`
 const ChartYearBox = styled.div`
   position: absolute;
   width: fit-content;
-  height: fit-content;
+  height: 2.7rem;
+  padding: 5px;
 
   &:hover {
     background-color: #e7e7e7;
   }
 
+  border: 1px solid #e7e7e7;
+
   cursor: pointer;
 
-  left: 20rem;
+  left: 0rem;
 
   border-radius: 0.3rem;
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   line-height: 2rem;
   /* or 286% */
 
@@ -114,21 +117,24 @@ const ChartYearBox = styled.div`
 const ChartMonthBox = styled.div`
   position: absolute;
   width: fit-content;
-  height: fit-content;
+  height: 2.7rem;
+  padding: 5px;
 
   &:hover {
     background-color: #e7e7e7;
   }
 
+  border: 1px solid #e7e7e7;
+
   cursor: pointer;
 
-  left: 28rem;
+  left: 9rem;
 
   border-radius: 0.3rem;
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   line-height: 2rem;
   /* or 286% */
 
@@ -156,7 +162,7 @@ const ChartIndicatorLine = styled.div`
 const BottomWrapper = styled.div`
   position: relative;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 34.8rem;
@@ -280,7 +286,12 @@ const RefreshButton = styled.img`
 `;
 
 const Container = styled.div`
-  width: 30rem;
+  width: 36rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 0.5rem;
+  background-color: #ffffff;
 `;
 
 export {

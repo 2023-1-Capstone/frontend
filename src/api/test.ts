@@ -1,4 +1,5 @@
 import api from './api';
+import silentRefresh from './silentRefresh';
 
 const test = async (buildingCode: number) => {
   try {
@@ -6,9 +7,10 @@ const test = async (buildingCode: number) => {
       url: `/api/electricity/${buildingCode}`,
       method: 'GET',
     });
+
     return response.data;
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    // silentRefresh().then((data) => console.log('리프레시 토큰 발급: ', data));
   }
 };
 

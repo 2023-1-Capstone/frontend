@@ -3,8 +3,8 @@ import * as S from './Dropdown.style';
 import { dropDonwInfoType } from '../../type/Types';
 
 const sizeObj: any = {
-  large: '12.1rem',
-  middle: '6.5rem',
+  large: '13.655rem',
+  middle: '6.9rem',
 };
 
 const Dropdown = ({ dropDownInfo }: { dropDownInfo: dropDonwInfoType }) => {

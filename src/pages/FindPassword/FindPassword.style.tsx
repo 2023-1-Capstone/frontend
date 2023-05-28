@@ -7,11 +7,13 @@ const StartInner = styled.div`
   padding: 0px;
   gap: 99px;
 
-  position: absolute;
+  position: relative;
   width: 276px;
-  height: 627px;
-  left: 57px;
-  top: 99px;
+  height: fit-content;
+
+  left: 50%;
+  top: 45%;
+  transform: translate(-50%, -50%);
 `;
 
 const SymbolMark = styled.img`
@@ -27,16 +29,17 @@ const SymbolMark = styled.img`
   flex-grow: 0;
 `;
 
-const StartTitle = styled.div`
-  width: 178px;
-  height: 38px;
+const SignUpTitle = styled.div`
+  width: fit-content;
+  height: fit-content;
 
   font-family: 'Pretendard';
   font-style: normal;
-  font-weight: 700;
-  font-size: 30px;
+  font-weight: 500;
+  font-size: 3rem;
   line-height: 36px;
 
+  margin-bottom: 1.5rem;
   color: #ffffff;
 
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -48,59 +51,18 @@ const StartTitle = styled.div`
   flex-grow: 0;
 `;
 
-const StartDescription = styled.div`
-  width: 276px;
-  height: 14px;
+const TopInput = styled.input<{ color: string; border: string }>`
+  box-sizing: border-box;
   position: relative;
-
-  font-family: 'Pretendard';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 19px;
-
-  color: #ffffff;
-
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-
-  /* Inside auto layout */
-
-  flex: none;
-
-  flex-grow: 0;
-`;
-
-const StartNext = styled.div`
-  width: 60px;
-  height: 23px;
-
-  font-family: 'Pretendard';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 19px;
-
-  color: #ffffff;
-
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-
-  /* Inside auto layout */
-
-  cursor: pointer;
-  flex: none;
-
-  flex-grow: 0;
-`;
-
-const LoginInput = styled.input`
-  width: 19.3rem;
-  height: 3.1rem;
+  width: 25.7rem;
+  height: 3.6rem;
   font-family: 'Pretendard';
   background: #ffffff;
-  border-radius: 0.4rem;
-  border: 0px;
+  border: ${(props) => props.border} solid ${(props) => props.color};
+  border-radius: 0.4rem 0.4rem 0rem 0rem;
+
   /* Inside auto layout */
-  text-align: left;
+
   &:hover {
     outline: none;
   }
@@ -109,32 +71,87 @@ const LoginInput = styled.input`
     outline: none;
   }
 
-  &:placeholder {
-    color: blue;
-    font-size: 2.5em;
-  }
-  padding: 1rem;
   flex: none;
   order: 0;
   flex-grow: 0;
+  padding: 1rem;
 `;
 
-const LoginBottomText = styled.span`
-  width: fit-content;
-  height: fit-content;
-
+const MiddleInput = styled.input<{ color: string; border: string }>`
+  box-sizing: border-box;
+  position: relative;
+  width: 25.7rem;
+  height: 3.6rem;
   font-family: 'Pretendard';
-  font-style: normal;
-  font-weight: 250;
-  font-size: 1.2rem;
-
-  color: #ffffff;
+  background: #ffffff;
+  border: ${(props) => props.border} solid ${(props) => props.color};
 
   /* Inside auto layout */
-  cursor: pointer;
+
+  &:hover {
+    outline: none;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
   flex: none;
   order: 0;
   flex-grow: 0;
+  padding: 1rem;
+`;
+
+const BottomInput = styled.input<{ color: string; border: string }>`
+  box-sizing: border-box;
+  position: relative;
+  width: 25.7rem;
+  height: 3.6rem;
+  font-family: 'Pretendard';
+  background: #ffffff;
+  border: ${(props) => props.border} solid ${(props) => props.color};
+  border-radius: 0rem 0rem 0.4rem 0.4rem;
+
+  /* Inside auto layout */
+
+  &:hover {
+    outline: none;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  padding: 1rem;
+`;
+
+const BottomInputError = styled.input<{ color: string; border: string }>`
+  box-sizing: border-box;
+  position: relative;
+  width: 25.7rem;
+  height: 3.6rem;
+  font-family: 'Pretendard';
+  background: #ffffff;
+  border: 2px solid red;
+  border-radius: 0rem 0rem 0.4rem 0.4rem;
+
+  /* Inside auto layout */
+
+  &:hover {
+    outline: none;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  padding: 1rem;
 `;
 
 const LoginBottomTextWrapper = styled.div`
@@ -149,8 +166,8 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   position: relative;
-  width: 19.3rem;
-  gap: 1.1rem;
+  gap: 0px;
+  width: fit-content;
 `;
 
 const LoginWrapper = styled.div`
@@ -164,9 +181,9 @@ const LoginWrapper = styled.div`
   height: fit-content;
 `;
 
-const LoginButton = styled.div`
+const LoginButton = styled.button`
   position: relative;
-  width: 19.3rem;
+  width: 25.7rem;
   height: 4.4rem;
   font-family: 'Pretendard';
   font-style: normal;
@@ -177,8 +194,9 @@ const LoginButton = styled.div`
   align-items: center;
   /* identical to box height */
   cursor: pointer;
-  color: #99bfcf;
+  color: #0065b3;
   top: 1rem;
+  border: 0px;
   background: #ffffff;
   border-radius: 4px;
 `;
@@ -186,13 +204,13 @@ const LoginButton = styled.div`
 export {
   StartInner,
   SymbolMark,
-  StartTitle,
-  StartDescription,
-  StartNext,
+  SignUpTitle,
   Form,
-  LoginInput,
-  LoginBottomText,
+  TopInput,
+  MiddleInput,
+  BottomInput,
   LoginWrapper,
   LoginBottomTextWrapper,
   LoginButton,
+  BottomInputError,
 };

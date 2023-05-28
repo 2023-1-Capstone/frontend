@@ -13,6 +13,22 @@ import electricityIcon from '../assets/svg/electricityCategory.svg';
 import gasIcon from '../assets/svg/gasCategory.svg';
 import carbon from '../assets/svg/carbon.svg';
 import 'chartjs-plugin-doughnutlabel-rebourne';
+import { plugin } from './chartPlugin';
+
+const monthCategory = [
+  '1',
+  '2',
+  '3',
+  '4',
+  '5',
+  '6',
+  '7',
+  '8',
+  '9',
+  '10',
+  '11',
+  '12',
+];
 
 const doughnutColor = [
   'rgb(255, 0, 0, 0.4)',
@@ -29,120 +45,8 @@ const doughnutColor = [
   'rgb(255, 0, 127, 0.4)',
 ];
 
-const carbonAllPlugin = {
-  id: 'centerText',
-  afterDraw(chart: any, args: any, options: any) {
-    const {
-      ctx,
-      chartArea: { top, bottom, left, right, width, height },
-    } = chart;
-
-    let total = 0;
-
-    chart.data.datasets.forEach((dataset: any, idx: number) => {
-      total = dataset.data?.reduce((acc: number, cur: number) => acc + cur, 0);
-    });
-
-    // const total = chart.data?.dataset[0].data.reduce(
-    //   (acc: number, cur: number) => acc + cur,
-    //   0
-    // );
-    ctx.save();
-    const xCoor = chart.getDatasetMeta(0).data[0]?.x;
-    const yCoor = chart.getDatasetMeta(0).data[0]?.y;
-    ctx.fillStyle = '#000';
-    ctx.textAlign = 'center';
-    ctx.textBaseLine = 'middle';
-    ctx.font = 'bold 15px Pretendard';
-    ctx.fillStyle = '#92C111';
-    ctx.fillText('총 탄소 배출량', xCoor, yCoor - 10);
-    ctx.font = 'bold 20px Pretendard';
-    ctx.borderColor = '#757575';
-    ctx.fillStyle = '#757575';
-    ctx.fillText(total.toLocaleString('ko-KR') + 'kg', xCoor, yCoor + 20);
-  },
-};
-
-const plugin = {
-  id: 'emptyDoughnut',
-  afterDraw(chart: any, args: any, options: any) {
-    const {
-      ctx,
-      chartArea: { top, bottom, left, right, width, height },
-    } = chart;
-    let total = 0;
-    chart.data.datasets.forEach((dataset: any, idx: number) => {
-      total = dataset.data?.reduce((acc: number, cur: number) => acc + cur, 0);
-      chart.getDatasetMeta(idx).data.forEach((datapoint: any, index: any) => {
-        const { x, y } = datapoint.tooltipPosition();
-
-        const halfwidth = width / 2;
-        const halfheight = height / 2;
-
-        const xLine = x >= halfwidth ? x + 20 : x - 20;
-        const yLine = y >= halfwidth ? y + 30 : y - 30;
-        const extraLine = x >= halfwidth ? 15 : -15;
-
-        ctx.beginPath();
-        ctx.moveTo(x, y);
-        if (chart.data.labels[index] === '로스쿨관') {
-          ctx.lineTo(xLine, yLine - 10);
-          ctx.lineTo(xLine + extraLine, yLine - 10);
-        } else {
-          ctx.lineTo(xLine, yLine);
-          ctx.lineTo(xLine + extraLine, yLine);
-        }
-
-        ctx.strokeStyle = dataset.borderColor[index];
-        ctx.stroke();
-
-        //text
-        ctx.font = 'bold 13px Arial';
-        //position
-        const textXPosition = x >= halfwidth ? 'left' : 'right';
-        const plusFivePx = x >= halfwidth ? 5 : -5;
-        ctx.textAlign = textXPosition;
-
-        ctx.textBaseLine = 'middle';
-        ctx.fillStyle = dataset.borderColor[index];
-
-        if (chart.data.labels[index] === '로스쿨관')
-          ctx.fillText(chart.data.labels[index], xLine + extraLine, yLine - 10);
-        else ctx.fillText(chart.data.labels[index], xLine + extraLine, yLine);
-      });
-    });
-    ctx.save();
-    const xCoor = chart.getDatasetMeta(0).data[0]?.x;
-    const yCoor = chart.getDatasetMeta(0).data[0]?.y;
-    ctx.fillStyle = '#000';
-    ctx.textAlign = 'center';
-    ctx.textBaseLine = 'middle';
-    ctx.font = 'bold 15px Pretendard';
-    ctx.fillStyle = '#92C111';
-    ctx.fillText('총 탄소 배출량', xCoor, yCoor - 10);
-    ctx.font = 'bold 20px Pretendard';
-    ctx.borderColor = '#757575';
-    ctx.fillStyle = '#757575';
-    ctx.fillText(total.toLocaleString('ko-KR'), xCoor - 10, yCoor + 20);
-    ctx.fillText('kg', xCoor + 47, yCoor + 20);
-  },
-};
-
 const monthlyInitData: any = {
-  labels: [
-    '1월',
-    '2월',
-    '3월',
-    '4월',
-    '5월',
-    '6월',
-    '7월',
-    '8월',
-    '9월',
-    '10월',
-    '11월',
-    '12월',
-  ],
+  labels: monthCategory,
   datasets: [
     {
       backgroundColor: ['rgb(75, 192, 192)'],
@@ -154,20 +58,7 @@ const monthlyInitData: any = {
 };
 
 const monthlyInitDatas: any = {
-  labels: [
-    '1월',
-    '2월',
-    '3월',
-    '4월',
-    '5월',
-    '6월',
-    '7월',
-    '8월',
-    '9월',
-    '10월',
-    '11월',
-    '12월',
-  ],
+  labels: monthCategory,
   datasets: [
     {
       backgroundColor: doughnutColor,
@@ -341,21 +232,6 @@ const gasChartCategory = [
   '동월 가스 사용량',
 ];
 
-const monthCategory = [
-  '1월',
-  '2월',
-  '3월',
-  '4월',
-  '5월',
-  '6월',
-  '7월',
-  '8월',
-  '9월',
-  '10월',
-  '11월',
-  '12월',
-];
-
 const yearCategory = ['2023', '2022', '2021', '2020', '2019', '2018', '2017'];
 
 const options: any = {
@@ -386,11 +262,6 @@ const options: any = {
     y: {
       grid: {
         display: false,
-      },
-
-      title: {
-        display: true,
-        text: '단위 : Mwh',
       },
     },
   },
@@ -653,7 +524,7 @@ const optionsCarbonBuilding: any = {
   plugins: {
     datalabels: {
       formatter: (value: any, context: any) => {
-        return value.toLocaleString('ko-KR') + 'kg';
+        return value?.toLocaleString('ko-KR') + 'kg';
       },
       color: '#fff',
     },
@@ -692,6 +563,67 @@ const optionsCarbonBuilding: any = {
       title: {},
     },
   },
+};
+
+const optionsAreaStacked: any = {
+  responsive: false,
+  indexAxis: 'y',
+  plugins: {
+    title: {
+      display: false,
+      text: 'Chart.js Bar Chart - Stacked',
+    },
+    legend: {
+      labesl: {
+        boxWidth: 10,
+      },
+    },
+    datalabels: {
+      display: false,
+    },
+  },
+  scales: {
+    x: {
+      stacked: true,
+      grid: {
+        display: false,
+      },
+    },
+    y: {
+      stacked: true,
+      grid: {
+        display: false,
+      },
+    },
+  },
+};
+
+const areaStackedInitData: any = {
+  labels: [
+    '본관',
+    '하이테크관',
+    '정석',
+    '60주년',
+    '2,4호관',
+    '5호관',
+    '6,9호관',
+    '학생회관',
+    '서호관',
+    '로스쿨관',
+  ],
+
+  datasets: [
+    {
+      label: '감소값',
+      data: [1, 2, 3, 4, 5],
+      backgroundColor: ['rgb(138, 200, 240)'],
+    },
+    {
+      label: '실제 사용량',
+      data: [1, 2, 3, 4, 5],
+      backgroundColor: ['rgb(214, 214, 214)'],
+    },
+  ],
 };
 
 const indicateCategory = [
@@ -767,7 +699,7 @@ export {
   optionsCarbon,
   optionsCarbonBuilding,
   optionsDoughnutCarbon,
-  plugin,
   carbonBuildingInitData,
-  carbonAllPlugin,
+  areaStackedInitData,
+  optionsAreaStacked,
 };

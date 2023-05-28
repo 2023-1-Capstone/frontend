@@ -22,7 +22,7 @@ const HomeCategoryFrame = styled.div`
   justify-content: center;
   align-items: center;
 
-  background: #eeeeee;
+  background: #ffffff;
   border-radius: 1.6rem;
 
   /* Inside auto layout */

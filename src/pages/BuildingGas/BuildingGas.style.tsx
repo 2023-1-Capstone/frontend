@@ -4,6 +4,13 @@ const Container = styled.div`
   width: 33rem;
 `;
 
+const ChartMonth = styled.div`
+  font-size: 1.3rem;
+  position: absolute;
+  left: 7rem;
+  top: 49rem;
+`;
+
 const BuildingTitle = styled.div`
   position: relative;
   width: 27.5rem;
@@ -128,4 +135,5 @@ export {
   ChartYearBox,
   ChartTopFrame,
   ChartChangeFrame,
+  ChartMonth,
 };

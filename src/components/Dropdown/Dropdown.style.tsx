@@ -29,7 +29,7 @@ const DropdownFrame = styled.div<{
 
   /* Inside auto layout */
 
-  z-index: 1;
+  z-index: 2;
 
   flex: none;
   order: 1;

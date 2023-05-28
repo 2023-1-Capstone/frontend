@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const BuildingMoreInfoFrame = styled.div`
   position: relative;
-  width: 32.8rem;
+  width: 36rem;
   height: 75rem;
   background: #eeeeee;
   border-radius: 1rem;
@@ -17,7 +17,7 @@ const BuildingMoreInfoInner = styled.div`
   flex-direction: column;
   align-items: center;
   display: flex;
-  width: 32rem;
+  width: 33rem;
   height: 71.9rem;
   background: #e0e0e0;
   border-radius: 0.7rem;
@@ -46,7 +46,7 @@ const BuildingMoreInfoSummary = styled.div`
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 400;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   /* or 164% */
 
   border: 2px solid #fff;

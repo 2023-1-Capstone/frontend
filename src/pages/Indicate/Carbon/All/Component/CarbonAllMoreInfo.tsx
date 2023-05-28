@@ -7,7 +7,8 @@ import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import api from '../../../../../api/api';
 import { findMostWasteIdxArr, findLessWasteIdxArr } from '../../util';
-import { carbonAllPlugin, monthlyInitDatas } from '../../../../../store/store';
+import { monthlyInitDatas } from '../../../../../store/store';
+import { carbonAllPlugin } from '../../../../../store/chartPlugin';
 import { doughnutColor } from '../../../../../store/store';
 
 ChartJS.register(Tooltip, Legend, ChartDataLabels);

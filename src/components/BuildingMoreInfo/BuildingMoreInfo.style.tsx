@@ -2,16 +2,17 @@ import styled from 'styled-components';
 
 const BuildingMoreInfoFrame = styled.div`
   position: relative;
-  width: 32.8rem;
-  height: 45rem;
+  width: 36rem;
+  height: 50rem;
   background: #eeeeee;
   border-radius: 1rem;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   left: 50%;
   transform: translateX(-50%);
+  top: 1.5rem;
 `;
 
 const BuildingMoreInfoInner = styled.div`
@@ -19,8 +20,8 @@ const BuildingMoreInfoInner = styled.div`
   flex-direction: column;
   align-items: center;
   display: flex;
-  width: 29.9rem;
-  height: 42.9rem;
+  width: 32.9rem;
+  height: 47.5rem;
   background: #e0e0e0;
   border-radius: 0.7rem;
 `;
@@ -29,7 +30,7 @@ const BuildingMoreInfoTitle = styled.div`
   position: relative;
   width: fit-content;
   height: 2.6rem;
-  margin-top: 1rem;
+  margin-bottom: 0.7rem;
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
@@ -42,23 +43,25 @@ const BuildingMoreInfoTitle = styled.div`
 
 const BuildingMoreInfoSummary = styled.div`
   width: fit-content;
-  height: 5.6rem;
+  height: 7.6rem;
   display: flex;
   flex-direction: column;
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 400;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   /* or 164% */
   gap: 0.5rem;
   letter-spacing: 0.02rem;
   margin-top: 2rem;
   position: relative;
-
+  border-radius: 0.3rem;
   /* Black/600 */
+  justify-content: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
   gap: 0.8rem;
   color: #757575;
-
   /* Inside auto layout */
 
   flex: none;
@@ -67,10 +70,13 @@ const BuildingMoreInfoSummary = styled.div`
 `;
 
 const Container = styled.div`
-  width: 28rem;
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 33rem;
+  height: 44rem;
+  border: 0.2rem solid #fff;
   border-radius: 1rem;
-  border: 0.3rem solid #fff;
 `;
 
 export {
