@@ -21,6 +21,8 @@ const WrapperInner = styled.div`
   left: 0rem;
   top: 12rem;
   width: 39rem;
+  background-color: #99bfcf;
+
   height: 61.3rem;
   overflow-y: scroll;
   ::-webkit-scrollbar {
