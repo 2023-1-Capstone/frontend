@@ -13,18 +13,12 @@ const api = axios.create({
   },
 });
 
-api.interceptors.request.use(
-  (config: any) => {
-    config.headers = {
-      ...config.headers,
-      Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
-    };
-    return config;
-  },
-  (error) => {
-    Promise.reject(error);
-  }
-);
+api.interceptors.request.use((config: any) => {
+  config.headers = {
+    ...config.headers,
+  };
+  return config;
+});
 
 api.interceptors.response.use(
   (response) => {

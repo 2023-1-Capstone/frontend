@@ -5,6 +5,7 @@ const getFindPassword = async (userInfo: any) => {
     const response = await api({
       headers: {
         'Content-Type': 'application/json',
+        Authorization: null,
       },
       url: `/api/user/password`,
       method: 'POST',
