@@ -2,24 +2,11 @@ import styled from 'styled-components';
 
 const BuildingMoreInfoFrame = styled.div`
   position: relative;
-  width: 36rem;
-  height: 77rem;
-  background: #fff;
-  border-radius: 1rem;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  padding-bottom: 1rem;
-`;
-
-const BuildingMoreInfoInner = styled.div`
-  position: relative;
   flex-direction: column;
   align-items: center;
   display: flex;
-  width: 33rem;
-  height: 71.9rem;
+  width: 36rem;
+  height: 95rem;
   background: #fff;
   border-radius: 0.7rem;
 `;
@@ -34,6 +21,7 @@ const BuildingMoreInfoTitle = styled.div`
   font-weight: 700;
   font-size: 2rem;
   display: flex;
+  margin-top: 1rem;
   align-items: center;
   opacity: 0.7;
   color: #000000;
@@ -130,7 +118,6 @@ const RefreshButton = styled.img`
 export {
   BuildingMoreInfoTitle,
   BuildingMoreInfoFrame,
-  BuildingMoreInfoInner,
   Container,
   BuildingMoreInfoSummary,
   ChartIndicatorLine,

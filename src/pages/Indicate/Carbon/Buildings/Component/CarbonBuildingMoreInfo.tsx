@@ -15,8 +15,7 @@ import { plugin } from '../../../../../store/chartPlugin';
 import TransItem from '../../../Component/TrasnItem/TransItem';
 import { getUniqueNumberList } from '../../util';
 import refreshSVG from '../../../../../assets/svg/refresh.svg';
-import next from '../../../../../assets/svg/next.svg';
-import prev from '../../../../../assets/svg/prev.svg';
+import TreeTransItem from '../../../Component/TreeTransItem/TreeTransItem';
 ChartJS.register(Tooltip, Legend, ChartDataLabels);
 
 const CarbonBuildingMoreInfo = ({ chartState }: { chartState: any }) => {
@@ -65,34 +64,37 @@ const CarbonBuildingMoreInfo = ({ chartState }: { chartState: any }) => {
 
   return (
     <S.BuildingMoreInfoFrame>
-      <S.BuildingMoreInfoInner>
-        <S.BuildingMoreInfoTitle>요약 정보</S.BuildingMoreInfoTitle>
-        <S.ChartIndicatorLine></S.ChartIndicatorLine>
-        <S.Container>
-          <Doughnut
-            data={chartData}
-            options={optionsDoughnutCarbon}
-            plugins={[plugin]}
-          ></Doughnut>
-        </S.Container>
-        <S.BuildingMoreInfoSummary>
-          <li>가장 많은 탄소를 배출한 건물은 '123'입니다.</li>
-          <li>가장 적은 탄소를 배출한 건물은 '123'입니다.</li>
-          <li>건물 평균 123kg를 배출하였습니다.</li>
-        </S.BuildingMoreInfoSummary>
-        <S.BottomTitle>
-          해당 시기 탄소 배출량은...
-          <S.RefreshButton
-            src={refreshSVG}
-            onClick={() => setRandomIdxList(getUniqueNumberList(4, 8))}
-          ></S.RefreshButton>
-        </S.BottomTitle>
-        <TransItem
-          type={'carbon'}
-          randomIdxList={randomIdxList}
-          waste={moreInfo.totalCarbonWaste}
-        ></TransItem>
-      </S.BuildingMoreInfoInner>
+      <S.BuildingMoreInfoTitle>요약 정보</S.BuildingMoreInfoTitle>
+      <S.ChartIndicatorLine></S.ChartIndicatorLine>
+      <S.Container>
+        <Doughnut
+          data={chartData}
+          options={optionsDoughnutCarbon}
+          plugins={[plugin]}
+        ></Doughnut>
+      </S.Container>
+      <S.BuildingMoreInfoSummary>
+        <li>
+          가장 많은 탄소를 배출한 건물은 '{moreInfo.mostWasteBuilding}'입니다.
+        </li>
+        <li>
+          가장 적은 탄소를 배출한 건물은 '{moreInfo.lessWasteBuilding}'입니다.
+        </li>
+        <li>건물 평균 {moreInfo.averageWaste}kg를 배출하였습니다.</li>
+      </S.BuildingMoreInfoSummary>
+      <S.BottomTitle>
+        해당 시기 탄소 배출량은...
+        <S.RefreshButton
+          src={refreshSVG}
+          onClick={() => setRandomIdxList(getUniqueNumberList(4, 8))}
+        ></S.RefreshButton>
+      </S.BottomTitle>
+      <TransItem
+        type={'carbon'}
+        randomIdxList={randomIdxList}
+        waste={moreInfo.totalCarbonWaste}
+      ></TransItem>
+      <TreeTransItem carbonWaste={moreInfo.totalCarbonWaste}></TreeTransItem>
     </S.BuildingMoreInfoFrame>
   );
 };
