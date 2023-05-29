@@ -25,19 +25,6 @@ import BuildingMoreInfoGas from '../../components/BuildingMoreInfo/BuildingMoreI
 
 ChartJS.register(Tooltip, Legend);
 
-const Chart = ({ chartState }: { chartState: any }) => {
-  return (
-    <S.Container>
-      <Bar
-        width="350"
-        height="250"
-        data={chartState}
-        options={optionsGas}
-      ></Bar>
-    </S.Container>
-  );
-};
-
 const BuildingElectricity = () => {
   const [selectedBuilding, setSelectedBuilding] = useState<string>('본관');
   const [chartData, setChartData] = useState<chartInfoType[]>([]);
@@ -168,21 +155,24 @@ const BuildingElectricity = () => {
   useEffect(setChartByDropdown, [rightCategory]);
 
   return (
-    <>
-      <Wrapper
-        onClick={(e: React.MouseEvent<HTMLDivElement>) => {
-          setIsLeftDropDownOn(false);
-          setIsRightDropDownOn(false);
-        }}
-      >
-        <Header></Header>
-        <WrapperInner>
-          <S.BuildingTitle>건물별 가스에너지를 확인해보세요!</S.BuildingTitle>
-          <Carousel
-            buildingList={buildingInfo?.data.result}
-            setSelectedBuilding={setSelectedBuilding}
-          ></Carousel>
-          <S.ChartChangeFrame>
+    <Wrapper
+      onClick={(e: React.MouseEvent<HTMLDivElement>) => {
+        setIsLeftDropDownOn(false);
+        setIsRightDropDownOn(false);
+      }}
+    >
+      <Header></Header>
+      <WrapperInner>
+        <S.BuildingTitle>건물별 가스에너지를 확인해보세요!</S.BuildingTitle>
+        <S.BuildingElectricityInner>
+          <S.CarouselFrame>
+            <Carousel
+              buildingList={buildingInfo?.data.result}
+              setSelectedBuilding={setSelectedBuilding}
+            ></Carousel>
+          </S.CarouselFrame>
+
+          <S.Container>
             <S.ChartTopFrame>
               <S.ChartCategoryBox onClick={leftDropdownHandler}>
                 {chartCategory} &nbsp;<img src={downArrow}></img>
@@ -192,21 +182,28 @@ const BuildingElectricity = () => {
                 {rightCategory && <img src={downArrow}></img>}
               </S.ChartYearBox>
             </S.ChartTopFrame>
-            <S.ChartIndicatorLine></S.ChartIndicatorLine>
-          </S.ChartChangeFrame>
-
-          <Chart chartState={chartState}></Chart>
+            <S.ChartChangeFrame></S.ChartChangeFrame>
+            <S.ChartContainer>
+              <Bar
+                width="350"
+                height="250"
+                data={chartState}
+                options={optionsGas}
+              ></Bar>
+            </S.ChartContainer>
+            <S.ChartTitle>{selectedBuilding}</S.ChartTitle>
+          </S.Container>
           <BuildingMoreInfoGas
-            chartState={chartState}
             categoryState={chartCategory}
+            chartState={chartState}
             curYear={rightCategory}
           ></BuildingMoreInfoGas>
           {isLeftDropdownOn && (
             <Dropdown
               dropDownInfo={dropdownInfoCreater(
                 '9.6rem',
-                '3rem',
-                '26.2rem',
+                '1.7rem',
+                '27.7rem',
                 'large',
                 gasChartCategory,
                 setChartCategory,
@@ -219,8 +216,8 @@ const BuildingElectricity = () => {
             <Dropdown
               dropDownInfo={dropdownInfoCreater(
                 '9.6rem',
-                '29.5rem',
-                '26.2rem',
+                '16.2rem',
+                '27.7rem',
                 'middle',
                 rightDropdown,
                 setRightCategory,
@@ -228,10 +225,10 @@ const BuildingElectricity = () => {
               )}
             ></Dropdown>
           )}
-        </WrapperInner>
-        <NavigationBar navigationStatus="gas"></NavigationBar>
-      </Wrapper>
-    </>
+        </S.BuildingElectricityInner>
+      </WrapperInner>
+      <NavigationBar navigationStatus="gas"></NavigationBar>
+    </Wrapper>
   );
 };
 

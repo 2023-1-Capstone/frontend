@@ -11,7 +11,7 @@ const BottomInfoTransItem = styled.div`
   width: 13.5rem;
   height: 11.2rem;
 
-  background: #ffffff;
+  background: #fff;
   border-radius: 1.1rem;
 
   /* Inside auto layout */
@@ -65,7 +65,7 @@ const BottomInfoTransWrapper = styled.div`
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   flex-wrap: wrap;
-  background-color: #e0e0e0;
+  background-color: #abcdef;
 `;
 
 export {

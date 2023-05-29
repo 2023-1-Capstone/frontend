@@ -7,12 +7,16 @@ import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import api from '../../../../../api/api';
 import { findMostWasteIdxArr, findLessWasteIdxArr } from '../../util';
-import { carbonBuildingInitData } from '../../../../../store/store';
+import {
+  carbonBuildingInitData,
+  BuildingCarbonDoughnut,
+} from '../../../../../store/store';
 import { plugin } from '../../../../../store/chartPlugin';
 import TransItem from '../../../Component/TrasnItem/TransItem';
 import { getUniqueNumberList } from '../../util';
 import refreshSVG from '../../../../../assets/svg/refresh.svg';
-
+import next from '../../../../../assets/svg/next.svg';
+import prev from '../../../../../assets/svg/prev.svg';
 ChartJS.register(Tooltip, Legend, ChartDataLabels);
 
 const CarbonBuildingMoreInfo = ({ chartState }: { chartState: any }) => {
@@ -33,7 +37,9 @@ const CarbonBuildingMoreInfo = ({ chartState }: { chartState: any }) => {
 
   useEffect(() => {
     const chartDataCopy = JSON.parse(JSON.stringify(chartData));
-    chartDataCopy.datasets[0] = chartState.datasets[0];
+    chartDataCopy.datasets[0].data = chartState.datasets[0].data;
+    chartDataCopy.datasets[0].backgroundColor = BuildingCarbonDoughnut;
+    chartDataCopy.datasets[0].borderColor = BuildingCarbonDoughnut;
     const areaArr = buildingData?.map((item: any) =>
       item.elecArea >= item.gasArea ? item.elecArea : item.gasArea
     );

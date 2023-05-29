@@ -7,7 +7,7 @@ import {
 import Header from '../../../../components/Header/Header';
 import NavigationBar from '../../../../components/NavigationBar/NavigationBar';
 import { Chart as ChartJS, Tooltip, Legend } from 'chart.js/auto';
-import { Bar, Doughnut } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 import { optionsCarbonBuilding, areaInitData } from '../../../../store/store';
 import downArrow from '../../../../assets/svg/downArrow.svg';
 import * as S from './CarbonBuildings.style';
@@ -19,8 +19,6 @@ import { getTargetBuildingsUsageArray } from '../util';
 import api from '../../../../api/api';
 import refreshSVG from '../../../../assets/svg/refresh.svg';
 import { getUniqueNumberList } from '../util';
-import TransItem from '../../Component/TrasnItem/TransItem';
-import TreeTransItem from '../../Component/TreeTransItem/TreeTransItem';
 import CarbonBuildingMoreInfo from './Component/CarbonBuildingMoreInfo';
 import DoughnutLabel from 'chartjs-plugin-doughnutlabel-rebourne';
 
@@ -62,7 +60,9 @@ const AreaElectricity = () => {
         <Header></Header>
         <WrapperInner>
           <S.SeasonWrapper>
-            <S.SeasonTitle>건물별 탄소 배출 현황</S.SeasonTitle>
+            <S.SeasonTitle>건물별 탄소 배출 현황을 확인해보세요!</S.SeasonTitle>
+            <S.Description>아래는 건물별 탄소 그래프에요</S.Description>
+
             <S.ChartChangeFrame>
               {isYearDropdownOn && (
                 <Dropdown

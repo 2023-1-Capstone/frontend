@@ -44,10 +44,6 @@ const BuildingElectricity = () => {
     api('/api/buildings')
   );
 
-  useEffect(() => {
-    console.log(userInfo);
-  }, [userInfo]);
-
   /**
    * API 호출이 들어가야 할 부분
    * @param selectedBuilding
@@ -165,82 +161,80 @@ const BuildingElectricity = () => {
   useEffect(setChartByDropdown, [rightCategory]);
 
   return (
-    <>
-      <Wrapper
-        onClick={(e: React.MouseEvent<HTMLDivElement>) => {
-          setIsLeftDropDownOn(false);
-          setIsRightDropDownOn(false);
-        }}
-      >
-        <Header></Header>
-        <WrapperInner>
-          <S.BuildingTitle>건물별 전기에너지를 확인해보세요!</S.BuildingTitle>
-          <S.BuildingElectricityInner>
-            <S.CarouselFrame>
-              <Carousel
-                buildingList={userInfo?.data.result}
-                setSelectedBuilding={setSelectedBuilding}
-              ></Carousel>
-            </S.CarouselFrame>
+    <Wrapper
+      onClick={(e: React.MouseEvent<HTMLDivElement>) => {
+        setIsLeftDropDownOn(false);
+        setIsRightDropDownOn(false);
+      }}
+    >
+      <Header></Header>
+      <WrapperInner>
+        <S.BuildingTitle>건물별 전기에너지를 확인해보세요!</S.BuildingTitle>
+        <S.BuildingElectricityInner>
+          <S.CarouselFrame>
+            <Carousel
+              buildingList={userInfo?.data.result}
+              setSelectedBuilding={setSelectedBuilding}
+            ></Carousel>
+          </S.CarouselFrame>
 
-            <S.Container>
-              <S.ChartTopFrame>
-                <S.ChartCategoryBox onClick={leftDropdownHandler}>
-                  {chartCategory} &nbsp;<img src={downArrow}></img>
-                </S.ChartCategoryBox>
-                <S.ChartYearBox onClick={rightDropdownHandler}>
-                  {rightCategory}&nbsp;{' '}
-                  {rightCategory && <img src={downArrow}></img>}
-                </S.ChartYearBox>
-              </S.ChartTopFrame>
-              <S.ChartChangeFrame></S.ChartChangeFrame>
-              <S.ChartContainer>
-                <Bar
-                  width="350"
-                  height="250"
-                  data={chartState}
-                  options={options}
-                ></Bar>
-              </S.ChartContainer>
-              <S.ChartTitle>{selectedBuilding}</S.ChartTitle>
-            </S.Container>
-            <BuildingMoreInfo
-              categoryState={chartCategory}
-              chartState={chartState}
-              curYear={rightCategory}
-            ></BuildingMoreInfo>
-            {isLeftDropdownOn && (
-              <Dropdown
-                dropDownInfo={dropdownInfoCreater(
-                  '9.6rem',
-                  '1.7rem',
-                  '27.7rem',
-                  'large',
-                  electricityChartCategory,
-                  setChartCategory,
-                  setIsLeftDropDownOn
-                )}
-              ></Dropdown>
-            )}
+          <S.Container>
+            <S.ChartTopFrame>
+              <S.ChartCategoryBox onClick={leftDropdownHandler}>
+                {chartCategory} &nbsp;<img src={downArrow}></img>
+              </S.ChartCategoryBox>
+              <S.ChartYearBox onClick={rightDropdownHandler}>
+                {rightCategory}&nbsp;{' '}
+                {rightCategory && <img src={downArrow}></img>}
+              </S.ChartYearBox>
+            </S.ChartTopFrame>
+            <S.ChartChangeFrame></S.ChartChangeFrame>
+            <S.ChartContainer>
+              <Bar
+                width="350"
+                height="250"
+                data={chartState}
+                options={options}
+              ></Bar>
+            </S.ChartContainer>
+            <S.ChartTitle>{selectedBuilding}</S.ChartTitle>
+          </S.Container>
+          <BuildingMoreInfo
+            categoryState={chartCategory}
+            chartState={chartState}
+            curYear={rightCategory}
+          ></BuildingMoreInfo>
+          {isLeftDropdownOn && (
+            <Dropdown
+              dropDownInfo={dropdownInfoCreater(
+                '9.6rem',
+                '1.7rem',
+                '27.7rem',
+                'large',
+                electricityChartCategory,
+                setChartCategory,
+                setIsLeftDropDownOn
+              )}
+            ></Dropdown>
+          )}
 
-            {isRightDropdownOn && (
-              <Dropdown
-                dropDownInfo={dropdownInfoCreater(
-                  '9.6rem',
-                  '16.2rem',
-                  '27.7rem',
-                  'middle',
-                  rightDropdown,
-                  setRightCategory,
-                  setIsRightDropDownOn
-                )}
-              ></Dropdown>
-            )}
-          </S.BuildingElectricityInner>
-        </WrapperInner>
-        <NavigationBar navigationStatus="electricity"></NavigationBar>
-      </Wrapper>
-    </>
+          {isRightDropdownOn && (
+            <Dropdown
+              dropDownInfo={dropdownInfoCreater(
+                '9.6rem',
+                '16.2rem',
+                '27.7rem',
+                'middle',
+                rightDropdown,
+                setRightCategory,
+                setIsRightDropDownOn
+              )}
+            ></Dropdown>
+          )}
+        </S.BuildingElectricityInner>
+      </WrapperInner>
+      <NavigationBar navigationStatus="electricity"></NavigationBar>
+    </Wrapper>
   );
 };
 

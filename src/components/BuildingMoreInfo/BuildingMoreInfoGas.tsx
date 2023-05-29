@@ -11,6 +11,8 @@ import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import api from '../../api/api';
 import { findMostWasteIdx } from '../../pages/BuildingElectricity/util';
+import { BuildingGasPlugin } from '../../store/chartPlugin';
+import { monthCategory } from '../../store/store';
 ChartJS.register(Tooltip, Legend, ChartDataLabels);
 
 const MonthlyMoreInfo = ({
@@ -53,6 +55,7 @@ const MonthlyMoreInfo = ({
     if (chartState) {
       const chartStateCopy = JSON.parse(JSON.stringify(chartState));
       chartStateCopy.datasets[0].backgroundColor = doughnutColor;
+      chartStateCopy.labels = monthCategory.map((item: any) => item + '월');
       const usageArr = chartStateCopy.datasets[0].data;
       const mostWasteMonth = findMostWasteIdx(usageArr) + 1;
       const totalWatt = usageArr?.reduce(
@@ -63,8 +66,6 @@ const MonthlyMoreInfo = ({
       const targetFeeData = feeData?.filter(
         (item: any) => item.year === parseInt(curYear)
       )[0]?.feeResponses;
-
-      console.log(feeData);
 
       setMoreInfo({
         ...moreInfo,
@@ -78,11 +79,13 @@ const MonthlyMoreInfo = ({
 
   return (
     <S.BuildingMoreInfoFrame>
-      <S.BuildingMoreInfoInner>
-        <S.BuildingMoreInfoTitle>요약 정보</S.BuildingMoreInfoTitle>
-        <S.Container>
-          <Doughnut data={chartData} options={optionsDoughnut}></Doughnut>
-        </S.Container>
+      <S.BuildingMoreInfoTitle>요약 정보</S.BuildingMoreInfoTitle>
+      <S.Container>
+        <Doughnut
+          data={chartData}
+          options={optionsDoughnut}
+          plugins={[BuildingGasPlugin]}
+        ></Doughnut>
         <S.BuildingMoreInfoSummary>
           <li>
             {curYear}년 총 {checkThisYear(parseInt(curYear)) ? '예상 ' : null}
@@ -107,7 +110,7 @@ const MonthlyMoreInfo = ({
             </li>
           )}
         </S.BuildingMoreInfoSummary>
-      </S.BuildingMoreInfoInner>
+      </S.Container>
     </S.BuildingMoreInfoFrame>
   );
 };
@@ -121,10 +124,6 @@ const BuildingMoreInfoGas = ({
   chartState: any;
   curYear: any;
 }) => {
-  useEffect(() => {
-    console.log(categoryState);
-  }, [categoryState]);
-
   if (categoryState === '월별 가스 사용량') {
     return (
       <MonthlyMoreInfo
