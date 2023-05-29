@@ -30,6 +30,7 @@ const WrapperInner = styled.div`
     display: none;
   }
   padding: 0 2rem;
+  padding-bottom: 3rem;
 `;
 
 export { Wrapper, WrapperInner };
