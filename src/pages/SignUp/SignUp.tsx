@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { Wrapper, WrapperInner } from '../../components/Wrapper/Wrapper.style';
 import * as S from './SignUp.style';
-import { UseQueryResult, useQuery } from '@tanstack/react-query';
-import api from '../../api/api';
 import postSignUp from '../../api/postSignUp';
 
 const signUpKey = ['username', 'password', 'email', 'name'];
@@ -30,7 +28,6 @@ const SignUp = () => {
     const data = await postSignUp(signUpInfo);
     if (data?.status === 200) {
       alert('인증 메일을 발송했습니다.');
-
       navigator('/');
     }
   };
