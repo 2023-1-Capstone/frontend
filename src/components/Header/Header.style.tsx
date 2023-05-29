@@ -6,7 +6,6 @@ const HeaderFrame = styled.div`
   align-items: center;
   padding: 0px;
   gap: 6.6rem;
-
   position: absolute;
   width: 35rem;
   height: 5.8rem;
