@@ -61,7 +61,7 @@ const AreaElectricity = () => {
         <WrapperInner>
           <S.SeasonWrapper>
             <S.SeasonTitle>건물별 탄소 배출 현황을 확인해보세요!</S.SeasonTitle>
-            <S.Description>아래는 건물별 탄소 그래프에요</S.Description>
+            <S.Description>아래는 탄소 배출량 공식이에요</S.Description>
 
             <S.ChartChangeFrame>
               {isYearDropdownOn && (
@@ -117,12 +117,9 @@ const AreaElectricity = () => {
                 height="250"
               ></Bar>
             </S.Container>
-
-            <S.BottomWrapper>
-              <CarbonBuildingMoreInfo
-                chartState={chartData}
-              ></CarbonBuildingMoreInfo>
-            </S.BottomWrapper>
+            <CarbonBuildingMoreInfo
+              chartState={chartData}
+            ></CarbonBuildingMoreInfo>
           </S.SeasonWrapper>
         </WrapperInner>
         <NavigationBar navigationStatus="indicator"></NavigationBar>
