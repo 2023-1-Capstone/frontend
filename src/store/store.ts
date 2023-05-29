@@ -8,7 +8,6 @@ import 호관6 from '../assets/schoolImage/6호관.jpg';
 import 로스쿨관 from '../assets/schoolImage/로스쿨관.jpg';
 import 서호관 from '../assets/schoolImage/서호관.jpg';
 import 학생회관 from '../assets/schoolImage/학생회관.jpg';
-import { buildingInfoType } from '../type/Types';
 import electricityIcon from '../assets/svg/electricityCategory.svg';
 import gasIcon from '../assets/svg/gasCategory.svg';
 import carbon from '../assets/svg/carbon.svg';
@@ -43,6 +42,20 @@ const doughnutColor = [
   'rgb(95, 0, 255, 0.4)',
   'rgb(255, 0, 221, 0.4)',
   'rgb(255, 0, 127, 0.4)',
+];
+
+const BuildingCarbonDoughnut = [
+  'rgba(0, 99, 132, 0.5)',
+  'rgba(25, 99, 132, 0.5)',
+  'rgba(50, 99, 132, 0.5)',
+  'rgba(75, 99, 132, 0.5)',
+  'rgba(100, 99, 132, 0.5)',
+  'rgba(125, 99, 132, 0.5)',
+  'rgba(150, 99, 132, 0.5)',
+  'rgba(175, 99, 132, 0.5)',
+  'rgba(200, 99, 132, 0.5)',
+  'rgba(225, 99, 132, 0.5)',
+  'rgba(255, 99, 132, 0.5)',
 ];
 
 const monthlyInitData: any = {
@@ -99,32 +112,10 @@ const areaInitData: any = {
   datasets: [
     {
       maxBarThickness: 35,
-      backgroundColor: [
-        'rgba(0, 99, 132, 0.6)',
-        'rgba(25, 99, 132, 0.6)',
-        'rgba(50, 99, 132, 0.6)',
-        'rgba(75, 99, 132, 0.6)',
-        'rgba(100, 99, 132, 0.6)',
-        'rgba(125, 99, 132, 0.6)',
-        'rgba(150, 99, 132, 0.6)',
-        'rgba(175, 99, 132, 0.6)',
-        'rgba(200, 99, 132, 0.6)',
-        'rgba(225, 99, 132, 0.6)',
-        'rgba(255, 99, 132, 0.6)',
-      ],
-      borderColor: [
-        'rgba(0, 99, 132, 0.6)',
-        'rgba(25, 99, 132, 0.6)',
-        'rgba(50, 99, 132, 0.6)',
-        'rgba(75, 99, 132, 0.6)',
-        'rgba(100, 99, 132, 0.6)',
-        'rgba(125, 99, 132, 0.6)',
-        'rgba(150, 99, 132, 0.6)',
-        'rgba(175, 99, 132, 0.6)',
-        'rgba(200, 99, 132, 0.6)',
-        'rgba(225, 99, 132, 0.6)',
-      ],
+      backgroundColor: BuildingCarbonDoughnut,
+      borderColor: BuildingCarbonDoughnut,
       borderRadius: 3,
+      borderWidth: 10,
       data: [],
     },
   ],
@@ -176,7 +167,6 @@ const carbonBuildingInitData: any = {
       ],
       borderRadius: 3,
       data: [],
-      borderWidth: 1,
     },
   ],
 };
@@ -245,7 +235,7 @@ const options: any = {
     },
     tooltip: {
       callbacks: {
-        title: (context: any) => context[0].label,
+        title: (context: any) => context[0].label + '월',
         label: (context: any) => {
           let label = context.dataset.label + '' || '';
           return context.parsed.y !== null ? context.parsed.y + 'Mwh' : null;
@@ -453,7 +443,7 @@ const optionsGas: any = {
     },
     tooltip: {
       callbacks: {
-        title: (context: any) => context[0].label,
+        title: (context: any) => context[0].label + '월',
         label: (context: any) => {
           let label = context.dataset.label + '' || '';
           return context.parsed.y !== null ? context.parsed.y + 'm3' : null;
@@ -470,11 +460,6 @@ const optionsGas: any = {
     y: {
       grid: {
         display: false,
-      },
-
-      title: {
-        display: true,
-        text: '단위 : m3',
       },
     },
   },
@@ -702,4 +687,5 @@ export {
   carbonBuildingInitData,
   areaStackedInitData,
   optionsAreaStacked,
+  BuildingCarbonDoughnut,
 };
