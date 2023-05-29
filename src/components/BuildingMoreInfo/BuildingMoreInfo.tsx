@@ -126,10 +126,6 @@ const BuildingMoreInfo = ({
   chartState: any;
   curYear: any;
 }) => {
-  useEffect(() => {
-    console.log(categoryState);
-  }, [categoryState]);
-
   if (categoryState === '월별 전기 사용량') {
     return (
       <MonthlyMoreInfo

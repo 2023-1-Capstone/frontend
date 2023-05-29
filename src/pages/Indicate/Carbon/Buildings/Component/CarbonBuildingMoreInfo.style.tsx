@@ -3,13 +3,14 @@ import styled from 'styled-components';
 const BuildingMoreInfoFrame = styled.div`
   position: relative;
   width: 36rem;
-  height: 75rem;
-  background: #eeeeee;
+  height: 77rem;
+  background: #fff;
   border-radius: 1rem;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  padding-bottom: 1rem;
 `;
 
 const BuildingMoreInfoInner = styled.div`
@@ -19,7 +20,7 @@ const BuildingMoreInfoInner = styled.div`
   display: flex;
   width: 33rem;
   height: 71.9rem;
-  background: #e0e0e0;
+  background: #fff;
   border-radius: 0.7rem;
 `;
 
@@ -27,19 +28,19 @@ const BuildingMoreInfoTitle = styled.div`
   position: relative;
   width: fit-content;
   height: 2.6rem;
-  margin-top: 1rem;
+
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
   font-size: 2rem;
   display: flex;
   align-items: center;
-
+  opacity: 0.7;
   color: #000000;
 `;
 
 const BuildingMoreInfoSummary = styled.div`
-  width: fit-content;
+  width: 33rem;
   height: fit-content;
   display: flex;
   flex-direction: column;
@@ -50,6 +51,7 @@ const BuildingMoreInfoSummary = styled.div`
   /* or 164% */
 
   border: 2px solid #fff;
+  background-color: #eee;
   border-radius: 0.5rem;
   padding: 1rem;
   letter-spacing: 0.02rem;
@@ -93,13 +95,14 @@ const BuildingMoreInfoChartInfo = styled.div`
 
 const Container = styled.div`
   position: relative;
-  width: 35rem;
+  width: 39rem;
   top: -7rem;
 `;
 
 const ChartIndicatorLine = styled.div`
   position: relative;
   width: 7.5rem;
+  margin-bottom: 1.5rem;
   border: 0.1rem solid #757575;
 `;
 

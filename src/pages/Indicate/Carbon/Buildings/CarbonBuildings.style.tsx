@@ -15,9 +15,10 @@ const SeasonTitle = styled.div`
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 400;
-  font-size: 2.4rem;
+  font-size: 2rem;
   line-height: 2.9rem;
   margin-top: 3rem;
+  margin-bottom: 3rem;
   color: #ffffff;
 `;
 
@@ -91,7 +92,7 @@ const ChartYearBox = styled.div`
 
   cursor: pointer;
 
-  left: 0rem;
+  left: 0.5rem;
 
   border-radius: 0.3rem;
   font-family: 'Pretendard';
@@ -105,7 +106,7 @@ const ChartYearBox = styled.div`
   align-items: center;
   text-align: center;
 
-  color: #000000;
+  color: #777777;
 
   /* Inside auto layout */
 
@@ -128,7 +129,7 @@ const ChartMonthBox = styled.div`
 
   cursor: pointer;
 
-  left: 9rem;
+  left: 10rem;
 
   border-radius: 0.3rem;
   font-family: 'Pretendard';
@@ -142,7 +143,7 @@ const ChartMonthBox = styled.div`
   align-items: center;
   text-align: center;
 
-  color: #000000;
+  color: #777777;
 
   /* Inside auto layout */
 
@@ -294,6 +295,19 @@ const Container = styled.div`
   background-color: #ffffff;
 `;
 
+const Description = styled.div`
+  position: relative;
+  width: fit-content;
+  height: fit-content;
+
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.2rem;
+  line-height: 2.9rem;
+  color: #fff;
+`;
+
 export {
   SeasonWrapper,
   ChartCategoryBox,
@@ -312,4 +326,5 @@ export {
   SeasonTitle,
   RefreshButton,
   Container,
+  Description,
 };

@@ -5,14 +5,25 @@ const postSignUp = async (signUpInfo: any) => {
     const response = await api({
       headers: {
         'Content-Type': 'application/json',
+        Authorization: null,
       },
       url: `/api/user/join`,
       method: 'POST',
       data: JSON.stringify(signUpInfo),
     });
-    console.log('응답 객체 : ', response);
+
+    // const response = await fetch('http://localhost:8080/api/user/join', {
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   method: 'POST',
+    //   body: JSON.stringify(signUpInfo),
+    // });
+
     return response;
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export default postSignUp;

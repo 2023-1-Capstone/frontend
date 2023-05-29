@@ -14,6 +14,7 @@ import AreaGas from '../pages/Indicate/Area/gas/AreaGas';
 import SignUp from '../pages/SignUp/SignUp';
 import FindPassword from '../pages/FindPassword/FindPassword';
 import ModifyPassword from '../pages/ModifyPassword/ModifyPassword';
+import Exception from '../pages/Exception/Exception';
 
 const Router = () => {
   return (
@@ -43,6 +44,7 @@ const Router = () => {
             element={<AreaElectricity />}
           />
           <Route path="/indicator/area/gas" element={<AreaGas />} />
+          <Route path="/authException" element={<Exception />} />
         </Routes>
       </BrowserRouter>
     </>
