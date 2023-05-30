@@ -46,6 +46,17 @@ const Water = () => {
     else setIsRightDropDownOn(true);
   };
 
+  const getBackgroundColor = (waterInfo: chartInfoType[]) => {
+    return waterInfo
+      ?.filter(
+        (item: chartInfoType) => item.year === parseInt(rightCategory)
+      )[0]
+      .usages.map((item: chartInfoUsageType) => {
+        if (item?.data) return 'rgb(91,125,177,0.9)';
+        return 'rgb(0,0,0,0.1)';
+      });
+  };
+
   useEffect(() => {
     const chartStateCopy = JSON.parse(JSON.stringify(chartState));
     const yearList = waterInfo?.map((item: chartInfoType) => item.year);
@@ -54,10 +65,12 @@ const Water = () => {
         (item: chartInfoType) => item.year === parseInt(rightCategory)
       )[0]
       .usages.map((item: chartInfoUsageType) => {
-        if (item.data) return item.data;
-        return item.prediction;
+        if (item?.data) return item?.data;
+        return item?.prediction;
       });
+    const backgroundColor = getBackgroundColor(waterInfo);
     chartStateCopy.datasets[0].data = usageList;
+    chartStateCopy.datasets[0].backgroundColor = backgroundColor;
     setChartState(chartStateCopy);
     setRightDropDown(yearList);
   }, [waterInfo, rightCategory]);
