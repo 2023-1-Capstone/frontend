@@ -61,7 +61,7 @@ const BuildingElectricity = () => {
     chartStateCopy.datasets[0].backgroundColor = rData.result[
       rData.result.length - 1
     ].usages.map((data: any) => {
-      if (data.data) return 'rgb(75, 192, 192)';
+      if (data.data) return 'rgb(91,125,177,0.9)';
       return 'rgb(0,0,0,0.1)';
     });
 
@@ -123,7 +123,7 @@ const BuildingElectricity = () => {
 
       // 타겟이 예측인지 아닌지 뽑아내서 색깔 변경주기
       chartStateCopy.datasets[0].backgroundColor = target?.map((data: any) => {
-        if (data.data) return 'rgb(75, 192, 192)';
+        if (data.data) return 'rgb(91,125,177,0.9)';
         return 'rgb(0,0,0,0.1)';
       });
 
@@ -134,7 +134,7 @@ const BuildingElectricity = () => {
       const target = chartData.map((item: any) => item.usages[curMonth]);
       const backgroundColor = chartData.map((item: chartInfoType) => {
         if (item.usages[parseInt(rightCategory) - 1].data)
-          return 'rgb(75, 192, 192)';
+          return 'rgb(91,125,177,0.9)';
         return 'rgb(0,0,0,0.1)';
       });
       chartStateCopy.datasets[0].data = target?.map(
@@ -203,7 +203,7 @@ const BuildingElectricity = () => {
               dropDownInfo={dropdownInfoCreater(
                 '9.6rem',
                 '1.7rem',
-                '27.7rem',
+                '25.7rem',
                 'large',
                 gasChartCategory,
                 setChartCategory,
@@ -217,7 +217,7 @@ const BuildingElectricity = () => {
               dropDownInfo={dropdownInfoCreater(
                 '9.6rem',
                 '16.2rem',
-                '27.7rem',
+                '25.7rem',
                 'middle',
                 rightDropdown,
                 setRightCategory,
