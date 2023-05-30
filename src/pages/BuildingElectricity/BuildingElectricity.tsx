@@ -59,15 +59,15 @@ const BuildingElectricity = () => {
     const target = rData.result[rData.result.length - 1].usages;
     const chartStateCopy = JSON.parse(JSON.stringify(chartState));
     const usageArr = target.map((data: any) => {
-      if (data.prediction) return data.prediction;
-      return data.data;
+      if (data.data) return data.data;
+      return data.prediction;
     });
     chartStateCopy.datasets[0].data = usageArr;
 
     //   backgroundColor: ['rgb(75, 192, 192)'],
 
     chartStateCopy.datasets[0].backgroundColor = target.map((data: any) => {
-      if (!data.prediction) return 'rgb(91,125,177,0.9)';
+      if (data.data) return 'rgb(91,125,177,0.9)';
       else return 'rgb(0,0,0,0.1)';
     });
 
@@ -129,8 +129,8 @@ const BuildingElectricity = () => {
 
       // 타겟이 예측인지 아닌지 뽑아내서 색깔 변경주기
       chartStateCopy.datasets[0].backgroundColor = target?.map((data: any) => {
-        if (data.prediction) return 'rgb(0,0,0,0.1)';
-        return 'rgb(91,125,177,0.9)';
+        if (data.data) return 'rgb(91,125,177,0.9)';
+        return 'rgb(0,0,0,0.1)';
       });
 
       setChartState(chartStateCopy);
