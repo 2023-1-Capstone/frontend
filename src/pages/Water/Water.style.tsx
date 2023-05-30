@@ -194,6 +194,7 @@ const ScrollChart = styled.div`
   height: 36rem;
   width: 36em;
   left: 50%;
+  border-radius: 0.5rem;
   transform: translateX(-50%);
   ::-webkit-scrollbar {
     height: 0.6rem; /* 스크롤바의 너비 */
