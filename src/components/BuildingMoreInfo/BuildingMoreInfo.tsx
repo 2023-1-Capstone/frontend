@@ -82,6 +82,7 @@ const MonthlyMoreInfo = ({
   return (
     <S.BuildingMoreInfoFrame>
       <S.BuildingMoreInfoTitle>요약 정보</S.BuildingMoreInfoTitle>
+      <S.ChartIndicatorLine></S.ChartIndicatorLine>
       <S.Container>
         <Doughnut
           data={chartData}
