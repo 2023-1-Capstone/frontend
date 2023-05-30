@@ -5,7 +5,7 @@ import Header from '../../components/Header/Header';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
 import * as S from './Water.style';
 import { Chart as ChartJS, Tooltip, Legend } from 'chart.js/auto';
-import { Bar } from 'react-chartjs-2';
+import { Bar, Line } from 'react-chartjs-2';
 import downArrow from '../../assets/svg/downArrow.svg';
 import { Dropdown } from '../../components/Dropdown/Dropdown';
 
@@ -16,13 +16,17 @@ import {
   monthlyInitData,
   optionsWater,
   options,
+  monthlyInitWaterData,
   yearCategory,
 } from '../../store/store';
+
+const waterCategory = ['월별 수도 사용량', '연간 수도 사용량'];
+const waterFeeCategory = ['월별 수도 요금', '연간 수도 요금'];
 
 ChartJS.register(Tooltip, Legend);
 
 const Water = () => {
-  const [chartState, setChartState] = useState(monthlyInitData);
+  const [chartState, setChartState] = useState(monthlyInitWaterData);
   const [yearChartState, setYearChartState] = useState(monthlyInitData);
   const [chartCategory, setChartCategory] =
     useState<string>('월별 수도 사용량');
@@ -60,17 +64,28 @@ const Water = () => {
   useEffect(() => {
     const chartStateCopy = JSON.parse(JSON.stringify(chartState));
     const yearList = waterInfo?.map((item: chartInfoType) => item.year);
-    const usageList = waterInfo
-      ?.filter(
-        (item: chartInfoType) => item.year === parseInt(rightCategory)
-      )[0]
-      .usages.map((item: chartInfoUsageType) => {
-        if (item?.data) return item?.data;
-        return item?.prediction;
-      });
+    const targetData = waterInfo?.filter(
+      (item: chartInfoType) => item.year === parseInt(rightCategory)
+    )[0];
+
+    console.log(targetData);
+
+    const usageList = targetData?.usages.map((item: chartInfoUsageType) => {
+      if (item?.data) return item?.data;
+      return item?.prediction;
+    });
+
     const backgroundColor = getBackgroundColor(waterInfo);
     chartStateCopy.datasets[0].data = usageList;
     chartStateCopy.datasets[0].backgroundColor = backgroundColor;
+
+    // 요금 리스트 뽑기
+    const feeList = targetData?.usages.map((item: any) =>
+      Math.floor(item.fee / 10000)
+    );
+
+    //요금 리스트 세팅
+    chartStateCopy.datasets[1].data = feeList;
     setChartState(chartStateCopy);
     setRightDropDown(yearList);
   }, [waterInfo, rightCategory]);
@@ -90,6 +105,46 @@ const Water = () => {
     setYearChartState(chartStateCopy);
   }, [waterInfo]);
 
+  const charts: any = {
+    '월별 수도 사용량': (
+      <>
+        <S.Container>
+          <S.ChartTopFrame>
+            <S.ChartCategoryBox onClick={leftDropdownHandler}>
+              {chartCategory} &nbsp;<img src={downArrow}></img>
+            </S.ChartCategoryBox>
+            <S.ChartYearBox onClick={rightDropdownHandler}>
+              {rightCategory}&nbsp;{' '}
+              {rightCategory && <img src={downArrow}></img>}
+            </S.ChartYearBox>
+          </S.ChartTopFrame>
+          <S.ChartContainer>
+            <Bar
+              width="350"
+              height="250"
+              data={chartState}
+              options={optionsWater}
+            ></Bar>
+          </S.ChartContainer>
+          <S.UnitTone>(톤)</S.UnitTone>
+          <S.UnitWon>(만원)</S.UnitWon>
+        </S.Container>
+      </>
+    ),
+    '연간 수도 사용량': (
+      <S.ScrollChart>
+        <S.ChartTopFrame>
+          <S.ChartCategoryBox onClick={leftDropdownHandler}>
+            연간 수도 사용량
+          </S.ChartCategoryBox>
+        </S.ChartTopFrame>
+        <S.YearWaterChartContainer>
+          <Bar data={yearChartState} options={optionsWater}></Bar>
+        </S.YearWaterChartContainer>
+      </S.ScrollChart>
+    ),
+  };
+
   return (
     <Wrapper
       onClick={(e: React.MouseEvent<HTMLDivElement>) => {
@@ -102,52 +157,35 @@ const Water = () => {
         <S.BuildingTitle>
           인하대학교의 수도 사용량을 확인해보세요!
         </S.BuildingTitle>
+        {isLeftDropdownOn && (
+          <Dropdown
+            dropDownInfo={dropdownInfoCreater(
+              '9.6rem',
+              '1.5rem',
+              '9.6rem',
+              'large',
+              waterCategory,
+              setChartCategory,
+              setIsRightDropDownOn
+            )}
+          ></Dropdown>
+        )}
+        {isRightDropdownOn && (
+          <Dropdown
+            dropDownInfo={dropdownInfoCreater(
+              '9.6rem',
+              '16.2rem',
+              '9.6rem',
+              'middle',
+              rightDropdown,
+              setRightCategory,
+              setIsRightDropDownOn
+            )}
+          ></Dropdown>
+        )}
         <S.BuildingElectricityInner>
-          <S.Container>
-            <S.ChartTopFrame>
-              <S.ChartCategoryBox onClick={leftDropdownHandler}>
-                {chartCategory} &nbsp;<img src={downArrow}></img>
-              </S.ChartCategoryBox>
-              <S.ChartYearBox onClick={rightDropdownHandler}>
-                {rightCategory}&nbsp;{' '}
-                {rightCategory && <img src={downArrow}></img>}
-              </S.ChartYearBox>
-            </S.ChartTopFrame>
-
-            <S.ChartContainer>
-              <Bar
-                width="350"
-                height="250"
-                data={chartState}
-                options={optionsWater}
-              ></Bar>
-            </S.ChartContainer>
-          </S.Container>
-
-          {isRightDropdownOn && (
-            <Dropdown
-              dropDownInfo={dropdownInfoCreater(
-                '9.6rem',
-                '16.2rem',
-                '9.6rem',
-                'middle',
-                rightDropdown,
-                setRightCategory,
-                setIsRightDropDownOn
-              )}
-            ></Dropdown>
-          )}
+          {charts[chartCategory]}
         </S.BuildingElectricityInner>
-        <S.ScrollChart>
-          <S.ChartTopFrame>
-            <S.ChartCategoryBox onClick={leftDropdownHandler}>
-              연간 수도 사용량
-            </S.ChartCategoryBox>
-          </S.ChartTopFrame>
-          <S.YearWaterChartContainer>
-            <Bar data={yearChartState} options={optionsWater}></Bar>
-          </S.YearWaterChartContainer>
-        </S.ScrollChart>
       </WrapperInner>
       <NavigationBar navigationStatus="water"></NavigationBar>
     </Wrapper>

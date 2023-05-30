@@ -191,7 +191,7 @@ const ScrollChart = styled.div`
   overflow-x: scroll;
   background-color: #fff;
   margin-top: 10px;
-  height: 36rem;
+  height: 30rem;
   width: 36em;
   left: 50%;
   border-radius: 0.5rem;
@@ -212,8 +212,20 @@ const ScrollChart = styled.div`
 `;
 
 const YearWaterChartContainer = styled.div`
-  width: 70rem;
-  height: 30rem;
+  width: 60rem;
+  height: 25rem;
+`;
+
+const UnitTone = styled.span`
+  position: relative;
+  bottom: 1.9rem;
+  left: 2.2rem;
+`;
+
+const UnitWon = styled.span`
+  position: relative;
+  bottom: 1.9rem;
+  left: 31rem;
 `;
 
 export {
@@ -230,4 +242,6 @@ export {
   ChartTitle,
   YearWaterChartContainer,
   ScrollChart,
+  UnitTone,
+  UnitWon,
 };
