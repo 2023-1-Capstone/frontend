@@ -17,15 +17,20 @@ import { dropdownInfoCreater } from '../../../BuildingElectricity/util';
 import { useQuery } from '@tanstack/react-query';
 import { getTargetBuildingsUsageArray } from '../util';
 import api from '../../../../api/api';
-import refreshSVG from '../../../../assets/svg/refresh.svg';
-import { getUniqueNumberList } from '../util';
 import CarbonBuildingMoreInfo from './Component/CarbonBuildingMoreInfo';
 import DoughnutLabel from 'chartjs-plugin-doughnutlabel-rebourne';
+import informationSVG from '../../../../assets/svg/information.svg';
 
 ChartJS.register(Tooltip, Legend, DoughnutLabel);
-const AreaElectricity = () => {
+
+const CarbonBuildings = () => {
   const { data: carbonData }: { data: any } = useQuery(['getAreaData'], () =>
     api('/api/carbon/area').then((data: any) => data.data.result)
+  );
+
+  const { data: buildingData }: { data: any } = useQuery(
+    ['getBuildingData'],
+    () => api('/api/buildings').then((data: any) => data.data.result)
   );
 
   const [chartData, setChartData] = useState(areaInitData);
@@ -33,10 +38,7 @@ const AreaElectricity = () => {
   const [isMonthDropdownOn, setIsMonthDropdownOn] = useState<Boolean>(false);
   const [curYear, setCurYear] = useState<string>('2023');
   const [curMonth, setCurMonth] = useState<string>('1월');
-  const [mostWasteIdx, setMostWasteIdx] = useState<number>(-1);
-  const [randomIdxList, setRandomIdxList] = useState<number[]>(
-    getUniqueNumberList(4, 8)
-  );
+  const [infoModalState, setInfoModalState] = useState<string>('hidden');
 
   useEffect(() => {
     const chartDataCopy = JSON.parse(JSON.stringify(chartData));
@@ -48,6 +50,10 @@ const AreaElectricity = () => {
     chartDataCopy.datasets[0].data = newChartData;
     setChartData(chartDataCopy);
   }, [carbonData, curYear, curMonth]);
+
+  useEffect(() => {
+    console.log(buildingData);
+  }, [buildingData]);
 
   return (
     <>
@@ -61,8 +67,42 @@ const AreaElectricity = () => {
         <WrapperInner>
           <S.SeasonWrapper>
             <S.SeasonTitle>건물별 탄소 배출 현황을 확인해보세요!</S.SeasonTitle>
-            <S.Description>아래는 탄소 배출량 공식이에요</S.Description>
-
+            <S.BuildingInfoFrame modalState={infoModalState}>
+              전기
+              {buildingData?.map((item: any) => {
+                return (
+                  <>
+                    {item.elecDescription ? (
+                      <S.BuildingListItem>{`${item.name} : ${item.elecDescription}`}</S.BuildingListItem>
+                    ) : null}
+                  </>
+                );
+              })}
+              가스
+              {buildingData?.map((item: any) => {
+                return (
+                  <>
+                    {item.gasDescription ? (
+                      <S.BuildingListItem>{`${item.name} : ${item.gasDescription}`}</S.BuildingListItem>
+                    ) : null}
+                  </>
+                );
+              })}
+            </S.BuildingInfoFrame>
+            <S.Calculate>
+              건물정보
+              <S.InfoImage
+                width="20px"
+                height="20px"
+                src={informationSVG}
+                onMouseEnter={() => {
+                  setInfoModalState('visible');
+                }}
+                onMouseLeave={() => {
+                  setInfoModalState('hidden');
+                }}
+              ></S.InfoImage>
+            </S.Calculate>
             <S.ChartChangeFrame>
               {isYearDropdownOn && (
                 <Dropdown
@@ -128,4 +168,4 @@ const AreaElectricity = () => {
   );
 };
 
-export default AreaElectricity;
+export default CarbonBuildings;

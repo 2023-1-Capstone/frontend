@@ -15,11 +15,23 @@ const SeasonTitle = styled.div`
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 400;
-  font-size: 2rem;
+  font-size: 2.1rem;
   line-height: 2.9rem;
-  margin-top: 3rem;
+  margin-top: 1rem;
   margin-bottom: 3rem;
   color: #ffffff;
+`;
+
+const BuildingInfoFrame = styled.div<{ modalState: string }>`
+  position: absolute;
+  width: 25rem;
+  top: 9rem;
+  right: 0px;
+  height: 10rem;
+  border-radius: 0.5rem;
+  background-color: #eeeeee;
+  z-index: 2;
+  visibility: ${(props) => props.modalState};
 `;
 
 const ChartChangeFrame = styled.div`
@@ -293,9 +305,10 @@ const Container = styled.div`
   align-items: center;
   border-radius: 0.5rem;
   background-color: #ffffff;
+  margin-top: -1.5rem;
 `;
 
-const Description = styled.div`
+const Description = styled.div<{ size: string }>`
   position: relative;
   width: fit-content;
   height: fit-content;
@@ -303,9 +316,34 @@ const Description = styled.div`
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 400;
-  font-size: 1.2rem;
+  font-size: ${(props) => props.size};
   line-height: 2.9rem;
   color: #fff;
+`;
+
+const Calculate = styled.div`
+  position: relative;
+  height: fit-content;
+  width: 36rem;
+  display: flex;
+  align-items: center;
+  text-align: right;
+  font-size: 1.7rem;
+  justify-content: flex-end;
+  margin-top: -1rem;
+  color: #fff;
+  font-weight: 400;
+`;
+
+const InfoImage = styled.img`
+  width: 2rem;
+  height: 2rem;
+  background: url(${(props) => props.src});
+  cursor: pointer;
+`;
+
+const BuildingListItem = styled.div`
+  font-size: 1.5rem;
 `;
 
 export {
@@ -327,4 +365,8 @@ export {
   RefreshButton,
   Container,
   Description,
+  Calculate,
+  BuildingInfoFrame,
+  InfoImage,
+  BuildingListItem,
 };
