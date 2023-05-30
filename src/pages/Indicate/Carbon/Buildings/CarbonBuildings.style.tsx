@@ -344,7 +344,7 @@ const BuildingInfoFrame = styled.div<{ modalState: string }>`
   right: 2rem;
   height: fit-content;
   border-radius: 0.5rem;
-  background-color: #ffffff;
+  background-color: #fefbf6;
   border: 2px solid #eee;
   padding: 1rem;
   z-index: 2;
@@ -361,7 +361,7 @@ const BuildingInfoNotice = styled.div`
   font-weight: 400;
   font-size: 1.4rem;
   line-height: 17px;
-  margin-bottom: 1rem;
+
   color: #757575;
 `;
 

@@ -37,7 +37,7 @@ const CarbonBuildings = () => {
   const [isYearDropdownOn, setIsYearDropdownOn] = useState<Boolean>(false);
   const [isMonthDropdownOn, setIsMonthDropdownOn] = useState<Boolean>(false);
   const [curYear, setCurYear] = useState<string>('2023');
-  const [curMonth, setCurMonth] = useState<string>('1월');
+  const [curMonth, setCurMonth] = useState<string>('1');
   const [infoModalState, setInfoModalState] = useState<string>('hidden');
 
   useEffect(() => {
@@ -116,7 +116,7 @@ const CarbonBuildings = () => {
                   dropDownInfo={dropdownInfoCreater(
                     '10rem',
                     '-17rem',
-                    '2.3rem',
+                    '2.5rem',
                     'middle',
                     carbonData[0]?.usagesList.map((item: any) => item.year),
                     setCurYear,
@@ -128,8 +128,8 @@ const CarbonBuildings = () => {
                 <Dropdown
                   dropDownInfo={dropdownInfoCreater(
                     '10rem',
-                    '10.2rem',
-                    '2.3rem',
+                    '-8rem',
+                    '2.5rem',
                     'middle',
                     monthCategory,
                     setCurMonth,
@@ -154,7 +154,7 @@ const CarbonBuildings = () => {
                     setIsMonthDropdownOn(true);
                   }}
                 >
-                  {curMonth} &nbsp;<img src={downArrow}></img>
+                  {curMonth}월 &nbsp;<img src={downArrow}></img>
                 </S.ChartMonthBox>
               </S.ChartTopFrame>
               <Bar
