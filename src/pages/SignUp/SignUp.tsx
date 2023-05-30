@@ -40,12 +40,8 @@ const SignUp = () => {
     console.log(errors);
   };
 
-  useEffect(() => {
-    console.log(watch('nickname'));
-  }, [watch('nickname')]);
-
   return (
-    <Wrapper color={'#0065B3'}>
+    <Wrapper color={'#99bfcf'}>
       <S.StartInner>
         <S.LoginWrapper>
           <S.SignUpTitle>회원가입</S.SignUpTitle>
