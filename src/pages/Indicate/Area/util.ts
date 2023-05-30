@@ -7,6 +7,8 @@ const getBuildingTargetDataElectricity = (
   year: string,
   month: string
 ) => {
+  if (!buildingData) return;
+
   const targetUsage = areaInfo?.map((item: areaDataType, idx: number) => {
     const targetYearData: any = item?.usagesList.filter(
       (usage) => usage.year === parseInt(year)

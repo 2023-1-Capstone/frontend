@@ -70,7 +70,7 @@ const AreaElectricityMoreInfo = ({
       <S.BottomInfoBox>
         <S.BottomInfoBoxInner>
           <li>
-            1㎡당 {chartState?.datasets[0].data[mostWasteIdx]}Kwh를
+            1㎡당 {chartState?.datasets[0]?.data[mostWasteIdx]}Kwh를
             사용하였습니다.
           </li>
           <li>
