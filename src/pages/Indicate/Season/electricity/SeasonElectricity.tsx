@@ -43,7 +43,8 @@ const SeasonElectricity = () => {
   const [mostWasteSeasonIdx, setMostWasteSeasonIdx] = useState<number>(0);
   const [chartData, setChartData] = useState(seasonInitData);
   const [isDropdownOn, setIsDropdownOn] = useState<Boolean>(false);
-  const [curYear, setCurYear] = useState<string>('2023');
+  const [yearList, setYearList] = useState([]);
+  const [curYear, setCurYear] = useState<string>('');
   const [infoData, setInfoData] = useState({ watt: 0, fee: 0 });
   const [randomIdxList, setRandomIdxList] = useState<number[]>(
     getUniqueNumberList(4, 6)
@@ -64,26 +65,38 @@ const SeasonElectricity = () => {
     const chartRes = chartDatas?.data.result;
     const feeRes = feeData?.data.result;
     if (chartRes && feeRes) {
+      const validData = chartRes.filter(
+        (item: any) => !item.usages.every((val: number) => val === 0)
+      );
       // 차트 정보 세팅
       const chartDataCopy = JSON.parse(JSON.stringify(chartData));
-      chartDataCopy.datasets[0].data = chartRes[chartRes.length - 1].usages;
+      chartDataCopy.datasets[0].data = validData[validData.length - 1].usages;
       setChartData(chartDataCopy);
 
       // 가장 사용을 많이 한 계절 인덱스 탐색
-      const targetSeasonIdx = findMostWasteIdx(chartRes);
+      const targetSeasonIdx = findMostWasteIdx(validData);
+
+      // 가장 최근 년도
+      const latestYear = validData[validData.length - 1].startYear;
 
       // 요금 정보 세팅
-      const target = feeRes.filter((item: any) => item.year === curYear)[0]
+      const target = feeRes.filter((item: any) => item.year === latestYear)[0]
         ?.feeResponses;
       const averageFee = getAverageFee(target, targetSeasonIdx);
 
+      // 연도 리스트 세팅
+      const curYearList = validData?.map((item: any) => item.startYear);
+      setYearList(curYearList);
       // 가장 사용량이 많은 계절 인덱스 세팅
       setMostWasteSeasonIdx(targetSeasonIdx);
+
+      // 가장최근 년도 세팅
+      setCurYear(latestYear);
 
       // 가장 많은 사용량, kwh당 요금 정보 세팅
       setInfoData((infoData) => ({
         ...infoData,
-        watt: chartRes[chartRes.length - 1].usages[targetSeasonIdx],
+        watt: validData[validData.length - 1].usages[targetSeasonIdx],
         fee: averageFee,
       }));
     }
@@ -92,7 +105,7 @@ const SeasonElectricity = () => {
   useEffect(() => {
     const target = chartDatas?.data.result.filter(
       (item: any) => item.startYear === parseInt(curYear)
-    )[0].usages;
+    )[0]?.usages;
     if (target) {
       const chartDataCopy = JSON.parse(JSON.stringify(chartData));
       chartDataCopy.datasets[0].data = target;
@@ -132,7 +145,7 @@ const SeasonElectricity = () => {
                     '26.2rem',
                     '2.3rem',
                     'middle',
-                    chartDatas?.data.result.map((val: any) => val.startYear),
+                    yearList,
                     setCurYear,
                     setIsDropdownOn
                   )}
