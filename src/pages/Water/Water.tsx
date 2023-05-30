@@ -149,7 +149,7 @@ const Water = () => {
           </S.YearWaterChartContainer>
         </S.ScrollChart>
       </WrapperInner>
-      <NavigationBar navigationStatus="electricity"></NavigationBar>
+      <NavigationBar navigationStatus="water"></NavigationBar>
     </Wrapper>
   );
 };
