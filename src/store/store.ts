@@ -11,7 +11,6 @@ import 학생회관 from '../assets/schoolImage/학생회관.jpg';
 import electricityIcon from '../assets/svg/electricityCategory.svg';
 import gasIcon from '../assets/svg/gasCategory.svg';
 import carbon from '../assets/svg/carbon.svg';
-import 'chartjs-plugin-doughnutlabel-rebourne';
 import { plugin } from './chartPlugin';
 
 const monthCategory = [
@@ -62,7 +61,7 @@ const monthlyInitData: any = {
   labels: monthCategory,
   datasets: [
     {
-      backgroundColor: ['rgb(75, 192, 192)'],
+      backgroundColor: ['#6E85B7'],
       maxBarThickness: 35,
       borderRadius: 3,
       data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
@@ -82,13 +81,11 @@ const monthlyInitDatas: any = {
 
 const seasonInitData: any = {
   labels: ['봄', '여름', '가을', '겨울'],
-
   datasets: [
     {
-      type: 'bar',
       maxBarThickness: 35,
       backgroundColor: 'rgb(75, 192, 192)',
-      data: [100, 400, 300, 200],
+      data: [],
     },
   ],
 };
@@ -115,7 +112,6 @@ const areaInitData: any = {
       backgroundColor: BuildingCarbonDoughnut,
       borderColor: BuildingCarbonDoughnut,
       borderRadius: 3,
-      borderWidth: 10,
       data: [],
     },
   ],
@@ -222,7 +218,18 @@ const gasChartCategory = [
   '동월 가스 사용량',
 ];
 
+const waterChartCategory = [
+  '월별 수도 사용량',
+  '연별 수도 사용량',
+  '동월 수도 사용량',
+];
+
 const yearCategory = ['2023', '2022', '2021', '2020', '2019', '2018', '2017'];
+
+const optionsWater: any = {
+  reponsive: false,
+  indexAxis: 'y',
+};
 
 const options: any = {
   reponsive: false,
@@ -688,4 +695,6 @@ export {
   areaStackedInitData,
   optionsAreaStacked,
   BuildingCarbonDoughnut,
+  waterChartCategory,
+  optionsWater,
 };
