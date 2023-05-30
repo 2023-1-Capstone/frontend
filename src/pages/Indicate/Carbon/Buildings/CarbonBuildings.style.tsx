@@ -22,18 +22,6 @@ const SeasonTitle = styled.div`
   color: #ffffff;
 `;
 
-const BuildingInfoFrame = styled.div<{ modalState: string }>`
-  position: absolute;
-  width: 25rem;
-  top: 9rem;
-  right: 0px;
-  height: 10rem;
-  border-radius: 0.5rem;
-  background-color: #eeeeee;
-  z-index: 2;
-  visibility: ${(props) => props.modalState};
-`;
-
 const ChartChangeFrame = styled.div`
   position: relative;
   width: fit-content;
@@ -346,6 +334,88 @@ const BuildingListItem = styled.div`
   font-size: 1.5rem;
 `;
 
+const BuildingInfoFrame = styled.div<{ modalState: string }>`
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: fit-content;
+  top: 9.5rem;
+  right: 2rem;
+  height: fit-content;
+  border-radius: 0.5rem;
+  background-color: #ffffff;
+  border: 2px solid #eee;
+  padding: 1rem;
+  z-index: 2;
+  visibility: ${(props) => props.modalState};
+`;
+
+const BuildingInfoNotice = styled.div`
+  position: relative;
+  width: fit-content;
+  height: fit-content;
+
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 17px;
+  margin-bottom: 1rem;
+  color: #757575;
+`;
+
+const BuildingInfoItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 0.2rem;
+
+  position: relative;
+  width: 33rem;
+  height: fit-content;
+  margin-bottom: ;
+`;
+
+const BuildingInfoItemTitle = styled.div`
+  width: fit-content;
+  height: fit-content;
+
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 19px;
+
+  color: #000000;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+`;
+
+const BuildingInfoItemContent = styled.div`
+  width: fit-content;
+  height: fit-content;
+
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 17px;
+
+  color: #000000;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+`;
+
 export {
   SeasonWrapper,
   ChartCategoryBox,
@@ -369,4 +439,8 @@ export {
   BuildingInfoFrame,
   InfoImage,
   BuildingListItem,
+  BuildingInfoNotice,
+  BuildingInfoItem,
+  BuildingInfoItemTitle,
+  BuildingInfoItemContent,
 };

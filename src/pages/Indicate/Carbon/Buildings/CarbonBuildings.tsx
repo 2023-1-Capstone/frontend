@@ -68,26 +68,33 @@ const CarbonBuildings = () => {
           <S.SeasonWrapper>
             <S.SeasonTitle>건물별 탄소 배출 현황을 확인해보세요!</S.SeasonTitle>
             <S.BuildingInfoFrame modalState={infoModalState}>
-              전기
-              {buildingData?.map((item: any) => {
-                return (
-                  <>
-                    {item.elecDescription ? (
-                      <S.BuildingListItem>{`${item.name} : ${item.elecDescription}`}</S.BuildingListItem>
-                    ) : null}
-                  </>
-                );
-              })}
-              가스
-              {buildingData?.map((item: any) => {
-                return (
-                  <>
-                    {item.gasDescription ? (
-                      <S.BuildingListItem>{`${item.name} : ${item.gasDescription}`}</S.BuildingListItem>
-                    ) : null}
-                  </>
-                );
-              })}
+              <S.BuildingInfoNotice>
+                ※ 아래는 전기, 가스 사용량에 포함된 건물들 정보에요.
+              </S.BuildingInfoNotice>
+              <S.BuildingInfoItem>
+                <S.BuildingInfoItemTitle>전기사용량⚡</S.BuildingInfoItemTitle>
+                {buildingData?.map((item: any) => {
+                  return (
+                    <>
+                      {item.elecDescription ? (
+                        <S.BuildingInfoItemContent>{`- ${item.name} : ${item.elecDescription}`}</S.BuildingInfoItemContent>
+                      ) : null}
+                    </>
+                  );
+                })}
+              </S.BuildingInfoItem>
+              <S.BuildingInfoItem>
+                <S.BuildingInfoItemTitle>가스사용량⛽</S.BuildingInfoItemTitle>
+                {buildingData?.map((item: any) => {
+                  return (
+                    <>
+                      {item.gasDescription ? (
+                        <S.BuildingInfoItemContent>{`- ${item.name} : ${item.gasDescription}`}</S.BuildingInfoItemContent>
+                      ) : null}
+                    </>
+                  );
+                })}
+              </S.BuildingInfoItem>
             </S.BuildingInfoFrame>
             <S.Calculate>
               건물정보
