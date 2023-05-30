@@ -5,7 +5,6 @@ const postSignUp = async (signUpInfo: any) => {
     const response = await api({
       headers: {
         'Content-Type': 'application/json',
-        Authorization: null,
       },
       url: `/api/user/join`,
       method: 'POST',
