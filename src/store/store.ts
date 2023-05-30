@@ -228,7 +228,38 @@ const yearCategory = ['2023', '2022', '2021', '2020', '2019', '2018', '2017'];
 
 const optionsWater: any = {
   reponsive: false,
-  indexAxis: 'y',
+  plugins: {
+    datalabels: {
+      display: false,
+    },
+    legend: {
+      display: false,
+    },
+    tooltip: {
+      callbacks: {
+        title: (context: any) =>
+          context[0].label + `${context[0].label.length >= 4 ? '년' : '월'}`,
+        label: (context: any) => {
+          let label = context.dataset.label + '' || '';
+          return context.parsed.y !== null
+            ? context.parsed.y.toLocaleString('ko-KR') + 't'
+            : null;
+        },
+      },
+    },
+  },
+  scales: {
+    x: {
+      grid: {
+        display: false,
+      },
+    },
+    y: {
+      grid: {
+        display: false,
+      },
+    },
+  },
 };
 
 const options: any = {
