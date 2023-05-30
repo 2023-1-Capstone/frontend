@@ -18,7 +18,7 @@ const NavigationItemTotalFrame = styled.div`
 
   justify-content: center;
   margin-top: 1rem;
-  gap: 6.6rem;
+  gap: 5.3rem;
 
   height: 4.3rem;
 
