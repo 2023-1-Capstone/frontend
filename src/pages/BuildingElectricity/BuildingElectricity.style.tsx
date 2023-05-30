@@ -25,7 +25,6 @@ const BuildingTitle = styled.div`
   color: #fefefe;
   width: fit-content;
   height: 2.7rem;
-  margin-top: 2rem;
 
   font-family: 'Pretendard';
   left: 50%;
@@ -43,7 +42,7 @@ const ChartChangeFrame = styled.div`
   flex-direction: column;
   left: 50%;
   transform: translateX(-50%);
-  margin-top: 2rem;
+
   margin-bottom: 1rem;
 `;
 
