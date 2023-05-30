@@ -7,8 +7,13 @@ import {
 import Header from '../../../../components/Header/Header';
 import NavigationBar from '../../../../components/NavigationBar/NavigationBar';
 import { Chart as ChartJS, Tooltip, Legend } from 'chart.js/auto';
-import { Line } from 'react-chartjs-2';
-import { options, seasonInitData, season } from '../../../../store/store';
+import { Bar, Doughnut } from 'react-chartjs-2';
+import {
+  options,
+  seasonInitData,
+  season,
+  optionsDoughnut,
+} from '../../../../store/store';
 import downArrow from '../../../../assets/svg/downArrow.svg';
 import * as S from './SeasonElectricity.style';
 import { Dropdown } from '../../../../components/Dropdown/Dropdown';
@@ -141,13 +146,14 @@ const SeasonElectricity = () => {
               </S.ChartTopFrame>
               <S.ChartIndicatorLine></S.ChartIndicatorLine>
             </S.ChartChangeFrame>
-            <Line
+            <Bar
               width="350"
               height="200"
               data={chartData}
               options={options}
-            ></Line>
+            ></Bar>
             <S.BottomWrapper>
+              <Doughnut options={optionsDoughnut} data={chartData}></Doughnut>
               <S.BottomTitle>
                 해당년도 사용 1위는 '{season[mostWasteSeasonIdx]}' 입니다.
               </S.BottomTitle>
