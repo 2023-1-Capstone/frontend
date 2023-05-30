@@ -59,6 +59,7 @@ const ChartTopFrame = styled.div`
   position: relative;
   width: 36rem;
   height: 2.3rem;
+  margin-bottom: 2rem;
 `;
 
 const ChartTitle = styled.div`
@@ -176,6 +177,7 @@ const CarouselFrame = styled.div`
   padding-bottom: 1rem;
   width: 36rem;
   top: 1rem;
+
   border-radius: 0.5rem;
 `;
 
@@ -184,12 +186,34 @@ const BuildingElectricityInner = styled.div`
   flex-direction: column;
 `;
 
-const Div = styled.div`
-  overflow-y: scroll;
-  height: 20rem;
+const ScrollChart = styled.div`
+  position: relative;
+  overflow-x: scroll;
+  background-color: #fff;
+  margin-top: 10px;
+  height: 36rem;
+  width: 36em;
+  left: 50%;
+  transform: translateX(-50%);
+  ::-webkit-scrollbar {
+    height: 0.6rem; /* 스크롤바의 너비 */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    height: 30%; /* 스크롤바의 길이 */
+    background: #757575; /* 스크롤바의 색상 */
+    border-radius: 2rem;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(33, 122, 244, 0.1); /*스크롤바 뒷 배경 색상*/
+  }
 `;
 
-const YearWaterChartContainer = styled.div``;
+const YearWaterChartContainer = styled.div`
+  width: 70rem;
+  height: 30rem;
+`;
 
 export {
   CarouselFrame,
@@ -204,5 +228,5 @@ export {
   BuildingElectricityInner,
   ChartTitle,
   YearWaterChartContainer,
-  Div,
+  ScrollChart,
 };

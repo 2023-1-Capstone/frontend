@@ -100,13 +100,13 @@ const Water = () => {
                 {rightCategory && <img src={downArrow}></img>}
               </S.ChartYearBox>
             </S.ChartTopFrame>
-            <S.ChartChangeFrame></S.ChartChangeFrame>
+
             <S.ChartContainer>
               <Bar
                 width="350"
                 height="250"
                 data={chartState}
-                options={options}
+                options={optionsWater}
               ></Bar>
             </S.ChartContainer>
           </S.Container>
@@ -125,15 +125,16 @@ const Water = () => {
             ></Dropdown>
           )}
         </S.BuildingElectricityInner>
-        <S.Div>
+        <S.ScrollChart>
+          <S.ChartTopFrame>
+            <S.ChartCategoryBox onClick={leftDropdownHandler}>
+              연간 수도 사용량
+            </S.ChartCategoryBox>
+          </S.ChartTopFrame>
           <S.YearWaterChartContainer>
-            <Bar
-              height={500}
-              data={yearChartState}
-              options={optionsWater}
-            ></Bar>
+            <Bar data={yearChartState} options={optionsWater}></Bar>
           </S.YearWaterChartContainer>
-        </S.Div>
+        </S.ScrollChart>
       </WrapperInner>
       <NavigationBar navigationStatus="electricity"></NavigationBar>
     </Wrapper>
