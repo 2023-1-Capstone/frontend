@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import api from '../../../../../api/api';
 import { findMostWasteIdxArr, findLessWasteIdxArr } from '../../util';
-import { monthlyInitDatas } from '../../../../../store/store';
+import { monthlyInitDatas, monthCategory } from '../../../../../store/store';
 import { carbonAllPlugin } from '../../../../../store/chartPlugin';
 import { doughnutColor } from '../../../../../store/store';
 
@@ -33,6 +33,7 @@ const CarbonAllMoreInfo = ({ chartState }: { chartState: any }) => {
     );
     chartDataCopy.datasets[0].backgroundColor = doughnutColor;
     chartDataCopy.datasets[0].borderColor = doughnutColor;
+    chartDataCopy.labels = monthCategory.map((item: any) => item + '월');
     chartDataCopy.datasets[0].data = validData;
     const areaArr = buildingData?.map((item: any) =>
       item.elecArea >= item.gasArea ? item.elecArea : item.gasArea
@@ -62,8 +63,9 @@ const CarbonAllMoreInfo = ({ chartState }: { chartState: any }) => {
       <S.BuildingMoreInfoTitle>요약 정보</S.BuildingMoreInfoTitle>
       <S.ChartIndicatorLine></S.ChartIndicatorLine>
       <S.Container>
-        <S.ChartDescription> ※ 월별 탄소 배출 비율 그래프</S.ChartDescription>
         <Doughnut
+          height={330}
+          width={330}
           data={chartData}
           options={optionsDoughnut}
           plugins={[carbonAllPlugin]}

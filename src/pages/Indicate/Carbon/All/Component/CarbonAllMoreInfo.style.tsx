@@ -27,14 +27,14 @@ const BuildingMoreInfoTitle = styled.div`
   position: relative;
   width: fit-content;
   height: 2.6rem;
-  margin-top: 1rem;
+
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
   font-size: 2rem;
   display: flex;
   align-items: center;
-
+  opacity: 0.7;
   color: #000000;
 `;
 
@@ -59,7 +59,6 @@ const BuildingMoreInfoSummary = styled.div`
   color: #757575;
   top: -7rem;
   /* Inside auto layout */
-
   flex: none;
   order: 0;
   flex-grow: 0;
@@ -91,10 +90,8 @@ const BuildingMoreInfoChartInfo = styled.div`
 `;
 
 const Container = styled.div`
-  top: 0.5rem;
   position: relative;
-  width: 27.4rem;
-  border: 3px solid white;
+  width: 34rem;
   border-radius: 1rem;
 `;
 

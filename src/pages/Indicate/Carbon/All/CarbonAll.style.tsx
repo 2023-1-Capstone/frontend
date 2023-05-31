@@ -14,11 +14,11 @@ const SeasonTitle = styled.div`
 
   font-family: 'Pretendard';
   font-style: normal;
-  font-weight: 700;
-  font-size: 2.4rem;
+  font-weight: 400;
+  font-size: 2.1rem;
   line-height: 2.9rem;
-  margin-top: 3rem;
-  color: #000000;
+
+  color: #fff;
 `;
 
 const ChartChangeFrame = styled.div`
@@ -38,36 +38,67 @@ const ChartTopFrame = styled.div`
   align-items: center;
   padding: 0px;
   gap: 15rem;
-  left: 5px;
+  top: 0.4rem;
+  left: 0.7rem;
   position: relative;
-  width: 33rem;
+  margin-bottom: 1.5rem;
+  width: 36rem;
   height: 2.3rem;
+`;
+
+const ChartTitle = styled.div`
+  position: relative;
+  width: 36rem;
+  padding-bottom: 1.5rem;
+  top: 0.4rem;
+  cursor: pointer;
+  flex-direction: row;
+  border-radius: 0.3rem;
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.8rem;
+  line-height: 2rem;
+  /* or 286% */
+
+  display: flex;
+  align-items: center;
+  justify-content: right;
+
+  color: #000000;
+
+  /* Inside auto layout */
+  right: 1rem;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
 `;
 
 const ChartCategoryBox = styled.div`
   position: absolute;
 
   width: fit-content;
-  height: fit-content;
+  height: 2.7rem;
 
   &:hover {
     background-color: #e7e7e7;
   }
+  border: 1px solid #e7e7e7;
 
   cursor: pointer;
 
-  left: 0.5rem;
-
+  left: -0.5rem;
+  padding: 5px;
   border-radius: 0.3rem;
 
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   line-height: 1.7rem;
   display: flex;
   align-items: center;
-
+  opacity: 0.7;
   color: #000000;
 
   /* Inside auto layout */
@@ -80,28 +111,31 @@ const ChartCategoryBox = styled.div`
 const ChartYearBox = styled.div`
   position: absolute;
   width: fit-content;
-  height: fit-content;
+  height: 2.7rem;
+  padding: 5px;
 
   &:hover {
     background-color: #e7e7e7;
   }
 
+  border: 1px solid #e7e7e7;
+
   cursor: pointer;
 
-  left: 26rem;
+  left: 8.2rem;
 
   border-radius: 0.3rem;
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   line-height: 2rem;
   /* or 286% */
 
   display: flex;
   align-items: center;
   text-align: center;
-
+  opacity: 0.7;
   color: #000000;
 
   /* Inside auto layout */
@@ -125,11 +159,10 @@ const BottomWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 34.8rem;
-  height: 90rem;
-
-  background: #eeeeee;
-  border-radius: 1rem;
+  width: 36rem;
+  height: 99rem;
+  background: #ffffff;
+  border-radius: 0.5rem;
 `;
 
 const BottomInner = styled.div`
@@ -137,7 +170,7 @@ const BottomInner = styled.div`
   flex-direction: column;
   align-items: center;
   display: flex;
-  width: 31.9rem;
+  width: 32.9rem;
   height: 86.9rem;
   background: #e0e0e0;
   border-radius: 0.7rem;
@@ -146,7 +179,7 @@ const BottomInner = styled.div`
 const BottomTitle = styled.div`
   width: 26.5rem;
   height: 2.6rem;
-  margin-top: 1.2rem;
+  margin-top: 5rem;
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
@@ -164,13 +197,12 @@ const BottomInfoBox = styled.div`
   justify-content: start;
   align-items: center;
   padding: 1.2rem 1.6rem;
-  gap: 1rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
   position: relative;
   width: fit-content;
-  height: 7.3rem;
-  left: 0.5rem;
+  height: fit-content;
+
   /* Black/300 */
 
   border-radius: 1.6rem;
@@ -179,13 +211,16 @@ const BottomInfoBox = styled.div`
 const BottomInfoBoxInner = styled.div`
   width: 29rem;
   height: 4.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 400;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   line-height: 1.8rem;
   /* or 164% */
-
+  margin-bottom: 1rem;
   letter-spacing: 0.02rem;
 
   /* Black/600 */
@@ -202,13 +237,10 @@ const BottomInfoBoxInner = styled.div`
 const BottomInfoTransWrapper = styled.div`
   display: flex;
   flex-direction: row;
-
   padding: 0rem;
   gap: 0.6rem;
-
   width: 28.8rem;
   height: fit-content;
-
   flex-wrap: wrap;
 `;
 
@@ -216,6 +248,22 @@ const RefreshButton = styled.img`
   width: 2.5rem;
   height: 2.5rem;
   cursor: pointer;
+`;
+
+const Container = styled.div`
+  background-color: #ffffff;
+  top: 2rem;
+  position: relative;
+  width: 36rem;
+  height: fit-content;
+  border-radius: 0.5rem;
+  margin-bottom: 2rem;
+`;
+
+const Li = styled.li`
+  text-indent: 0px;
+  padding-left: 21px;
+  text-indent: -21px;
 `;
 
 export {
@@ -233,4 +281,6 @@ export {
   SeasonTitle,
   RefreshButton,
   BottomInner,
+  Container,
+  Li,
 };

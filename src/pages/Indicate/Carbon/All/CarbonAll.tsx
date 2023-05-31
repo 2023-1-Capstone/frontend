@@ -9,7 +9,7 @@ import NavigationBar from '../../../../components/NavigationBar/NavigationBar';
 import { Chart as ChartJS, Tooltip, Legend } from 'chart.js/auto';
 import { Bar } from 'react-chartjs-2';
 import {
-  optionsCarbon,
+  optionsCarbonAll,
   monthlyInitData,
   season,
 } from '../../../../store/store';
@@ -46,9 +46,9 @@ const CarbonAll = () => {
 
   const setCurYearChart = (chartInfo: any) => {
     const chartCopyData = JSON.parse(JSON.stringify(chartData));
-    const usages = chartInfo?.filter(
-      (item: any) => item.year === parseInt(curYear)
-    )[0].usages;
+    const usages = chartInfo
+      ?.filter((item: any) => item.year === parseInt(curYear))[0]
+      .usages.map((item: number) => item / 1000);
     chartCopyData.datasets[0].data = usages;
     const totalUsage = usages?.reduce(
       (acc: number, cur: number) => acc + cur,
@@ -77,72 +77,72 @@ const CarbonAll = () => {
         <Header></Header>
         <WrapperInner>
           <S.SeasonWrapper>
-            <S.SeasonTitle>👑탄소 배출량</S.SeasonTitle>
-            <S.ChartChangeFrame>
-              {isDropdownOn && (
-                <Dropdown
-                  dropDownInfo={dropdownInfoCreater(
-                    '10rem',
-                    '26.2rem',
-                    '2.3rem',
-                    'middle',
-                    carbonData?.map((item: any) => item.year),
-                    setCurYear,
-                    setIsDropdownOn
-                  )}
-                ></Dropdown>
-              )}
+            <S.SeasonTitle>
+              학교 전체의 탄소배출량을 확인해보세요!
+            </S.SeasonTitle>
+            {isDropdownOn && (
+              <Dropdown
+                dropDownInfo={dropdownInfoCreater(
+                  '10rem',
+                  '11.2rem',
+                  '8.7rem',
+                  'middle',
+                  carbonData?.map((item: any) => item.year),
+                  setCurYear,
+                  setIsDropdownOn
+                )}
+              ></Dropdown>
+            )}
+            <S.Container>
               <S.ChartTopFrame>
                 <S.ChartCategoryBox>탄소 배출량</S.ChartCategoryBox>
                 <S.ChartYearBox onClick={() => setIsDropdownOn(true)}>
                   {curYear}년 &nbsp;<img src={downArrow}></img>
                 </S.ChartYearBox>
               </S.ChartTopFrame>
-              <S.ChartIndicatorLine></S.ChartIndicatorLine>
-            </S.ChartChangeFrame>
-            <Bar
-              width="350"
-              height="250"
-              data={chartData}
-              options={optionsCarbon}
-            ></Bar>
+              <Bar
+                width="350"
+                height="250"
+                data={chartData}
+                options={optionsCarbonAll}
+              ></Bar>
+            </S.Container>
             <S.BottomWrapper>
-              <S.BottomInner>
-                <CarbonAllMoreInfo chartState={chartData}></CarbonAllMoreInfo>
-                <S.BottomInfoBox>
-                  <S.BottomInfoBoxInner>
-                    <li>
-                      {curYear}년 총 탄소 배출량은{' '}
-                      {totalCarbon?.toLocaleString('ko-KR')}kg입니다.
-                    </li>
-                    <li>
-                      사회적 탄소 배출 비용은{' '}
-                      {Math.floor((totalCarbon * 55400) / 1000).toLocaleString(
-                        'ko-KR'
-                      )}
-                      원 입니다.
-                    </li>
-                    <li>
-                      {mostWasteSeasonIdx + 1}월에{' '}
-                      {mostWaste.toLocaleString('ko-KR')}kg로 가장 많은 양의
-                      탄소를 배출했습니다.
-                    </li>
-                  </S.BottomInfoBoxInner>
-                </S.BottomInfoBox>
-                <S.BottomTitle>
-                  이 탄소 배출량은...
-                  <S.RefreshButton
-                    src={refreshSVG}
-                    onClick={() => setRandomIdxList(getUniqueNumberList(4, 8))}
-                  ></S.RefreshButton>
-                </S.BottomTitle>
-                <TransItem
-                  type={'carbon'}
-                  waste={totalCarbon}
-                  randomIdxList={randomIdxList}
-                ></TransItem>
-                <TreeTransItem carbonWaste={totalCarbon}></TreeTransItem>
-              </S.BottomInner>
+              <CarbonAllMoreInfo chartState={chartData}></CarbonAllMoreInfo>
+              <S.BottomInfoBox>
+                <S.BottomInfoBoxInner>
+                  <S.Li>
+                    {curYear}년 총 탄소 배출량은{' '}
+                    {Math.floor(totalCarbon * 100).toLocaleString('ko-KR')}
+                    kg입니다.
+                  </S.Li>
+                  <S.Li>
+                    사회적 탄소 배출 비용은{' '}
+                    {Math.floor((totalCarbon * 55400) / 1000).toLocaleString(
+                      'ko-KR'
+                    )}
+                    원 입니다.
+                  </S.Li>
+                  <S.Li>
+                    {mostWasteSeasonIdx + 1}월에{' '}
+                    {Math.floor(mostWaste * 100).toLocaleString('ko-KR')}kg로
+                    가장 많은 양의 탄소를 배출했습니다.
+                  </S.Li>
+                </S.BottomInfoBoxInner>
+              </S.BottomInfoBox>
+              <S.BottomTitle>
+                이 탄소 배출량은...
+                <S.RefreshButton
+                  src={refreshSVG}
+                  onClick={() => setRandomIdxList(getUniqueNumberList(4, 8))}
+                ></S.RefreshButton>
+              </S.BottomTitle>
+              <TransItem
+                type={'carbon'}
+                waste={totalCarbon}
+                randomIdxList={randomIdxList}
+              ></TransItem>
+              <TreeTransItem carbonWaste={totalCarbon}></TreeTransItem>
             </S.BottomWrapper>
           </S.SeasonWrapper>
         </WrapperInner>
