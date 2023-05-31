@@ -18,13 +18,17 @@ const carbonAllPlugin = {
     ctx.fillStyle = '#000';
     ctx.textAlign = 'center';
     ctx.textBaseLine = 'middle';
-    ctx.font = 'bold 15px Pretendard';
+    ctx.font = 'bold 17px Pretendard';
     ctx.fillStyle = '#92C111';
     ctx.fillText('총 탄소 배출량', xCoor, yCoor - 10);
-    ctx.font = 'bold 20px Pretendard';
+    ctx.font = 'bold 22px Pretendard';
     ctx.borderColor = '#757575';
     ctx.fillStyle = '#757575';
-    ctx.fillText(total.toLocaleString('ko-KR') + 'kg', xCoor, yCoor + 20);
+    ctx.fillText(
+      (total * 1000).toLocaleString('ko-KR') + 'kg',
+      xCoor,
+      yCoor + 20
+    );
   },
 };
 

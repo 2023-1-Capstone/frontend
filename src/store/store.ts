@@ -69,6 +69,28 @@ const monthlyInitData: any = {
   ],
 };
 
+const monthlyInitWaterData: any = {
+  labels: monthCategory,
+  datasets: [
+    {
+      backgroundColor: ['#6E85B7'],
+      yAxisID: 'y-left',
+      maxBarThickness: 35,
+      borderRadius: 3,
+      data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    },
+    {
+      type: 'line',
+      yAxisID: 'y-right',
+      backgroundColor: ['#FFFFFF'],
+      borderColor: ['#9BA4B5'],
+      maxBarThickness: 35,
+      borderRadius: 3,
+      data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    },
+  ],
+};
+
 const monthlyInitDatas: any = {
   labels: monthCategory,
   datasets: [
@@ -237,13 +259,15 @@ const optionsWater: any = {
     },
     tooltip: {
       callbacks: {
-        title: (context: any) =>
-          context[0].label + `${context[0].label.length >= 4 ? '년' : '월'}`,
+        title: (context: any) => context[0].label + '월',
         label: (context: any) => {
+          let targetLabel = '';
+          if (context.datasetIndex === 0)
+            targetLabel = context.parsed.y.toLocaleString('ko-KR') + '톤';
+          else targetLabel = context.parsed.y.toLocaleString('ko-KR') + '만원';
+
           let label = context.dataset.label + '' || '';
-          return context.parsed.y !== null
-            ? context.parsed.y.toLocaleString('ko-KR') + 't'
-            : null;
+          return context.parsed.y !== null ? targetLabel : null;
         },
       },
     },
@@ -254,7 +278,18 @@ const optionsWater: any = {
         display: false,
       },
     },
-    y: {
+    'y-left': {
+      type: 'linear',
+      position: 'left',
+      grace: '50%',
+      grid: {
+        display: false,
+      },
+    },
+    'y-right': {
+      type: 'linear',
+      position: 'right',
+
       grid: {
         display: false,
       },
@@ -532,10 +567,40 @@ const optionsCarbon: any = {
       grid: {
         display: false,
       },
+    },
+  },
+};
 
-      title: {
-        display: true,
-        text: '단위 : kg',
+const optionsCarbonAll: any = {
+  reponsive: false,
+  plugins: {
+    datalabels: {
+      display: false,
+    },
+    legend: {
+      display: false,
+    },
+    tooltip: {
+      callbacks: {
+        title: (context: any) => context[0].label + '월',
+        label: (context: any) => {
+          let label = context.dataset.label + '' || '';
+          return context.parsed.y !== null
+            ? Math.floor(context.parsed.y * 1000).toLocaleString('ko-KR') + 'kg'
+            : null;
+        },
+      },
+    },
+  },
+  scales: {
+    x: {
+      grid: {
+        display: false,
+      },
+    },
+    y: {
+      grid: {
+        display: false,
       },
     },
   },
@@ -696,6 +761,42 @@ const stuffPrice = {
   '서호관 라면': 500,
 };
 
+const optionsWaterFee: any = {
+  reponsive: false,
+  plugins: {
+    datalabels: {
+      display: false,
+    },
+    legend: {
+      display: false,
+    },
+    tooltip: {
+      callbacks: {
+        title: (context: any) =>
+          context[0].label + `${context[0].label.length >= 4 ? '년' : '월'}`,
+        label: (context: any) => {
+          let label = context.dataset.label + '' || '';
+          return context.parsed.y !== null
+            ? context.parsed.y.toLocaleString('ko-KR') + 't'
+            : null;
+        },
+      },
+    },
+  },
+  scales: {
+    x: {
+      grid: {
+        display: false,
+      },
+    },
+    y: {
+      grid: {
+        display: false,
+      },
+    },
+  },
+};
+
 const season = ['봄', '여름', '가을', '겨울'];
 export {
   monthlyInitData,
@@ -728,4 +829,6 @@ export {
   BuildingCarbonDoughnut,
   waterChartCategory,
   optionsWater,
+  monthlyInitWaterData,
+  optionsCarbonAll,
 };
