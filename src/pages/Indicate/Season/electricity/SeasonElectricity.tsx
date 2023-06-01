@@ -164,21 +164,19 @@ const SeasonElectricity = () => {
         <WrapperInner>
           <S.SeasonWrapper>
             <S.SeasonTitle>👑계절별 전력 사용량 순위</S.SeasonTitle>
-            <S.ChartChangeFrame>
-              {isDropdownOn && (
-                <Dropdown
-                  dropDownInfo={dropdownInfoCreater(
-                    '10rem',
-                    '1rem',
-                    '2.3rem',
-                    'middle',
-                    yearList,
-                    setCurYear,
-                    setIsDropdownOn
-                  )}
-                ></Dropdown>
-              )}
-            </S.ChartChangeFrame>
+            {isDropdownOn && (
+              <Dropdown
+                dropDownInfo={dropdownInfoCreater(
+                  '10rem',
+                  '12rem',
+                  '10rem',
+                  'middle',
+                  yearList,
+                  setCurYear,
+                  setIsDropdownOn
+                )}
+              ></Dropdown>
+            )}
             <S.BuildingInfoFrame modalState={infoModalState}>
               <S.BuildingInfoNotice>
                 ※ 아래는 각 계절에 포함된 월에 대한 정보에요
@@ -219,10 +217,9 @@ const SeasonElectricity = () => {
               <S.ChartTopFrame>
                 <S.ChartCategoryBox>계절별 사용량</S.ChartCategoryBox>
                 <S.ChartYearBox onClick={() => setIsDropdownOn(true)}>
-                  {curYear}년 &nbsp;<img src={downArrow}></img>
+                  {curYear} &nbsp;<img src={downArrow}></img>
                 </S.ChartYearBox>
               </S.ChartTopFrame>
-
               <Bar
                 width="350"
                 height="250"
@@ -230,7 +227,6 @@ const SeasonElectricity = () => {
                 options={optionsSeason}
               ></Bar>
             </S.Container>
-
             <S.BottomWrapper>
               <S.BuildingMoreInfoTitle>요약 정보</S.BuildingMoreInfoTitle>
               <S.ChartIndicatorLine></S.ChartIndicatorLine>
@@ -248,8 +244,8 @@ const SeasonElectricity = () => {
                 </S.Li>
                 <S.Li>
                   총 사용 전기량은 &nbsp;
-                  {infoData.watt.toLocaleString('ko-KR')}
-                  Mwh 입니다.
+                  {(infoData.watt * 1000).toLocaleString('ko-KR')}
+                  kwh 입니다.
                 </S.Li>
                 <S.Li>
                   예상 사용 요금은 &nbsp;

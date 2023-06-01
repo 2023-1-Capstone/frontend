@@ -18,6 +18,7 @@ const SeasonTitle = styled.div`
   font-size: 2.4rem;
   line-height: 2.9rem;
   margin-top: 1rem;
+  margin-bottom: 2rem;
   color: #ffffff;
 `;
 
@@ -156,9 +157,8 @@ const BottomWrapper = styled.div`
   align-items: center;
   width: 36rem;
   height: 82.5rem;
-
-  background: #eeeeee;
-  border-radius: 1rem;
+  background: #ffffff;
+  border-radius: 0.5rem;
 `;
 
 const BottomTitle = styled.div`
@@ -190,7 +190,7 @@ const BottomInfoBoxInner = styled.div`
 
   border: 2px solid #fff;
   background-color: #eee;
-  border-radius: 0.5rem;
+  border-radius: 1rem;
   padding: 1rem;
   letter-spacing: 0.02rem;
   position: relative;
@@ -236,7 +236,7 @@ const Container = styled.div`
   width: 36rem;
   height: fit-content;
   border-radius: 0.5rem;
-  margin-bottom: 2rem;
+  margin-bottom: 0rem;
 `;
 const BuildingMoreInfoTitle = styled.div`
   position: relative;
@@ -281,7 +281,7 @@ const BuildingInfoFrame = styled.div<{ modalState: string }>`
   flex-direction: column;
   gap: 1rem;
   width: fit-content;
-  top: 8.5rem;
+  top: 0.5rem;
   right: 2rem;
   height: fit-content;
   border-radius: 0.5rem;
