@@ -1,44 +1,43 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
+import React, { useEffect } from "react";
+import { useState } from "react";
 import {
   Wrapper,
   WrapperInner,
-} from '../../../../components/Wrapper/Wrapper.style';
-import Header from '../../../../components/Header/Header';
-import NavigationBar from '../../../../components/NavigationBar/NavigationBar';
-import { Chart as ChartJS, Tooltip, Legend } from 'chart.js/auto';
-import { Bar } from 'react-chartjs-2';
-import { optionsCarbonBuilding, areaInitData } from '../../../../store/store';
-import downArrow from '../../../../assets/svg/downArrow.svg';
-import * as S from './CarbonBuildings.style';
-import { Dropdown } from '../../../../components/Dropdown/Dropdown';
-import { monthCategory } from '../../../../store/store';
-import { dropdownInfoCreater } from '../../../BuildingElectricity/util';
-import { useQuery } from '@tanstack/react-query';
-import { getTargetBuildingsUsageArray } from '../util';
-import api from '../../../../api/api';
-import CarbonBuildingMoreInfo from './Component/CarbonBuildingMoreInfo';
-import DoughnutLabel from 'chartjs-plugin-doughnutlabel-rebourne';
-import informationSVG from '../../../../assets/svg/information.svg';
+} from "../../../../components/Wrapper/Wrapper.style";
+import Header from "../../../../components/Header/Header";
+import NavigationBar from "../../../../components/NavigationBar/NavigationBar";
+import { Chart as ChartJS, Tooltip, Legend } from "chart.js/auto";
+import { Bar } from "react-chartjs-2";
+import { optionsCarbonBuilding, areaInitData } from "../../../../store/store";
+import downArrow from "../../../../assets/svg/downArrow.svg";
+import * as S from "./CarbonBuildings.style";
+import { Dropdown } from "../../../../components/Dropdown/Dropdown";
+import { monthCategory } from "../../../../store/store";
+import { dropdownInfoCreater } from "../../../BuildingElectricity/util";
+import { useQuery } from "@tanstack/react-query";
+import { getTargetBuildingsUsageArray } from "../util";
+import api from "../../../../api/api";
+import CarbonBuildingMoreInfo from "./Component/CarbonBuildingMoreInfo";
+import informationSVG from "../../../../assets/svg/information.svg";
 
-ChartJS.register(Tooltip, Legend, DoughnutLabel);
+ChartJS.register(Tooltip, Legend);
 
 const CarbonBuildings = () => {
-  const { data: carbonData }: { data: any } = useQuery(['getAreaData'], () =>
-    api('/api/carbon/area').then((data: any) => data.data.result)
+  const { data: carbonData }: { data: any } = useQuery(["getAreaData"], () =>
+    api("/api/carbon/area").then((data: any) => data.data.result)
   );
 
   const { data: buildingData }: { data: any } = useQuery(
-    ['getBuildingData'],
-    () => api('/api/buildings').then((data: any) => data.data.result)
+    ["getBuildingData"],
+    () => api("/api/buildings").then((data: any) => data.data.result)
   );
 
   const [chartData, setChartData] = useState(areaInitData);
   const [isYearDropdownOn, setIsYearDropdownOn] = useState<Boolean>(false);
   const [isMonthDropdownOn, setIsMonthDropdownOn] = useState<Boolean>(false);
-  const [curYear, setCurYear] = useState<string>('2023');
-  const [curMonth, setCurMonth] = useState<string>('1');
-  const [infoModalState, setInfoModalState] = useState<string>('hidden');
+  const [curYear, setCurYear] = useState<string>("2023");
+  const [curMonth, setCurMonth] = useState<string>("1");
+  const [infoModalState, setInfoModalState] = useState<string>("hidden");
 
   useEffect(() => {
     const chartDataCopy = JSON.parse(JSON.stringify(chartData));
@@ -103,10 +102,10 @@ const CarbonBuildings = () => {
                 height="20px"
                 src={informationSVG}
                 onMouseEnter={() => {
-                  setInfoModalState('visible');
+                  setInfoModalState("visible");
                 }}
                 onMouseLeave={() => {
-                  setInfoModalState('hidden');
+                  setInfoModalState("hidden");
                 }}
               ></S.InfoImage>
             </S.Calculate>
@@ -114,10 +113,10 @@ const CarbonBuildings = () => {
               {isYearDropdownOn && (
                 <Dropdown
                   dropDownInfo={dropdownInfoCreater(
-                    '10rem',
-                    '-17rem',
-                    '2.5rem',
-                    'middle',
+                    "10rem",
+                    "-17rem",
+                    "2.5rem",
+                    "middle",
                     carbonData[0]?.usagesList.map((item: any) => item.year),
                     setCurYear,
                     setIsYearDropdownOn
@@ -127,10 +126,10 @@ const CarbonBuildings = () => {
               {isMonthDropdownOn && (
                 <Dropdown
                   dropDownInfo={dropdownInfoCreater(
-                    '10rem',
-                    '-8rem',
-                    '2.5rem',
-                    'middle',
+                    "10rem",
+                    "-8rem",
+                    "2.5rem",
+                    "middle",
                     monthCategory,
                     setCurMonth,
                     setIsMonthDropdownOn
