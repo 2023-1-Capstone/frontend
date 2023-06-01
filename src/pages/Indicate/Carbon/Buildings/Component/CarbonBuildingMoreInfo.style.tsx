@@ -38,9 +38,8 @@ const BuildingMoreInfoSummary = styled.div`
   font-size: 1.5rem;
   /* or 164% */
 
-  border: 2px solid #fff;
   background-color: #eee;
-  border-radius: 0.5rem;
+  border-radius: 1rem;
   padding: 1rem;
   letter-spacing: 0.02rem;
   position: relative;
