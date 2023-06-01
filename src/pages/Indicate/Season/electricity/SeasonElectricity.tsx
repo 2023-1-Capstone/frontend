@@ -1,40 +1,49 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect } from 'react';
+import { useState } from 'react';
 import {
   Wrapper,
   WrapperInner,
-} from "../../../../components/Wrapper/Wrapper.style";
-import Header from "../../../../components/Header/Header";
-import NavigationBar from "../../../../components/NavigationBar/NavigationBar";
-import { Chart as ChartJS, Tooltip, Legend } from "chart.js/auto";
-import { Bar, Doughnut } from "react-chartjs-2";
+} from '../../../../components/Wrapper/Wrapper.style';
+import Header from '../../../../components/Header/Header';
+import NavigationBar from '../../../../components/NavigationBar/NavigationBar';
+import { Chart as ChartJS, Tooltip, Legend } from 'chart.js/auto';
+import { Bar, Doughnut } from 'react-chartjs-2';
 import {
   options,
   seasonInitData,
   season,
   optionsDoughnut,
-} from "../../../../store/store";
-import downArrow from "../../../../assets/svg/downArrow.svg";
-import * as S from "./SeasonElectricity.style";
-import { Dropdown } from "../../../../components/Dropdown/Dropdown";
-import { dropdownInfoCreater } from "../../../BuildingElectricity/util";
-import { useQuery } from "@tanstack/react-query";
-import { getAverageFee, findMostWasteIdx } from "../util";
-import api from "../../../../api/api";
-import TransItem from "../../Component/TrasnItem/TransItem";
-import refreshSVG from "../../../../assets/svg/refresh.svg";
-import { getUniqueNumberList } from "../util";
+} from '../../../../store/store';
+import downArrow from '../../../../assets/svg/downArrow.svg';
+import * as S from './SeasonElectricity.style';
+import { Dropdown } from '../../../../components/Dropdown/Dropdown';
+import { dropdownInfoCreater } from '../../../BuildingElectricity/util';
+import { useQuery } from '@tanstack/react-query';
+import { getAverageFee, findMostWasteIdx } from '../util';
+import api from '../../../../api/api';
+import TransItem from '../../Component/TrasnItem/TransItem';
+import refreshSVG from '../../../../assets/svg/refresh.svg';
+import { getUniqueNumberList } from '../util';
+import { BuildingElectricityPlugin } from '../../../../store/chartPlugin';
+import informationSVG from '../../../../assets/svg/information.svg';
 
 ChartJS.register(Tooltip, Legend);
 
+const seasonInfo = [
+  { season: '봄', month: '3,4,5월' },
+  { season: '여름', month: '6,7,8월' },
+  { season: '가을', month: '9,10,11월' },
+  { season: '겨울', month: '12,1,2월' },
+];
+
 const SeasonElectricity = () => {
   const { data: chartDatas }: { data: any } = useQuery(
-    ["getSeasonElectricity"],
-    () => api("/api/electricity/season")
+    ['getSeasonElectricity'],
+    () => api('/api/electricity/season')
   );
   const { data: feeData }: { data: any } = useQuery(
-    ["getElectricityFee"],
-    () => api("/api/electricity/fee"),
+    ['getElectricityFee'],
+    () => api('/api/electricity/fee'),
     {
       enabled: !!chartDatas,
     }
@@ -44,11 +53,12 @@ const SeasonElectricity = () => {
   const [chartData, setChartData] = useState(seasonInitData);
   const [isDropdownOn, setIsDropdownOn] = useState<Boolean>(false);
   const [yearList, setYearList] = useState([]);
-  const [curYear, setCurYear] = useState<string>("");
+  const [curYear, setCurYear] = useState<string>('');
   const [infoData, setInfoData] = useState({ watt: 0, fee: 0 });
   const [randomIdxList, setRandomIdxList] = useState<number[]>(
     getUniqueNumberList(4, 6)
   );
+  const [infoModalState, setInfoModalState] = useState<string>('hidden');
 
   const getPercent = (usageArr: number[], targetUsage: number) => {
     let numOfNotNullSeason = 0;
@@ -141,10 +151,10 @@ const SeasonElectricity = () => {
               {isDropdownOn && (
                 <Dropdown
                   dropDownInfo={dropdownInfoCreater(
-                    "10rem",
-                    "1rem",
-                    "2.3rem",
-                    "middle",
+                    '10rem',
+                    '1rem',
+                    '2.3rem',
+                    'middle',
                     yearList,
                     setCurYear,
                     setIsDropdownOn
@@ -152,6 +162,42 @@ const SeasonElectricity = () => {
                 ></Dropdown>
               )}
             </S.ChartChangeFrame>
+            <S.BuildingInfoFrame modalState={infoModalState}>
+              <S.BuildingInfoNotice>
+                ※ 아래는 각 계절에 포함된 월에 대한 정보에요
+              </S.BuildingInfoNotice>
+              <S.BuildingInfoItem>
+                {' '}
+                <S.SeasonInfoDescriptionFrame>
+                  {seasonInfo.map((item: any, idx: number) => {
+                    return (
+                      <S.SeasonInfoDescriptionItem key={idx}>
+                        <S.BuildingInfoItemTitle>
+                          {item.season}
+                        </S.BuildingInfoItemTitle>
+                        <S.BuildingInfoItemContent>
+                          {item.month}
+                        </S.BuildingInfoItemContent>
+                      </S.SeasonInfoDescriptionItem>
+                    );
+                  })}
+                </S.SeasonInfoDescriptionFrame>
+              </S.BuildingInfoItem>
+            </S.BuildingInfoFrame>
+            <S.Calculate>
+              계절정보
+              <S.InfoImage
+                width="20px"
+                height="20px"
+                src={informationSVG}
+                onMouseEnter={() => {
+                  setInfoModalState('visible');
+                }}
+                onMouseLeave={() => {
+                  setInfoModalState('hidden');
+                }}
+              ></S.InfoImage>
+            </S.Calculate>
             <S.Container>
               <S.ChartTopFrame>
                 <S.ChartCategoryBox>계절별 사용량</S.ChartCategoryBox>
@@ -159,6 +205,7 @@ const SeasonElectricity = () => {
                   {curYear}년 &nbsp;<img src={downArrow}></img>
                 </S.ChartYearBox>
               </S.ChartTopFrame>
+
               <Bar
                 width="350"
                 height="250"
@@ -170,28 +217,29 @@ const SeasonElectricity = () => {
             <S.BottomWrapper>
               <S.BuildingMoreInfoTitle>요약 정보</S.BuildingMoreInfoTitle>
               <S.ChartIndicatorLine></S.ChartIndicatorLine>
-              <Doughnut options={optionsDoughnut} data={chartData}></Doughnut>
-              <S.BottomTitle>
-                해당년도 사용 1위는 '{season[mostWasteSeasonIdx]}' 입니다.
-              </S.BottomTitle>
-              <S.BottomInfoBox>
-                <S.BottomInfoBoxInner>
-                  <li>
-                    총 사용 전기량은 &nbsp;
-                    {infoData.watt.toLocaleString("ko-KR")}
-                    Mwh 입니다.
-                  </li>
-                  <li>
-                    예상 사용 요금은 &nbsp;
-                    {Math.floor(infoData.fee).toLocaleString("ko-KR")}원 입니다.
-                  </li>
-                  <li>
-                    계절 평균 대비 &nbsp;
-                    {getPercent(chartData?.datasets[0].data, infoData?.watt)}%가
-                    높습니다.
-                  </li>
-                </S.BottomInfoBoxInner>
-              </S.BottomInfoBox>
+              <Doughnut
+                options={optionsDoughnut}
+                data={chartData}
+                plugins={[BuildingElectricityPlugin]}
+              ></Doughnut>
+
+              <S.BottomInfoBoxInner>
+                <S.Li>
+                  해당년도 사용 1위는 '{season[mostWasteSeasonIdx]}'이며 계절
+                  평균 대비 &nbsp;
+                  {getPercent(chartData?.datasets[0].data, infoData?.watt)}%가
+                  높습니다.
+                </S.Li>
+                <S.Li>
+                  총 사용 전기량은 &nbsp;
+                  {infoData.watt.toLocaleString('ko-KR')}
+                  Mwh 입니다.
+                </S.Li>
+                <S.Li>
+                  예상 사용 요금은 &nbsp;
+                  {Math.floor(infoData.fee).toLocaleString('ko-KR')}원 입니다.
+                </S.Li>
+              </S.BottomInfoBoxInner>
               <S.BottomTitle>
                 이 전기 사용량으로...
                 <S.RefreshButton
@@ -200,7 +248,7 @@ const SeasonElectricity = () => {
                 ></S.RefreshButton>
               </S.BottomTitle>
               <TransItem
-                type={"resource"}
+                type={'resource'}
                 waste={infoData.fee}
                 randomIdxList={randomIdxList}
               ></TransItem>
