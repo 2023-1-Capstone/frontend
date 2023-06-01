@@ -281,7 +281,7 @@ const BuildingInfoFrame = styled.div<{ modalState: string }>`
   flex-direction: column;
   gap: 1rem;
   width: fit-content;
-  top: 9.5rem;
+  top: 8.5rem;
   right: 2rem;
   height: fit-content;
   border-radius: 0.5rem;

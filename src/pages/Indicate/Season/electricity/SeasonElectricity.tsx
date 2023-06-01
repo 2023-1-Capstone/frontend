@@ -9,7 +9,7 @@ import NavigationBar from '../../../../components/NavigationBar/NavigationBar';
 import { Chart as ChartJS, Tooltip, Legend } from 'chart.js/auto';
 import { Bar, Doughnut } from 'react-chartjs-2';
 import {
-  options,
+  optionsSeason,
   seasonInitData,
   season,
   optionsDoughnut,
@@ -80,8 +80,17 @@ const SeasonElectricity = () => {
       );
       // 차트 정보 세팅
       const chartDataCopy = JSON.parse(JSON.stringify(chartData));
-      chartDataCopy.datasets[0].data = validData[validData.length - 1].usages;
+      const usageList = validData[validData.length - 1].usages;
+      chartDataCopy.datasets[0].data = usageList.filter(
+        (val: number) => val !== 0
+      );
       setChartData(chartDataCopy);
+
+      //유효하지 않은 계절 제거
+      const validSeason = usageList
+        .filter((item: any) => item !== 0)
+        .map((item: any, idx: number) => seasonInfo[idx].season);
+      chartDataCopy.labels = validSeason;
 
       // 가장 사용을 많이 한 계절 인덱스 탐색
       const targetSeasonIdx = findMostWasteIdx(validData);
@@ -118,13 +127,21 @@ const SeasonElectricity = () => {
     )[0]?.usages;
     if (target) {
       const chartDataCopy = JSON.parse(JSON.stringify(chartData));
-      chartDataCopy.datasets[0].data = target;
+      chartDataCopy.datasets[0].data = target.filter(
+        (val: number) => val !== 0
+      );
 
       const targetSeasonIdx = target?.reduce(
         (iMax: number, x: number, idx: number, arr: number[]) =>
           x > arr[iMax] ? idx : iMax,
         0
       );
+
+      const validSeason = target
+        .filter((item: any) => item !== 0)
+        .map((item: any, idx: number) => seasonInfo[idx].season);
+      chartDataCopy.labels = validSeason;
+
       const targetFeeData = feeData?.data.result.filter(
         (val: any) => val.year === parseInt(curYear)
       )[0]?.feeResponses;
@@ -210,7 +227,7 @@ const SeasonElectricity = () => {
                 width="350"
                 height="250"
                 data={chartData}
-                options={options}
+                options={optionsSeason}
               ></Bar>
             </S.Container>
 
@@ -222,7 +239,6 @@ const SeasonElectricity = () => {
                 data={chartData}
                 plugins={[BuildingElectricityPlugin]}
               ></Doughnut>
-
               <S.BottomInfoBoxInner>
                 <S.Li>
                   해당년도 사용 1위는 '{season[mostWasteSeasonIdx]}'이며 계절

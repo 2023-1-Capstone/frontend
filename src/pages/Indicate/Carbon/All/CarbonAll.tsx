@@ -113,19 +113,19 @@ const CarbonAll = () => {
                 <S.BottomInfoBoxInner>
                   <S.Li>
                     {curYear}년 총 탄소 배출량은{' '}
-                    {Math.floor(totalCarbon * 100).toLocaleString('ko-KR')}
+                    {Math.floor(totalCarbon * 1000).toLocaleString('ko-KR')}
                     kg입니다.
                   </S.Li>
                   <S.Li>
                     사회적 탄소 배출 비용은{' '}
-                    {Math.floor((totalCarbon * 55400) / 1000).toLocaleString(
-                      'ko-KR'
-                    )}
+                    {Math.floor(
+                      (totalCarbon * 55400 * 1000) / 1000
+                    ).toLocaleString('ko-KR')}
                     원 입니다.
                   </S.Li>
                   <S.Li>
                     {mostWasteSeasonIdx + 1}월에{' '}
-                    {Math.floor(mostWaste * 100).toLocaleString('ko-KR')}kg로
+                    {Math.floor(mostWaste * 1000).toLocaleString('ko-KR')}kg로
                     가장 많은 양의 탄소를 배출했습니다.
                   </S.Li>
                 </S.BottomInfoBoxInner>
