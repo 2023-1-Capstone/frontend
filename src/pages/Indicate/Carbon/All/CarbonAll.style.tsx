@@ -165,21 +165,9 @@ const BottomWrapper = styled.div`
   border-radius: 0.5rem;
 `;
 
-const BottomInner = styled.div`
-  position: relative;
-  flex-direction: column;
-  align-items: center;
-  display: flex;
-  width: 32.9rem;
-  height: 86.9rem;
-  background: #e0e0e0;
-  border-radius: 0.7rem;
-`;
-
 const BottomTitle = styled.div`
   width: 26.5rem;
   height: 2.6rem;
-  margin-top: 5rem;
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
@@ -192,27 +180,9 @@ const BottomTitle = styled.div`
 `;
 
 const BottomInfoBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: start;
-  align-items: center;
-  padding: 1.2rem 1.6rem;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  position: relative;
-  width: fit-content;
+  width: 33rem;
   height: fit-content;
 
-  /* Black/300 */
-
-  border-radius: 1.6rem;
-`;
-
-const BottomInfoBoxInner = styled.div`
-  width: 29rem;
-  height: 4.9rem;
-  display: flex;
-  flex-direction: column;
   gap: 0.3rem;
   font-family: 'Pretendard';
   font-style: normal;
@@ -220,15 +190,15 @@ const BottomInfoBoxInner = styled.div`
   font-size: 1.5rem;
   line-height: 1.8rem;
   /* or 164% */
-  margin-bottom: 1rem;
+
   letter-spacing: 0.02rem;
-
   /* Black/600 */
-
+  margin-bottom: 2rem;
   color: #757575;
-
+  padding: 1rem;
+  border-radius: 1rem;
   /* Inside auto layout */
-
+  background-color: #eeeeee;
   flex: none;
   order: 0;
   flex-grow: 0;
@@ -276,11 +246,9 @@ export {
   BottomWrapper,
   BottomTitle,
   BottomInfoBox,
-  BottomInfoBoxInner,
   BottomInfoTransWrapper,
   SeasonTitle,
   RefreshButton,
-  BottomInner,
   Container,
   Li,
 };
