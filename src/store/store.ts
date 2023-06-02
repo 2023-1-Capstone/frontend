@@ -97,6 +97,7 @@ const monthlyInitDatas: any = {
     {
       backgroundColor: doughnutColor,
       data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      borderRadius: 3,
     },
   ],
 };
@@ -314,6 +315,39 @@ const options: any = {
     tooltip: {
       callbacks: {
         title: (context: any) => context[0].label + '월',
+        label: (context: any) => {
+          let label = context.dataset.label + '' || '';
+          return context.parsed.y !== null ? context.parsed.y + 'Mwh' : null;
+        },
+      },
+    },
+  },
+  scales: {
+    x: {
+      grid: {
+        display: false,
+      },
+    },
+    y: {
+      grid: {
+        display: false,
+      },
+    },
+  },
+};
+
+const optionsSeason: any = {
+  reponsive: false,
+  plugins: {
+    datalabels: {
+      display: false,
+    },
+    legend: {
+      display: false,
+    },
+    tooltip: {
+      callbacks: {
+        title: (context: any) => context[0].label,
         label: (context: any) => {
           let label = context.dataset.label + '' || '';
           return context.parsed.y !== null ? context.parsed.y + 'Mwh' : null;
@@ -836,4 +870,5 @@ export {
   optionsWater,
   monthlyInitWaterData,
   optionsCarbonAll,
+  optionsSeason,
 };

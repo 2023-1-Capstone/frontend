@@ -72,6 +72,8 @@ const SeasonElectricity = () => {
   };
 
   useEffect(() => {
+    console.log(chartDatas);
+
     const chartRes = chartDatas?.data.result;
     const feeRes = feeData?.data.result;
     if (chartRes && feeRes) {

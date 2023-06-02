@@ -68,7 +68,8 @@ const SeasonGas = () => {
         return acc + cur;
       }, 0) / numOfNotNullSeason
     );
-    return ((targetUsage / averageWatt) * 10).toFixed(2);
+
+    return ((targetUsage / averageWatt) * 100 - 100).toFixed(2);
   };
 
   useEffect(() => {
