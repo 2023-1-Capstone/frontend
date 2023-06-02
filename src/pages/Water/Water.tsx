@@ -19,9 +19,9 @@ import {
   monthlyInitWaterData,
   yearCategory,
 } from '../../store/store';
+import WaterMoreInfo from './Component/WaterMoreInfo';
 
 const waterCategory = ['월별 수도 사용량', '연간 수도 사용량'];
-const waterFeeCategory = ['월별 수도 요금', '연간 수도 요금'];
 
 ChartJS.register(Tooltip, Legend);
 
@@ -67,8 +67,6 @@ const Water = () => {
     const targetData = waterInfo?.filter(
       (item: chartInfoType) => item.year === parseInt(rightCategory)
     )[0];
-
-    console.log(targetData);
 
     const usageList = targetData?.usages.map((item: chartInfoUsageType) => {
       if (item?.data) return item?.data;
@@ -186,6 +184,12 @@ const Water = () => {
         <S.BuildingElectricityInner>
           {charts[chartCategory]}
         </S.BuildingElectricityInner>
+        <WaterMoreInfo
+          categoryState={chartCategory}
+          curYear={rightCategory}
+          chartState={chartState}
+          waterInfo={waterInfo}
+        ></WaterMoreInfo>
       </WrapperInner>
       <NavigationBar navigationStatus="water"></NavigationBar>
     </Wrapper>
