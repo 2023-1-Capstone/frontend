@@ -25,6 +25,7 @@ const BuildingTitle = styled.div`
   color: #fefefe;
   width: fit-content;
   height: 2.7rem;
+  margin-top: 2rem;
 
   font-family: 'Pretendard';
   left: 50%;
@@ -42,7 +43,7 @@ const ChartChangeFrame = styled.div`
   flex-direction: column;
   left: 50%;
   transform: translateX(-50%);
-
+  margin-top: 2rem;
   margin-bottom: 1rem;
 `;
 
@@ -58,6 +59,7 @@ const ChartTopFrame = styled.div`
   position: relative;
   width: 36rem;
   height: 2.3rem;
+  margin-bottom: 2rem;
 `;
 
 const ChartTitle = styled.div`
@@ -175,12 +177,55 @@ const CarouselFrame = styled.div`
   padding-bottom: 1rem;
   width: 36rem;
   top: 1rem;
+
   border-radius: 0.5rem;
 `;
 
 const BuildingElectricityInner = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+const ScrollChart = styled.div`
+  position: relative;
+  overflow-x: scroll;
+  background-color: #fff;
+  margin-top: 10px;
+  height: 30rem;
+  width: 36em;
+  left: 50%;
+  border-radius: 0.5rem;
+  transform: translateX(-50%);
+  ::-webkit-scrollbar {
+    height: 0.6rem; /* 스크롤바의 너비 */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    height: 30%; /* 스크롤바의 길이 */
+    background: #757575; /* 스크롤바의 색상 */
+    border-radius: 2rem;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(33, 122, 244, 0.1); /*스크롤바 뒷 배경 색상*/
+  }
+`;
+
+const YearWaterChartContainer = styled.div`
+  width: 60rem;
+  height: 25rem;
+`;
+
+const UnitTone = styled.span`
+  position: relative;
+  bottom: 1.9rem;
+  left: 2.2rem;
+`;
+
+const UnitWon = styled.span`
+  position: relative;
+  bottom: 1.9rem;
+  left: 31rem;
 `;
 
 export {
@@ -195,4 +240,8 @@ export {
   ChartContainer,
   BuildingElectricityInner,
   ChartTitle,
+  YearWaterChartContainer,
+  ScrollChart,
+  UnitTone,
+  UnitWon,
 };

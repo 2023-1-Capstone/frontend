@@ -47,7 +47,7 @@ const FindPassword = () => {
   }, [watch('nickname')]);
 
   return (
-    <Wrapper color={'#0065B3'}>
+    <Wrapper color={'#99bfcf'}>
       <S.StartInner>
         <S.LoginWrapper>
           <S.SignUpTitle>비밀번호 찾기</S.SignUpTitle>

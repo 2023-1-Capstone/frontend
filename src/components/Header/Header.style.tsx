@@ -9,8 +9,8 @@ const HeaderFrame = styled.div`
   position: absolute;
   width: 35rem;
   height: 5.8rem;
-  left: 1.9rem;
-  top: 5.1rem;
+  left: 0rem;
+  top: 2.1rem;
 `;
 
 const HeaderTitleFrame = styled.div`
@@ -20,7 +20,7 @@ const HeaderTitleFrame = styled.div`
   padding: 0px;
   gap: 1rem;
 
-  width: 19rem;
+  width: fit-content;
   height: 5.8rem;
 
   /* Inside auto layout */
@@ -31,8 +31,8 @@ const HeaderTitleFrame = styled.div`
 `;
 
 const HeaderTitleSymbol = styled.img`
-  width: 4.8rem;
-  height: 5.8rem;
+  width: 3.8rem;
+  height: 3.8rem;
 
   background: url(${(props) => props.src});
 
@@ -46,13 +46,13 @@ const HeaderTitleSymbol = styled.img`
 const HeaderTitleText = styled.div`
   /* Carbon LIVE */
 
-  width: 13.2rem;
+  width: fit-content;
   height: 2.4rem;
 
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
-  font-size: 2rem;
+  font-size: 2.3rem;
   line-height: 2.4rem;
   /* identical to box height */
 
@@ -67,9 +67,9 @@ const HeaderTitleText = styled.div`
 
 const HeaderBackArrow = styled.img`
   background: url(${(props) => props.src});
-
+  position: relative;
   /* Inside auto layout */
-
+  left: 1.3rem;
   flex: none;
   order: 0;
   flex-grow: 0;
@@ -78,7 +78,7 @@ const HeaderBackArrow = styled.img`
 const HeaderMenu = styled.img`
   /* Black/600 */
   position: relative;
-  right: 1.5rem;
+  right: 0.3rem;
   width: 3rem;
 
   background: url(${(props) => props.src});

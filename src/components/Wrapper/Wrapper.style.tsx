@@ -7,7 +7,7 @@ const Wrapper = styled.div`
   margin: auto;
   width: 39rem;
   height: 84.4rem;
-  background-color: ${(props) => (props.color ? props.color : '#ffffff')};
+  background-color: ${(props) => (props.color ? props.color : '#99bfcf')};
   border: #eeeeee 1px solid; // 임시용
   background-color: 
   overflow-y: scroll;
@@ -20,11 +20,11 @@ const Wrapper = styled.div`
 const WrapperInner = styled.div`
   position: relative;
   left: 0rem;
-  top: 12rem;
+  top: 10rem;
   width: 39rem;
   background-color: #99bfcf;
   padding-bottom: 1rem;
-  height: 61.3rem;
+  height: 63.3rem;
   overflow-y: scroll;
   ::-webkit-scrollbar {
     display: none;

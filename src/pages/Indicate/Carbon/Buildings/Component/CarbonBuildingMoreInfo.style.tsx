@@ -6,7 +6,7 @@ const BuildingMoreInfoFrame = styled.div`
   align-items: center;
   display: flex;
   width: 36rem;
-  height: 95rem;
+  height: 100rem;
   background: #fff;
   border-radius: 0.7rem;
 `;
@@ -38,9 +38,8 @@ const BuildingMoreInfoSummary = styled.div`
   font-size: 1.5rem;
   /* or 164% */
 
-  border: 2px solid #fff;
   background-color: #eee;
-  border-radius: 0.5rem;
+  border-radius: 1rem;
   padding: 1rem;
   letter-spacing: 0.02rem;
   position: relative;
@@ -54,6 +53,12 @@ const BuildingMoreInfoSummary = styled.div`
   flex: none;
   order: 0;
   flex-grow: 0;
+`;
+
+const Li = styled.li`
+  text-indent: 0px;
+  padding-left: 21px;
+  text-indent: -21px;
 `;
 
 const BuildingMoreInfoChartInfo = styled.div`
@@ -115,6 +120,24 @@ const RefreshButton = styled.img`
   cursor: pointer;
 `;
 
+const Calculate = styled.div`
+  position: relative;
+  height: fit-content;
+  width: 36rem;
+`;
+const Description = styled.div<{ size: string }>`
+  position: relative;
+  width: fit-content;
+  height: fit-content;
+
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 400;
+  font-size: ${(props) => props.size};
+  line-height: 2.9rem;
+  color: #fff;
+`;
+
 export {
   BuildingMoreInfoTitle,
   BuildingMoreInfoFrame,
@@ -124,4 +147,7 @@ export {
   BuildingMoreInfoChartInfo,
   BottomTitle,
   RefreshButton,
+  Calculate,
+  Description,
+  Li,
 };

@@ -59,15 +59,15 @@ const BuildingElectricity = () => {
     const target = rData.result[rData.result.length - 1].usages;
     const chartStateCopy = JSON.parse(JSON.stringify(chartState));
     const usageArr = target.map((data: any) => {
-      if (data.prediction) return data.prediction;
-      return data.data;
+      if (data.data) return data.data;
+      return data.prediction;
     });
     chartStateCopy.datasets[0].data = usageArr;
 
     //   backgroundColor: ['rgb(75, 192, 192)'],
 
     chartStateCopy.datasets[0].backgroundColor = target.map((data: any) => {
-      if (!data.prediction) return 'rgb(75, 192, 192)';
+      if (data.data) return 'rgb(91,125,177,0.9)';
       else return 'rgb(0,0,0,0.1)';
     });
 
@@ -100,7 +100,7 @@ const BuildingElectricity = () => {
     );
 
     const chartStateCopy = JSON.parse(JSON.stringify(chartState));
-    chartStateCopy.datasets[0].backgroundColor = ['rgb(75, 192, 192)'];
+    chartStateCopy.datasets[0].backgroundColor = ['rgb(91,125,177,0.9)'];
     setRightCategory(matchChartCategory[chartCategory][0]);
     setRightDropDown(matchChartCategory[chartCategory][1]);
 
@@ -129,8 +129,8 @@ const BuildingElectricity = () => {
 
       // 타겟이 예측인지 아닌지 뽑아내서 색깔 변경주기
       chartStateCopy.datasets[0].backgroundColor = target?.map((data: any) => {
-        if (data.prediction) return 'rgb(0,0,0,0.1)';
-        return 'rgb(75, 192, 192)';
+        if (data.data) return 'rgb(91,125,177,0.9)';
+        return 'rgb(0,0,0,0.1)';
       });
 
       setChartState(chartStateCopy);
@@ -141,7 +141,7 @@ const BuildingElectricity = () => {
       const backgroundColor = chartData.map((item: chartInfoType) => {
         if (item.usages[parseInt(rightCategory) - 1].prediction)
           return 'rgb(0,0,0,0.1)';
-        return 'rgb(75, 192, 192)';
+        return 'rgb(91,125,177,0.9)';
       });
       chartStateCopy.datasets[0].data = target?.map(
         (item: chartInfoUsageType) =>
@@ -160,6 +160,10 @@ const BuildingElectricity = () => {
   useEffect(setChartByCategory, [chartCategory]);
   useEffect(setChartByDropdown, [rightCategory]);
 
+  useEffect(() => {
+    console.log(userInfo);
+  }, [userInfo]);
+
   return (
     <Wrapper
       onClick={(e: React.MouseEvent<HTMLDivElement>) => {
@@ -177,7 +181,6 @@ const BuildingElectricity = () => {
               setSelectedBuilding={setSelectedBuilding}
             ></Carousel>
           </S.CarouselFrame>
-
           <S.Container>
             <S.ChartTopFrame>
               <S.ChartCategoryBox onClick={leftDropdownHandler}>
@@ -197,7 +200,18 @@ const BuildingElectricity = () => {
                 options={options}
               ></Bar>
             </S.ChartContainer>
-            <S.ChartTitle>{selectedBuilding}</S.ChartTitle>
+            <S.ChartTitle>
+              {selectedBuilding}
+              {userInfo?.data.result.filter(
+                (item: any) => item.name === selectedBuilding
+              )[0].elecDescription
+                ? `(${
+                    userInfo?.data.result.filter(
+                      (item: any) => item.name === selectedBuilding
+                    )[0].elecDescription
+                  })`
+                : null}
+            </S.ChartTitle>
           </S.Container>
           <BuildingMoreInfo
             categoryState={chartCategory}
@@ -209,7 +223,7 @@ const BuildingElectricity = () => {
               dropDownInfo={dropdownInfoCreater(
                 '9.6rem',
                 '1.7rem',
-                '27.7rem',
+                '25.7rem',
                 'large',
                 electricityChartCategory,
                 setChartCategory,
@@ -217,13 +231,12 @@ const BuildingElectricity = () => {
               )}
             ></Dropdown>
           )}
-
           {isRightDropdownOn && (
             <Dropdown
               dropDownInfo={dropdownInfoCreater(
                 '9.6rem',
                 '16.2rem',
-                '27.7rem',
+                '25.7rem',
                 'middle',
                 rightDropdown,
                 setRightCategory,

@@ -74,13 +74,16 @@ const CarbonBuildingMoreInfo = ({ chartState }: { chartState: any }) => {
         ></Doughnut>
       </S.Container>
       <S.BuildingMoreInfoSummary>
-        <li>
+        <S.Li>
           가장 많은 탄소를 배출한 건물은 '{moreInfo.mostWasteBuilding}'입니다.
-        </li>
-        <li>
+        </S.Li>
+        <S.Li>
           가장 적은 탄소를 배출한 건물은 '{moreInfo.lessWasteBuilding}'입니다.
-        </li>
-        <li>건물 평균 {moreInfo.averageWaste}kg를 배출하였습니다.</li>
+        </S.Li>
+        <S.Li>건물 평균 {moreInfo.averageWaste}kg를 배출하였습니다.</S.Li>
+        <S.Li>
+          탄소배출량은 전기, 가스, 수도 사용량을 기반으로 계산했습니다.
+        </S.Li>
       </S.BuildingMoreInfoSummary>
       <S.BottomTitle>
         해당 시기 탄소 배출량은...

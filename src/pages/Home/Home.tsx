@@ -10,6 +10,7 @@ import silentRefresh from '../../api/silentRefresh';
 
 const HomePage = () => {
   const navigate = useNavigate();
+
   return (
     <Wrapper>
       <Header></Header>
@@ -37,7 +38,6 @@ const HomePage = () => {
           })}
         </S.HomeCategoryList>
       </WrapperInner>
-      <NavigationBar navigationStatus="home"></NavigationBar>
     </Wrapper>
   );
 };

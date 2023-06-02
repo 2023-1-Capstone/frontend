@@ -4,6 +4,7 @@ import home from '../../assets/svg/home.svg';
 import gas from '../../assets/svg/gas.svg';
 import electricity from '../../assets/svg/eletricity.svg';
 import indicator from '../../assets/svg/indicator.svg';
+import waterMaterial from '../../assets/svg/waterMaterial.svg';
 import { navigationItemType } from '../../type/Types';
 import { useNavigate } from 'react-router-dom';
 
@@ -28,6 +29,12 @@ const SIDEBARITEMS: navigationItemType[] = [
   },
   {
     id: '4',
+    src: waterMaterial,
+    message: '수도',
+    status: 'water',
+  },
+  {
+    id: '5',
     src: indicator,
     message: '지표',
     status: 'indicator',

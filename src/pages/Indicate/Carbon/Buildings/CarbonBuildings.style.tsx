@@ -15,9 +15,9 @@ const SeasonTitle = styled.div`
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 400;
-  font-size: 2rem;
+  font-size: 2.1rem;
   line-height: 2.9rem;
-  margin-top: 3rem;
+  margin-top: 1rem;
   margin-bottom: 3rem;
   color: #ffffff;
 `;
@@ -293,9 +293,10 @@ const Container = styled.div`
   align-items: center;
   border-radius: 0.5rem;
   background-color: #ffffff;
+  margin-top: -1.5rem;
 `;
 
-const Description = styled.div`
+const Description = styled.div<{ size: string }>`
   position: relative;
   width: fit-content;
   height: fit-content;
@@ -303,9 +304,116 @@ const Description = styled.div`
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 400;
-  font-size: 1.2rem;
+  font-size: ${(props) => props.size};
   line-height: 2.9rem;
   color: #fff;
+`;
+
+const Calculate = styled.div`
+  position: relative;
+  height: fit-content;
+  width: 36rem;
+  display: flex;
+  align-items: center;
+  text-align: right;
+  font-size: 1.7rem;
+  justify-content: flex-end;
+  margin-top: -1rem;
+  color: #fff;
+  font-weight: 400;
+`;
+
+const InfoImage = styled.img`
+  width: 2rem;
+  height: 2rem;
+  background: url(${(props) => props.src});
+  cursor: pointer;
+`;
+
+const BuildingListItem = styled.div`
+  font-size: 1.5rem;
+`;
+
+const BuildingInfoFrame = styled.div<{ modalState: string }>`
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: fit-content;
+  top: 9.5rem;
+  right: 2rem;
+  height: fit-content;
+  border-radius: 0.5rem;
+  background-color: #fefbf6;
+  border: 2px solid #eee;
+  padding: 1rem;
+  z-index: 2;
+  visibility: ${(props) => props.modalState};
+`;
+
+const BuildingInfoNotice = styled.div`
+  position: relative;
+  width: fit-content;
+  height: fit-content;
+
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 17px;
+
+  color: #757575;
+`;
+
+const BuildingInfoItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 0.2rem;
+
+  position: relative;
+  width: 33rem;
+  height: fit-content;
+  margin-bottom: ;
+`;
+
+const BuildingInfoItemTitle = styled.div`
+  width: fit-content;
+  height: fit-content;
+
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 19px;
+
+  color: #000000;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+`;
+
+const BuildingInfoItemContent = styled.div`
+  width: fit-content;
+  height: fit-content;
+
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 17px;
+
+  color: #000000;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
 `;
 
 export {
@@ -327,4 +435,12 @@ export {
   RefreshButton,
   Container,
   Description,
+  Calculate,
+  BuildingInfoFrame,
+  InfoImage,
+  BuildingListItem,
+  BuildingInfoNotice,
+  BuildingInfoItem,
+  BuildingInfoItemTitle,
+  BuildingInfoItemContent,
 };

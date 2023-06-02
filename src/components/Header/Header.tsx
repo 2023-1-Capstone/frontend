@@ -22,7 +22,7 @@ const Header = () => {
         <S.HeaderBackArrow src={back}></S.HeaderBackArrow>
         <S.HeaderTitleFrame>
           <S.HeaderTitleSymbol src={symbolMark}></S.HeaderTitleSymbol>
-          <S.HeaderTitleText>Carbon Live</S.HeaderTitleText>
+          <S.HeaderTitleText>Carbon live</S.HeaderTitleText>
         </S.HeaderTitleFrame>
         <S.HeaderMenu src={logoutSVG} onClick={logout}></S.HeaderMenu>
       </S.HeaderFrame>

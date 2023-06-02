@@ -18,13 +18,17 @@ const carbonAllPlugin = {
     ctx.fillStyle = '#000';
     ctx.textAlign = 'center';
     ctx.textBaseLine = 'middle';
-    ctx.font = 'bold 15px Pretendard';
+    ctx.font = 'bold 17px Pretendard';
     ctx.fillStyle = '#92C111';
     ctx.fillText('총 탄소 배출량', xCoor, yCoor - 10);
-    ctx.font = 'bold 20px Pretendard';
+    ctx.font = 'bold 22px Pretendard';
     ctx.borderColor = '#757575';
     ctx.fillStyle = '#757575';
-    ctx.fillText(total.toLocaleString('ko-KR') + 'kg', xCoor, yCoor + 20);
+    ctx.fillText(
+      (total * 1000).toLocaleString('ko-KR') + 'kg',
+      xCoor,
+      yCoor + 20
+    );
   },
 };
 
@@ -88,11 +92,37 @@ const BuildingGasPlugin = {
     ctx.font = 'bold 20px Pretendard';
     ctx.borderColor = '#757575';
     ctx.fillStyle = '#757575';
-    ctx.fillText(
-      (total * 1000).toLocaleString('ko-KR') + 'm3',
-      xCoor,
-      yCoor + 20
-    );
+    ctx.fillText(total.toLocaleString('ko-KR') + 'm3', xCoor, yCoor + 20);
+  },
+};
+
+const WaterPlugin = {
+  id: 'centerText',
+  afterDraw(chart: any, args: any, options: any) {
+    const {
+      ctx,
+      chartArea: { top, bottom, left, right, width, height },
+    } = chart;
+
+    let total = 0;
+
+    chart.data.datasets.forEach((dataset: any, idx: number) => {
+      total = dataset.data?.reduce((acc: number, cur: number) => acc + cur, 0);
+    });
+
+    ctx.save();
+    const xCoor = chart.getDatasetMeta(0).data[0]?.x;
+    const yCoor = chart.getDatasetMeta(0).data[0]?.y;
+    ctx.fillStyle = '#000';
+    ctx.textAlign = 'center';
+    ctx.textBaseLine = 'middle';
+    ctx.font = 'bold 17px Pretendard';
+    ctx.fillStyle = '#6E85B7';
+    ctx.fillText('총 물 사용량', xCoor, yCoor - 10);
+    ctx.font = 'bold 20px Pretendard';
+    ctx.borderColor = '#757575';
+    ctx.fillStyle = '#757575';
+    ctx.fillText(total.toLocaleString('ko-KR') + '톤', xCoor, yCoor + 20);
   },
 };
 
@@ -166,4 +196,5 @@ export {
   plugin,
   BuildingElectricityPlugin,
   BuildingGasPlugin,
+  WaterPlugin,
 };

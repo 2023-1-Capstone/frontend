@@ -46,7 +46,7 @@ const createChartCategoryArray = (
     for (let i = 0; i < item.usages.length; i++) {
       if (item.usages[i].prediction) return 'rgb(0,0,0,0.1)';
     }
-    return 'rgb(75, 192, 192)';
+    return 'rgb(91,125,177,0.9)';
   });
 
   const matchChartCategory: any = {

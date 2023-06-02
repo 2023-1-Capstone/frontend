@@ -4,7 +4,7 @@ const BuildingMoreInfoFrame = styled.div`
   position: relative;
   width: 32.8rem;
   height: 75rem;
-  background: #eeeeee;
+  background: #ffffff;
   border-radius: 1rem;
   display: flex;
   flex-direction: row;
@@ -12,29 +12,18 @@ const BuildingMoreInfoFrame = styled.div`
   justify-content: center;
 `;
 
-const BuildingMoreInfoInner = styled.div`
-  position: relative;
-  flex-direction: column;
-  align-items: center;
-  display: flex;
-  width: 32rem;
-  height: 71.9rem;
-  background: #e0e0e0;
-  border-radius: 0.7rem;
-`;
-
 const BuildingMoreInfoTitle = styled.div`
   position: relative;
   width: fit-content;
   height: 2.6rem;
-  margin-top: 1rem;
+
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
   font-size: 2rem;
   display: flex;
   align-items: center;
-
+  opacity: 0.7;
   color: #000000;
 `;
 
@@ -48,7 +37,6 @@ const BuildingMoreInfoSummary = styled.div`
   font-weight: 400;
   /* or 164% */
 
-  border: 2px solid #fff;
   border-radius: 0.5rem;
   padding: 1rem;
   letter-spacing: 0.02rem;
@@ -59,7 +47,6 @@ const BuildingMoreInfoSummary = styled.div`
   color: #757575;
   top: -7rem;
   /* Inside auto layout */
-
   flex: none;
   order: 0;
   flex-grow: 0;
@@ -91,10 +78,8 @@ const BuildingMoreInfoChartInfo = styled.div`
 `;
 
 const Container = styled.div`
-  top: 0.5rem;
   position: relative;
-  width: 27.4rem;
-  border: 3px solid white;
+  width: 34rem;
   border-radius: 1rem;
 `;
 
@@ -142,7 +127,6 @@ const ChartDescription = styled.div`
 export {
   BuildingMoreInfoTitle,
   BuildingMoreInfoFrame,
-  BuildingMoreInfoInner,
   Container,
   BuildingMoreInfoSummary,
   ChartIndicatorLine,

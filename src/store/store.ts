@@ -11,7 +11,6 @@ import 학생회관 from '../assets/schoolImage/학생회관.jpg';
 import electricityIcon from '../assets/svg/electricityCategory.svg';
 import gasIcon from '../assets/svg/gasCategory.svg';
 import carbon from '../assets/svg/carbon.svg';
-import 'chartjs-plugin-doughnutlabel-rebourne';
 import { plugin } from './chartPlugin';
 
 const monthCategory = [
@@ -62,7 +61,29 @@ const monthlyInitData: any = {
   labels: monthCategory,
   datasets: [
     {
-      backgroundColor: ['rgb(75, 192, 192)'],
+      backgroundColor: ['#6E85B7'],
+      maxBarThickness: 35,
+      borderRadius: 3,
+      data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    },
+  ],
+};
+
+const monthlyInitWaterData: any = {
+  labels: monthCategory,
+  datasets: [
+    {
+      backgroundColor: ['#6E85B7'],
+      yAxisID: 'y-left',
+      maxBarThickness: 35,
+      borderRadius: 3,
+      data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    },
+    {
+      type: 'line',
+      yAxisID: 'y-right',
+      backgroundColor: ['#FFFFFF'],
+      borderColor: ['#9BA4B5'],
       maxBarThickness: 35,
       borderRadius: 3,
       data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
@@ -76,19 +97,23 @@ const monthlyInitDatas: any = {
     {
       backgroundColor: doughnutColor,
       data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      borderRadius: 3,
     },
   ],
 };
 
 const seasonInitData: any = {
   labels: ['봄', '여름', '가을', '겨울'],
-
   datasets: [
     {
-      type: 'bar',
       maxBarThickness: 35,
-      backgroundColor: 'rgb(75, 192, 192)',
-      data: [100, 400, 300, 200],
+      backgroundColor: [
+        'rgba(100, 99, 132, 0.5)',
+        'rgba(125, 99, 132, 0.5)',
+        'rgba(150, 99, 132, 0.5)',
+        'rgba(175, 99, 132, 0.5)',
+      ],
+      data: [],
     },
   ],
 };
@@ -115,7 +140,6 @@ const areaInitData: any = {
       backgroundColor: BuildingCarbonDoughnut,
       borderColor: BuildingCarbonDoughnut,
       borderRadius: 3,
-      borderWidth: 10,
       data: [],
     },
   ],
@@ -222,7 +246,62 @@ const gasChartCategory = [
   '동월 가스 사용량',
 ];
 
+const waterChartCategory = [
+  '월별 수도 사용량',
+  '연별 수도 사용량',
+  '동월 수도 사용량',
+];
+
 const yearCategory = ['2023', '2022', '2021', '2020', '2019', '2018', '2017'];
+
+const optionsWater: any = {
+  reponsive: false,
+  plugins: {
+    datalabels: {
+      display: false,
+    },
+    legend: {
+      display: false,
+    },
+    tooltip: {
+      callbacks: {
+        title: (context: any) => context[0].label + '월',
+        label: (context: any) => {
+          let targetLabel = '';
+          if (context.datasetIndex === 0)
+            targetLabel = context.parsed.y.toLocaleString('ko-KR') + '톤';
+          else targetLabel = context.parsed.y.toLocaleString('ko-KR') + '만원';
+
+          let label = context.dataset.label + '' || '';
+          return context.parsed.y !== null ? targetLabel : null;
+        },
+      },
+    },
+  },
+  scales: {
+    x: {
+      grid: {
+        display: false,
+      },
+    },
+    'y-left': {
+      type: 'linear',
+      position: 'left',
+      grace: '50%',
+      grid: {
+        display: false,
+      },
+    },
+    'y-right': {
+      type: 'linear',
+      position: 'right',
+
+      grid: {
+        display: false,
+      },
+    },
+  },
+};
 
 const options: any = {
   reponsive: false,
@@ -236,6 +315,39 @@ const options: any = {
     tooltip: {
       callbacks: {
         title: (context: any) => context[0].label + '월',
+        label: (context: any) => {
+          let label = context.dataset.label + '' || '';
+          return context.parsed.y !== null ? context.parsed.y + 'Mwh' : null;
+        },
+      },
+    },
+  },
+  scales: {
+    x: {
+      grid: {
+        display: false,
+      },
+    },
+    y: {
+      grid: {
+        display: false,
+      },
+    },
+  },
+};
+
+const optionsSeason: any = {
+  reponsive: false,
+  plugins: {
+    datalabels: {
+      display: false,
+    },
+    legend: {
+      display: false,
+    },
+    tooltip: {
+      callbacks: {
+        title: (context: any) => context[0].label,
         label: (context: any) => {
           let label = context.dataset.label + '' || '';
           return context.parsed.y !== null ? context.parsed.y + 'Mwh' : null;
@@ -494,10 +606,40 @@ const optionsCarbon: any = {
       grid: {
         display: false,
       },
+    },
+  },
+};
 
-      title: {
-        display: true,
-        text: '단위 : kg',
+const optionsCarbonAll: any = {
+  reponsive: false,
+  plugins: {
+    datalabels: {
+      display: false,
+    },
+    legend: {
+      display: false,
+    },
+    tooltip: {
+      callbacks: {
+        title: (context: any) => context[0].label + '월',
+        label: (context: any) => {
+          let label = context.dataset.label + '' || '';
+          return context.parsed.y !== null
+            ? Math.floor(context.parsed.y * 1000).toLocaleString('ko-KR') + 'kg'
+            : null;
+        },
+      },
+    },
+  },
+  scales: {
+    x: {
+      grid: {
+        display: false,
+      },
+    },
+    y: {
+      grid: {
+        display: false,
       },
     },
   },
@@ -658,6 +800,42 @@ const stuffPrice = {
   '서호관 라면': 500,
 };
 
+const optionsWaterFee: any = {
+  reponsive: false,
+  plugins: {
+    datalabels: {
+      display: false,
+    },
+    legend: {
+      display: false,
+    },
+    tooltip: {
+      callbacks: {
+        title: (context: any) =>
+          context[0].label + `${context[0].label.length >= 4 ? '년' : '월'}`,
+        label: (context: any) => {
+          let label = context.dataset.label + '' || '';
+          return context.parsed.y !== null
+            ? context.parsed.y.toLocaleString('ko-KR') + 't'
+            : null;
+        },
+      },
+    },
+  },
+  scales: {
+    x: {
+      grid: {
+        display: false,
+      },
+    },
+    y: {
+      grid: {
+        display: false,
+      },
+    },
+  },
+};
+
 const season = ['봄', '여름', '가을', '겨울'];
 export {
   monthlyInitData,
@@ -688,4 +866,9 @@ export {
   areaStackedInitData,
   optionsAreaStacked,
   BuildingCarbonDoughnut,
+  waterChartCategory,
+  optionsWater,
+  monthlyInitWaterData,
+  optionsCarbonAll,
+  optionsSeason,
 };

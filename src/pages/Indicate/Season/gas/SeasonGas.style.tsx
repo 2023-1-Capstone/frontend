@@ -14,11 +14,11 @@ const SeasonTitle = styled.div`
 
   font-family: 'Pretendard';
   font-style: normal;
-  font-weight: 700;
+  font-weight: 400;
   font-size: 2.4rem;
   line-height: 2.9rem;
-  margin-top: 3rem;
-  color: #000000;
+  margin-top: 1rem;
+  color: #ffffff;
 `;
 
 const ChartChangeFrame = styled.div`
@@ -26,8 +26,6 @@ const ChartChangeFrame = styled.div`
   width: fit-content;
   display: flex;
   flex-direction: column;
-
-  margin-top: 2rem;
   margin-bottom: 1rem;
 `;
 
@@ -37,37 +35,67 @@ const ChartTopFrame = styled.div`
   justify-content: center;
   align-items: center;
   padding: 0px;
-  gap: 15rem;
-  left: 5px;
+  top: 0.4rem;
+  left: 0.7rem;
   position: relative;
-  width: 33rem;
+  margin-bottom: 3.5rem;
+  width: 36rem;
   height: 2.3rem;
+`;
+
+const ChartTitle = styled.div`
+  position: relative;
+  width: 36rem;
+  padding-bottom: 1.5rem;
+  top: 0.4rem;
+  cursor: pointer;
+  flex-direction: row;
+  border-radius: 0.3rem;
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.8rem;
+  line-height: 2rem;
+  /* or 286% */
+
+  display: flex;
+  align-items: center;
+  justify-content: right;
+
+  color: #000000;
+
+  /* Inside auto layout */
+  right: 1rem;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
 `;
 
 const ChartCategoryBox = styled.div`
   position: absolute;
 
   width: fit-content;
-  height: fit-content;
+  height: 2.7rem;
 
   &:hover {
     background-color: #e7e7e7;
   }
+  border: 1px solid #e7e7e7;
 
   cursor: pointer;
 
-  left: 0.5rem;
-
+  left: -0.5rem;
+  padding: 5px;
   border-radius: 0.3rem;
 
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   line-height: 1.7rem;
   display: flex;
   align-items: center;
-
+  opacity: 0.7;
   color: #000000;
 
   /* Inside auto layout */
@@ -80,28 +108,31 @@ const ChartCategoryBox = styled.div`
 const ChartYearBox = styled.div`
   position: absolute;
   width: fit-content;
-  height: fit-content;
+  height: 2.7rem;
+  padding: 5px;
 
   &:hover {
     background-color: #e7e7e7;
   }
 
+  border: 1px solid #e7e7e7;
+
   cursor: pointer;
 
-  left: 26rem;
+  left: 9.7rem;
 
   border-radius: 0.3rem;
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   line-height: 2rem;
   /* or 286% */
 
   display: flex;
   align-items: center;
   text-align: center;
-
+  opacity: 0.7;
   color: #000000;
 
   /* Inside auto layout */
@@ -113,8 +144,7 @@ const ChartYearBox = styled.div`
 
 const ChartIndicatorLine = styled.div`
   position: relative;
-  left: 0.8rem;
-  width: 32.1rem;
+  width: 7.6rem;
   height: 0px;
   border: 0.1rem solid #757575;
 `;
@@ -124,11 +154,11 @@ const BottomWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 34.8rem;
-  height: 39.5rem;
+  width: 36rem;
+  height: 82.5rem;
 
-  background: #eeeeee;
-  border-radius: 1rem;
+  background: #ffffff;
+  border-radius: 0.5rem;
 `;
 
 const BottomTitle = styled.div`
@@ -146,38 +176,27 @@ const BottomTitle = styled.div`
   color: #000000;
 `;
 
-const BottomInfoBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: start;
-  align-items: center;
-  padding: 1.2rem 1.6rem;
-  gap: 1rem;
-
-  position: relative;
-  width: 26.8rem;
-  height: 7.3rem;
-
-  /* Black/300 */
-
-  background: #e0e0e0;
-  border-radius: 1.6rem;
-`;
-
 const BottomInfoBoxInner = styled.div`
-  width: fit-content;
-  height: 4.9rem;
+  position: relative;
+  width: 33rem;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 400;
-  font-size: 1.1rem;
-  line-height: 1.8rem;
+  font-size: 1.5rem;
   /* or 164% */
 
+  border: 2px solid #fff;
+  background-color: #eee;
+  border-radius: 1rem;
+  padding: 1rem;
   letter-spacing: 0.02rem;
+  position: relative;
 
   /* Black/600 */
-
+  gap: 0.8rem;
   color: #757575;
 
   /* Inside auto layout */
@@ -185,6 +204,11 @@ const BottomInfoBoxInner = styled.div`
   flex: none;
   order: 0;
   flex-grow: 0;
+`;
+
+const Li = styled.li`
+  padding-left: 21px;
+  text-indent: -1.8rem;
 `;
 
 const BottomInfoTransWrapper = styled.div`
@@ -205,6 +229,146 @@ const RefreshButton = styled.img`
   height: 2.5rem;
   cursor: pointer;
 `;
+const Container = styled.div`
+  background-color: #ffffff;
+  top: 0rem;
+  position: relative;
+  width: 36rem;
+  height: fit-content;
+  border-radius: 0.5rem;
+`;
+
+const BuildingMoreInfoTitle = styled.div`
+  position: relative;
+  width: fit-content;
+  height: 2.6rem;
+
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 2rem;
+  display: flex;
+  margin-top: 1rem;
+  align-items: center;
+  opacity: 0.7;
+  color: #000000;
+`;
+
+const Calculate = styled.div`
+  position: relative;
+  height: fit-content;
+  width: 36rem;
+  display: flex;
+  align-items: center;
+  text-align: right;
+  font-size: 1.7rem;
+  justify-content: flex-end;
+  color: #fff;
+  font-weight: 400;
+`;
+
+const InfoImage = styled.img`
+  width: 2rem;
+  height: 2rem;
+  background: url(${(props) => props.src});
+  cursor: pointer;
+`;
+
+const BuildingInfoFrame = styled.div<{ modalState: string }>`
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: fit-content;
+  top: 7.5rem;
+  right: 2rem;
+  height: fit-content;
+  border-radius: 0.5rem;
+  background-color: #fefbf6;
+  border: 2px solid #eee;
+  padding: 1rem;
+  z-index: 2;
+  visibility: ${(props) => props.modalState};
+`;
+
+const BuildingInfoNotice = styled.div`
+  position: relative;
+  width: fit-content;
+  height: fit-content;
+
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 17px;
+
+  color: #757575;
+`;
+
+const BuildingInfoItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 0.2rem;
+
+  position: relative;
+  width: 33rem;
+  height: fit-content;
+  margin-bottom: ;
+`;
+
+const BuildingInfoItemTitle = styled.div`
+  width: fit-content;
+  height: fit-content;
+
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 19px;
+
+  color: #000000;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+`;
+
+const BuildingInfoItemContent = styled.div`
+  width: fit-content;
+  height: fit-content;
+
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 17px;
+
+  color: #000000;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+`;
+
+const SeasonInfoDescriptionFrame = styled.div`
+  position: relative;
+  left: 1rem;
+  display: flex;
+  flex-direction: row;
+  gap: 4rem;
+  justify-content: center;
+`;
+
+const SeasonInfoDescriptionItem = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 export {
   SeasonWrapper,
@@ -215,9 +379,20 @@ export {
   ChartChangeFrame,
   BottomWrapper,
   BottomTitle,
-  BottomInfoBox,
   BottomInfoBoxInner,
   BottomInfoTransWrapper,
   SeasonTitle,
   RefreshButton,
+  Container,
+  BuildingMoreInfoTitle,
+  Li,
+  Calculate,
+  InfoImage,
+  BuildingInfoFrame,
+  BuildingInfoItemContent,
+  BuildingInfoNotice,
+  BuildingInfoItemTitle,
+  BuildingInfoItem,
+  SeasonInfoDescriptionFrame,
+  SeasonInfoDescriptionItem,
 };

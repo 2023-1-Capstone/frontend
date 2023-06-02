@@ -12,14 +12,15 @@ const NavigationFrame = styled.div`
 `;
 
 const NavigationItemTotalFrame = styled.div`
+  position: relative;
   display: flex;
   flex-direction: row;
   align-items: center;
 
   justify-content: center;
   margin-top: 1rem;
-  gap: 6.6rem;
-
+  gap: 5.3rem;
+  top: 1rem;
   height: 4.3rem;
 
   /* Inside auto layout */
