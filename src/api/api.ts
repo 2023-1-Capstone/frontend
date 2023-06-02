@@ -36,6 +36,11 @@ api.interceptors.response.use(
     return response;
   },
   async (error) => {
+    if (error?.response?.status === 404) {
+      alert('세션이 만료되었습니다. 다시 로그인 해주세요');
+      window.location.href = 'http://localhost:3000';
+    }
+
     if (error?.response?.status === 401) {
       if (window.location.pathname === '/') {
         alert('로그인 정보를 확인해주세요');
@@ -44,6 +49,7 @@ api.interceptors.response.use(
       const originalRequest = error.config;
       try {
         const response = await silentRefresh();
+
         if (response) {
           localStorage.setItem(
             'accessToken',
@@ -52,7 +58,8 @@ api.interceptors.response.use(
           return api.request(originalRequest);
         }
       } catch (e) {
-        console.log('세션 만료');
+        console.log(e);
+        window.location.href = 'http://localhost:3000';
       }
     }
   }
