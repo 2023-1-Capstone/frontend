@@ -9,8 +9,9 @@ const category: homeCategoryType[] = [
     id: 1,
     route: 'electricity',
     src: electricity,
-    descriptTop: '',
-    descriptBottom: ``,
+    descriptTop: '우리학교 전기 에너지 확인하기',
+    descriptBottom: `인하대학교 건물들의 
+    전기 사용량을 확인해보세요!`,
   },
 
   {

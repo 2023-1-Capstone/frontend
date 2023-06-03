@@ -303,6 +303,100 @@ const optionsWater: any = {
   },
 };
 
+const optionsElectricityAll: any = {
+  reponsive: false,
+  plugins: {
+    datalabels: {
+      display: false,
+    },
+    legend: {
+      display: false,
+    },
+    tooltip: {
+      callbacks: {
+        title: (context: any) => context[0].label + '월',
+        label: (context: any) => {
+          let targetLabel = '';
+          if (context.datasetIndex === 0)
+            targetLabel = context.parsed.y.toLocaleString('ko-KR') + 'Mwh';
+          else targetLabel = context.parsed.y.toLocaleString('ko-KR') + '만원';
+          let label = context.dataset.label + '' || '';
+          return context.parsed.y !== null ? targetLabel : null;
+        },
+      },
+    },
+  },
+  scales: {
+    x: {
+      grid: {
+        display: false,
+      },
+    },
+    'y-left': {
+      type: 'linear',
+      position: 'left',
+      grace: '140%',
+      grid: {
+        display: false,
+      },
+    },
+    'y-right': {
+      type: 'linear',
+      position: 'right',
+      grid: {
+        display: false,
+      },
+    },
+  },
+};
+
+const optionsGasAll: any = {
+  reponsive: false,
+  plugins: {
+    datalabels: {
+      display: false,
+    },
+    legend: {
+      display: false,
+    },
+    tooltip: {
+      callbacks: {
+        title: (context: any) => context[0].label + '월',
+        label: (context: any) => {
+          let targetLabel = '';
+          if (context.datasetIndex === 0)
+            targetLabel = context.parsed.y.toLocaleString('ko-KR') + 'm3';
+          else targetLabel = context.parsed.y.toLocaleString('ko-KR') + '만원';
+          let label = context.dataset.label + '' || '';
+          return context.parsed.y !== null ? targetLabel : null;
+        },
+      },
+    },
+  },
+  scales: {
+    x: {
+      grid: {
+        display: false,
+      },
+    },
+    'y-left': {
+      type: 'linear',
+      position: 'left',
+      grace: '200%',
+      grid: {
+        display: false,
+      },
+    },
+    'y-right': {
+      type: 'linear',
+      position: 'right',
+      grid: {
+        display: false,
+      },
+    },
+  },
+};
+
 const options: any = {
   reponsive: false,
   plugins: {
@@ -767,22 +861,22 @@ const areaStackedInitData: any = {
 
 const indicateCategory = [
   {
-    content: '계절별 전력사용 순위',
+    content: '계절별 전력사용',
     src: electricityIcon,
     route: '/indicator/season/electricity',
   },
   {
-    content: '계절별 가스사용 순위',
+    content: '계절별 가스사용',
     src: gasIcon,
     route: '/indicator/season/gas',
   },
   {
-    content: '면적당 전력사용 순위',
+    content: '면적당 전력사용',
     src: electricityIcon,
     route: '/indicator/area/electricity',
   },
   {
-    content: '면적당 가스사용 순위',
+    content: '면적당 가스사용',
     src: gasIcon,
     route: '/indicator/area/gas',
   },
@@ -883,4 +977,6 @@ export {
   monthlyInitWaterData,
   optionsCarbonAll,
   optionsSeason,
+  optionsElectricityAll,
+  optionsGasAll,
 };
