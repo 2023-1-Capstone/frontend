@@ -14,11 +14,12 @@ const SeasonTitle = styled.div`
 
   font-family: 'Pretendard';
   font-style: normal;
-  font-weight: 700;
+  font-weight: 400;
   font-size: 2.4rem;
   line-height: 2.9rem;
-  margin-top: 3rem;
-  color: #000000;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  color: #ffffff;
 `;
 
 const ChartChangeFrame = styled.div`
@@ -37,6 +38,7 @@ const ChartTopFrame = styled.div`
   justify-content: center;
   align-items: center;
   padding: 0px;
+  top: -1rem;
   gap: 15rem;
   left: 5px;
   position: relative;
@@ -48,26 +50,27 @@ const ChartCategoryBox = styled.div`
   position: absolute;
 
   width: fit-content;
-  height: fit-content;
+  height: 2.7rem;
 
   &:hover {
     background-color: #e7e7e7;
   }
+  border: 1px solid #e7e7e7;
 
   cursor: pointer;
 
-  left: 0.5rem;
-
+  left: -0.5rem;
+  padding: 5px;
   border-radius: 0.3rem;
 
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   line-height: 1.7rem;
   display: flex;
   align-items: center;
-
+  opacity: 0.7;
   color: #000000;
 
   /* Inside auto layout */
@@ -80,21 +83,24 @@ const ChartCategoryBox = styled.div`
 const ChartYearBox = styled.div`
   position: absolute;
   width: fit-content;
-  height: fit-content;
+  height: 2.7rem;
+  padding: 5px;
 
   &:hover {
     background-color: #e7e7e7;
   }
 
+  border: 1px solid #e7e7e7;
+
   cursor: pointer;
 
-  left: 20rem;
+  left: 0.5rem;
 
   border-radius: 0.3rem;
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   line-height: 2rem;
   /* or 286% */
 
@@ -102,7 +108,7 @@ const ChartYearBox = styled.div`
   align-items: center;
   text-align: center;
 
-  color: #000000;
+  color: #777777;
 
   /* Inside auto layout */
 
@@ -114,21 +120,24 @@ const ChartYearBox = styled.div`
 const ChartMonthBox = styled.div`
   position: absolute;
   width: fit-content;
-  height: fit-content;
+  height: 2.7rem;
+  padding: 5px;
 
   &:hover {
     background-color: #e7e7e7;
   }
 
+  border: 1px solid #e7e7e7;
+
   cursor: pointer;
 
-  left: 28rem;
+  left: 10rem;
 
   border-radius: 0.3rem;
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   line-height: 2rem;
   /* or 286% */
 
@@ -136,7 +145,7 @@ const ChartMonthBox = styled.div`
   align-items: center;
   text-align: center;
 
-  color: #000000;
+  color: #777777;
 
   /* Inside auto layout */
 
@@ -279,6 +288,118 @@ const RefreshButton = styled.img`
   cursor: pointer;
 `;
 
+const Container = styled.div`
+  background-color: #ffffff;
+  top: 0rem;
+  position: relative;
+  width: 36rem;
+  height: fit-content;
+  border-radius: 0.5rem;
+  margin-bottom: 0rem;
+`;
+
+const BuildingInfoFrame = styled.div<{ modalState: string }>`
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: fit-content;
+  top: 9.5rem;
+  right: 2rem;
+  height: fit-content;
+  border-radius: 0.5rem;
+  background-color: #fefbf6;
+  border: 2px solid #eee;
+  padding: 1rem;
+  z-index: 2;
+  visibility: ${(props) => props.modalState};
+`;
+
+const BuildingInfoNotice = styled.div`
+  position: relative;
+  width: fit-content;
+  height: fit-content;
+
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 17px;
+
+  color: #757575;
+`;
+
+const BuildingInfoItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 0.2rem;
+
+  position: relative;
+  width: 33rem;
+  height: fit-content;
+`;
+
+const BuildingInfoItemTitle = styled.div`
+  width: fit-content;
+  height: fit-content;
+
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 19px;
+
+  color: #000000;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+`;
+
+const BuildingInfoItemContent = styled.div`
+  width: fit-content;
+  height: fit-content;
+
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 17px;
+
+  color: #000000;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+`;
+
+const Calculate = styled.div`
+  position: relative;
+  height: fit-content;
+  width: 36rem;
+  display: flex;
+  align-items: center;
+  text-align: right;
+  font-size: 1.7rem;
+  justify-content: flex-end;
+  margin-top: -1rem;
+  color: #fff;
+  font-weight: 400;
+`;
+
+const InfoImage = styled.img`
+  width: 2rem;
+  height: 2rem;
+  background: url(${(props) => props.src});
+  cursor: pointer;
+`;
+
 export {
   SeasonWrapper,
   ChartCategoryBox,
@@ -296,4 +417,12 @@ export {
   BottomInfoTransText,
   SeasonTitle,
   RefreshButton,
+  Container,
+  BuildingInfoFrame,
+  BuildingInfoNotice,
+  BuildingInfoItem,
+  BuildingInfoItemTitle,
+  BuildingInfoItemContent,
+  Calculate,
+  InfoImage
 };
