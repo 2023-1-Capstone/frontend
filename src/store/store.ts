@@ -350,6 +350,53 @@ const optionsElectricityAll: any = {
   },
 };
 
+const optionsGasAll: any = {
+  reponsive: false,
+  plugins: {
+    datalabels: {
+      display: false,
+    },
+    legend: {
+      display: false,
+    },
+    tooltip: {
+      callbacks: {
+        title: (context: any) => context[0].label + '월',
+        label: (context: any) => {
+          let targetLabel = '';
+          if (context.datasetIndex === 0)
+            targetLabel = context.parsed.y.toLocaleString('ko-KR') + 'm3';
+          else targetLabel = context.parsed.y.toLocaleString('ko-KR') + '만원';
+          let label = context.dataset.label + '' || '';
+          return context.parsed.y !== null ? targetLabel : null;
+        },
+      },
+    },
+  },
+  scales: {
+    x: {
+      grid: {
+        display: false,
+      },
+    },
+    'y-left': {
+      type: 'linear',
+      position: 'left',
+      grace: '200%',
+      grid: {
+        display: false,
+      },
+    },
+    'y-right': {
+      type: 'linear',
+      position: 'right',
+      grid: {
+        display: false,
+      },
+    },
+  },
+};
+
 const options: any = {
   reponsive: false,
   plugins: {
@@ -919,4 +966,5 @@ export {
   optionsCarbonAll,
   optionsSeason,
   optionsElectricityAll,
+  optionsGasAll,
 };
