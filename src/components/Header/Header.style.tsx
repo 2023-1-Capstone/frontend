@@ -4,18 +4,22 @@ const HeaderFrame = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
   padding: 0px;
   gap: 6.6rem;
   position: absolute;
   width: 35rem;
   height: 5.8rem;
-  left: 0rem;
+  left: 50%;
+  transform: translateX(-50%);
   top: 2.1rem;
 `;
 
 const HeaderTitleFrame = styled.div`
+  position: relative;
   display: flex;
   flex-direction: row;
+
   align-items: center;
   padding: 0px;
   gap: 1rem;

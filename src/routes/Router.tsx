@@ -16,6 +16,7 @@ import FindPassword from '../pages/FindPassword/FindPassword';
 import ModifyPassword from '../pages/ModifyPassword/ModifyPassword';
 import Exception from '../pages/Exception/Exception';
 import Water from '../pages/Water/Water';
+import ElectricityAll from '../pages/ElectricityAll/ElectricityAll';
 
 const Router = () => {
   return (
@@ -47,6 +48,7 @@ const Router = () => {
           <Route path="/indicator/area/gas" element={<AreaGas />} />
           <Route path="/authException" element={<Exception />} />
           <Route path="/water" element={<Water />} />
+          <Route path="/electricityAll" element={<ElectricityAll />} />
         </Routes>
       </BrowserRouter>
     </>

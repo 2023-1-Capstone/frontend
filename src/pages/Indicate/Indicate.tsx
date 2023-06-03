@@ -16,7 +16,7 @@ const Indicate = () => {
         <WrapperInner>
           <S.IndicateTotalWrapper>
             <S.IndicateTitle>
-              <img src={crown}></img>&nbsp; 재미로 보는 랭킹
+              <img src={crown}></img>&nbsp; 재미로 보는 데이터
             </S.IndicateTitle>
             <S.IndicateDescription>
               학교의 에너지 사용 내역을 다양하게 살펴보세요!
