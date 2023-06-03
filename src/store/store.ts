@@ -482,6 +482,12 @@ const optionsArea: any = {
   reponsive: false,
   indexAxis: 'y',
   plugins: {
+    datalabels: {
+      formatter: (value: any, context: any) => {
+        return value?.toLocaleString('ko-KR') + 'Kwh/㎡';
+      },
+      color: '#fff'
+    },
     legend: {
       display: false,
     },
@@ -515,6 +521,12 @@ const optionsAreaGas: any = {
   reponsive: false,
   indexAxis: 'y',
   plugins: {
+    datalabels: {
+      formatter: (value: any, context: any) => {
+        return value?.toLocaleString('ko-KR') + 'm3/㎡';
+      },
+      color: '#fff'
+    },
     legend: {
       display: false,
     },
