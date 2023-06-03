@@ -22,6 +22,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getBuildingTargetDataElectricity, findMostWasteIdx } from '../util';
 import api from '../../../../api/api';
 import AreaElectricityMoreInfo from './Component/AreaElectricityMoreInfo';
+import informationSVG from "../../../../assets/svg/information.svg";
 
 ChartJS.register(Tooltip, Legend);
 
@@ -44,6 +45,7 @@ const AreaElectricity = () => {
   const [isMonthDropdownOn, setIsMonthDropdownOn] = useState<Boolean>(false);
   const [curYear, setCurYear] = useState<string>('2023');
   const [curMonth, setCurMonth] = useState<string>('1');
+  const [infoModalState, setInfoModalState] = useState<string>('hidden');
 
   const createNewChartData = (newData: number[]) => {
     const chartCopyState = JSON.parse(JSON.stringify(chartData));
@@ -87,60 +89,93 @@ const AreaElectricity = () => {
         <WrapperInner>
           <S.SeasonWrapper>
             <S.SeasonTitle>👑면적당 전기 사용 순위</S.SeasonTitle>
-            <S.ChartChangeFrame>
-              {isYearDropdownOn && (
-                <Dropdown
-                  dropDownInfo={dropdownInfoCreater(
-                    '10rem',
-                    '20.2rem',
-                    '2.3rem',
-                    'middle',
-                    areaData[0]?.usagesList.map((item: any) => item.year),
-                    setCurYear,
-                    setIsYearDropdownOn
-                  )}
-                ></Dropdown>
-              )}
-              {isMonthDropdownOn && (
-                <Dropdown
-                  dropDownInfo={dropdownInfoCreater(
-                    '10rem',
-                    '27.2rem',
-                    '2.3rem',
-                    'middle',
-                    monthCategory,
-                    setCurMonth,
-                    setIsMonthDropdownOn
-                  )}
-                ></Dropdown>
-              )}
-              <S.ChartTopFrame>
-                <S.ChartCategoryBox>면적당 사용량</S.ChartCategoryBox>
-                <S.ChartYearBox
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsYearDropdownOn(true);
+
+            <S.BuildingInfoFrame modalState={infoModalState}>
+              <S.BuildingInfoNotice>
+                ※ 아래는 전기 사용량에 포함된 건물들 정보에요.
+              </S.BuildingInfoNotice>
+              <S.BuildingInfoItem>
+                <S.BuildingInfoItemTitle>전기사용량⚡</S.BuildingInfoItemTitle>
+                {buildingData?.map((item: any) => {
+                  return (
+                      <>
+                        {item.elecDescription ? (
+                            <S.BuildingInfoItemContent>{`- ${item.name} : ${item.elecDescription}`}</S.BuildingInfoItemContent>
+                        ) : null}
+                      </>
+                  );
+                })}
+              </S.BuildingInfoItem>
+            </S.BuildingInfoFrame>
+            <S.Calculate>
+              건물정보
+              <S.InfoImage
+                  width="20px"
+                  height="20px"
+                  src={informationSVG}
+                  onMouseEnter={() => {
+                    setInfoModalState("visible");
                   }}
-                >
-                  {curYear}년 &nbsp;<img src={downArrow}></img>
-                </S.ChartYearBox>
-                <S.ChartMonthBox
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsMonthDropdownOn(true);
+                  onMouseLeave={() => {
+                    setInfoModalState("hidden");
                   }}
-                >
-                  {curMonth}월 &nbsp;<img src={downArrow}></img>
-                </S.ChartMonthBox>
-              </S.ChartTopFrame>
-              <S.ChartIndicatorLine></S.ChartIndicatorLine>
-            </S.ChartChangeFrame>
-            <Bar
-              data={chartData}
-              options={optionsArea}
-              width="270"
-              height="200"
-            ></Bar>
+              ></S.InfoImage>
+            </S.Calculate>
+
+            <S.Container>
+              <S.ChartChangeFrame>
+                {isYearDropdownOn && (
+                  <Dropdown
+                    dropDownInfo={dropdownInfoCreater(
+                      '10rem',
+                      '20.2rem',
+                      '2.3rem',
+                      'middle',
+                      areaData[0]?.usagesList.map((item: any) => item.year),
+                      setCurYear,
+                      setIsYearDropdownOn
+                    )}
+                  ></Dropdown>
+                )}
+                {isMonthDropdownOn && (
+                  <Dropdown
+                    dropDownInfo={dropdownInfoCreater(
+                      '10rem',
+                      '27.2rem',
+                      '2.3rem',
+                      'middle',
+                      monthCategory,
+                      setCurMonth,
+                      setIsMonthDropdownOn
+                    )}
+                  ></Dropdown>
+                )}
+                <S.ChartTopFrame>
+                  <S.ChartYearBox
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsYearDropdownOn(true);
+                    }}
+                  >
+                    {curYear}년 &nbsp;<img src={downArrow}></img>
+                  </S.ChartYearBox>
+                  <S.ChartMonthBox
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsMonthDropdownOn(true);
+                    }}
+                  >
+                    {curMonth}월 &nbsp;<img src={downArrow}></img>
+                  </S.ChartMonthBox>
+                </S.ChartTopFrame>
+              </S.ChartChangeFrame>
+                <Bar
+                  data={chartData}
+                  options={optionsArea}
+                  width="270"
+                  height="250"
+                ></Bar>
+            </S.Container>
             <AreaElectricityMoreInfo
               chartState={chartData}
               buildingData={buildingData}
