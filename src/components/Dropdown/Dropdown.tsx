@@ -4,7 +4,8 @@ import { dropDonwInfoType } from '../../type/Types';
 
 const sizeObj: any = {
   large: '13.655rem',
-  middle: '6.9rem',
+  middle: '7.5rem',
+  small: '5.5rem',
 };
 
 const Dropdown = ({ dropDownInfo }: { dropDownInfo: dropDonwInfoType }) => {
