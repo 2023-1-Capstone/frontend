@@ -32,9 +32,6 @@ const MonthlyMoreInfo = ({
     totalFee: 0,
     mostWasteMonth: '',
   });
-  const [randomIdxList, setRandomIdxList] = useState<number[]>(
-    getUniqueNumberList(4, 6)
-  );
 
   useEffect(() => {
     // 도넛 차트에 물 정보 세팅
@@ -124,16 +121,9 @@ const MonthlyMoreInfo = ({
           </S.Li>
         )}
       </S.BuildingMoreInfoSummary>
-      <S.BottomTitle>
-        {curYear}년 전기 사용량으로...
-        <S.RefreshButton
-          src={refreshSVG}
-          onClick={() => setRandomIdxList(getUniqueNumberList(4, 6))}
-        ></S.RefreshButton>
-      </S.BottomTitle>
       <TransItem
+        curYear={curYear}
         type={'resource'}
-        randomIdxList={randomIdxList}
         waste={moreInfo?.totalFee}
       ></TransItem>
     </S.BuildingMoreInfoFrame>
