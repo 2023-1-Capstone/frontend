@@ -68,27 +68,25 @@ const AreaElectricityMoreInfo = ({
         해당시기 사용 1위는 '{buildingByIdx[mostWasteIdx]}' 입니다.
       </S.BottomTitle>
       <S.BottomInfoBox>
-        <S.BottomInfoBoxInner>
-          <li>
-            1㎡당 {chartState?.datasets[0]?.data[mostWasteIdx]}Kwh를
-            사용하였습니다.
-          </li>
-          <li>
-            1㎡당{' '}
-            {(chartState?.datasets[0].data[mostWasteIdx] * 7000).toLocaleString(
-              'ko-KR'
-            )}
-            원 정도를 사용하였습니다.
-          </li>
-          <li>
-            평균 면적 사용량 대비{' '}
-            {getPercentage(
-              chartState?.datasets[0].data[mostWasteIdx],
-              getAverageWaste(chartState?.datasets[0].data)
-            )}
-            % 높은 수치입니다.
-          </li>
-        </S.BottomInfoBoxInner>
+        <S.Li>
+          1㎡당 {chartState?.datasets[0]?.data[mostWasteIdx]}Kwh를
+          사용하였습니다.
+        </S.Li>
+        <S.Li>
+          1㎡당{' '}
+          {(chartState?.datasets[0].data[mostWasteIdx] * 7000).toLocaleString(
+            'ko-KR'
+          )}
+          원 정도를 사용하였습니다.
+        </S.Li>
+        <S.Li>
+          평균 면적 사용량 대비{' '}
+          {getPercentage(
+            chartState?.datasets[0].data[mostWasteIdx],
+            getAverageWaste(chartState?.datasets[0].data)
+          )}
+          % 높은 수치입니다.
+        </S.Li>
       </S.BottomInfoBox>
       {/* <S.Container>
         <Bar
@@ -98,14 +96,14 @@ const AreaElectricityMoreInfo = ({
           height="250"
         ></Bar>
       </S.Container> */}
-      <S.Container>
+      {/* <S.Container>
         <Bar
           data={chartData}
           options={optionsAreaStacked}
           width="270"
           height="250"
         ></Bar>
-      </S.Container>
+      </S.Container> */}
     </S.BottomWrapper>
   );
 };

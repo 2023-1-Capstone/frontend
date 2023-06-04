@@ -17,19 +17,9 @@ const SeasonTitle = styled.div`
   font-weight: 400;
   font-size: 2.4rem;
   line-height: 2.9rem;
-  margin-top: 1rem;
+  margin-top: 2rem;
   margin-bottom: 2rem;
   color: #ffffff;
-`;
-
-const ChartChangeFrame = styled.div`
-  position: relative;
-  width: fit-content;
-  display: flex;
-  flex-direction: column;
-
-  margin-top: 2rem;
-  margin-bottom: 1rem;
 `;
 
 const ChartTopFrame = styled.div`
@@ -38,9 +28,10 @@ const ChartTopFrame = styled.div`
   justify-content: center;
   align-items: center;
   padding: 0px;
-  top: -1rem;
+  top: 0.5rem;
+  margin-bottom: 0.5rem;
   gap: 15rem;
-  left: 5px;
+  left: 0.5rem;
   position: relative;
   width: 33rem;
   height: 2.3rem;
@@ -59,7 +50,6 @@ const ChartCategoryBox = styled.div`
 
   cursor: pointer;
 
-  left: -0.5rem;
   padding: 5px;
   border-radius: 0.3rem;
 
@@ -82,7 +72,7 @@ const ChartCategoryBox = styled.div`
 
 const ChartYearBox = styled.div`
   position: absolute;
-  width: fit-content;
+  width: 7.5rem;
   height: 2.7rem;
   padding: 5px;
 
@@ -94,7 +84,7 @@ const ChartYearBox = styled.div`
 
   cursor: pointer;
 
-  left: 0.5rem;
+  left: 0rem;
 
   border-radius: 0.3rem;
   font-family: 'Pretendard';
@@ -119,7 +109,7 @@ const ChartYearBox = styled.div`
 
 const ChartMonthBox = styled.div`
   position: absolute;
-  width: fit-content;
+  width: 5.5rem;
   height: 2.7rem;
   padding: 5px;
 
@@ -131,7 +121,7 @@ const ChartMonthBox = styled.div`
 
   cursor: pointer;
 
-  left: 10rem;
+  left: 8rem;
 
   border-radius: 0.3rem;
   font-family: 'Pretendard';
@@ -407,7 +397,6 @@ export {
   ChartYearBox,
   ChartMonthBox,
   ChartTopFrame,
-  ChartChangeFrame,
   BottomWrapper,
   BottomTitle,
   BottomInfoBox,
@@ -424,5 +413,5 @@ export {
   BuildingInfoItemTitle,
   BuildingInfoItemContent,
   Calculate,
-  InfoImage
+  InfoImage,
 };
