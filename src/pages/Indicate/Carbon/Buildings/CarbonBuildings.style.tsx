@@ -17,7 +17,7 @@ const SeasonTitle = styled.div`
   font-weight: 400;
   font-size: 2.1rem;
   line-height: 2.9rem;
-  margin-top: 1rem;
+  margin-top: 3rem;
   margin-bottom: 3rem;
   color: #ffffff;
 `;
@@ -80,7 +80,7 @@ const ChartCategoryBox = styled.div`
 
 const ChartYearBox = styled.div`
   position: absolute;
-  width: fit-content;
+  width: 7.5rem;
   height: 2.7rem;
   padding: 5px;
 
@@ -117,7 +117,7 @@ const ChartYearBox = styled.div`
 
 const ChartMonthBox = styled.div`
   position: absolute;
-  width: fit-content;
+  width: 5.5rem;
   height: 2.7rem;
   padding: 5px;
 
@@ -129,7 +129,7 @@ const ChartMonthBox = styled.div`
 
   cursor: pointer;
 
-  left: 10rem;
+  left: 8.3rem;
 
   border-radius: 0.3rem;
   font-family: 'Pretendard';
@@ -318,7 +318,7 @@ const Calculate = styled.div`
   text-align: right;
   font-size: 1.7rem;
   justify-content: flex-end;
-  margin-top: -1rem;
+  margin-bottom: 1rem;
   color: #fff;
   font-weight: 400;
 `;

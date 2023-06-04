@@ -38,6 +38,7 @@ const CarbonBuildings = () => {
   const [curYear, setCurYear] = useState<string>('2023');
   const [curMonth, setCurMonth] = useState<string>('1');
   const [infoModalState, setInfoModalState] = useState<string>('hidden');
+  const [yearList, setYearList] = useState([]);
 
   useEffect(() => {
     const chartDataCopy = JSON.parse(JSON.stringify(chartData));
@@ -47,12 +48,12 @@ const CarbonBuildings = () => {
       carbonData
     );
     chartDataCopy.datasets[0].data = newChartData;
+    setYearList(
+      carbonData &&
+        carbonData[0]?.usagesList?.map((item: any) => item.year).reverse()
+    );
     setChartData(chartDataCopy);
   }, [carbonData, curYear, curMonth]);
-
-  useEffect(() => {
-    console.log(buildingData);
-  }, [buildingData]);
 
   return (
     <WrapperInner
@@ -106,34 +107,34 @@ const CarbonBuildings = () => {
             }}
           ></S.InfoImage>
         </S.Calculate>
-        <S.ChartChangeFrame>
-          {isYearDropdownOn && (
-            <Dropdown
-              dropDownInfo={dropdownInfoCreater(
-                '10rem',
-                '-17rem',
-                '2.5rem',
-                'middle',
-                carbonData[0]?.usagesList.map((item: any) => item.year),
-                setCurYear,
-                setIsYearDropdownOn
-              )}
-            ></Dropdown>
-          )}
-          {isMonthDropdownOn && (
-            <Dropdown
-              dropDownInfo={dropdownInfoCreater(
-                '10rem',
-                '-8rem',
-                '2.5rem',
-                'middle',
-                monthCategory,
-                setCurMonth,
-                setIsMonthDropdownOn
-              )}
-            ></Dropdown>
-          )}
-        </S.ChartChangeFrame>
+
+        {isYearDropdownOn && (
+          <Dropdown
+            dropDownInfo={dropdownInfoCreater(
+              '10rem',
+              '2.3rem',
+              '15.5rem',
+              'middle',
+              yearList,
+              setCurYear,
+              setIsYearDropdownOn
+            )}
+          ></Dropdown>
+        )}
+        {isMonthDropdownOn && (
+          <Dropdown
+            dropDownInfo={dropdownInfoCreater(
+              '10rem',
+              '10rem',
+              '15.5rem',
+              'small',
+              monthCategory,
+              setCurMonth,
+              setIsMonthDropdownOn
+            )}
+          ></Dropdown>
+        )}
+
         <S.Container>
           <S.ChartTopFrame>
             <S.ChartYearBox
@@ -142,7 +143,7 @@ const CarbonBuildings = () => {
                 setIsYearDropdownOn(true);
               }}
             >
-              {curYear}년 &nbsp;<img src={downArrow}></img>
+              {curYear} &nbsp;<img src={downArrow}></img>
             </S.ChartYearBox>
             <S.ChartMonthBox
               onClick={(e) => {
@@ -150,7 +151,8 @@ const CarbonBuildings = () => {
                 setIsMonthDropdownOn(true);
               }}
             >
-              {curMonth}월 &nbsp;<img src={downArrow}></img>
+              {curMonth.toString().padStart(2, '0')} &nbsp;
+              <img src={downArrow}></img>
             </S.ChartMonthBox>
           </S.ChartTopFrame>
           <Bar
