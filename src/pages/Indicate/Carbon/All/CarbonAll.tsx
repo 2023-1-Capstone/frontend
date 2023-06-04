@@ -38,11 +38,8 @@ const CarbonAll = () => {
   const [chartData, setChartData] = useState(monthlyInitData);
   const [isDropdownOn, setIsDropdownOn] = useState<Boolean>(false);
   const [curYear, setCurYear] = useState<string>('2023');
-  const [infoData, setInfoData] = useState({ watt: 0, fee: 0 });
   const [totalCarbon, setTotalCarbon] = useState(0);
-  const [randomIdxList, setRandomIdxList] = useState<number[]>(
-    getUniqueNumberList(4, 8)
-  );
+  const [yearList, setYearList] = useState([]);
 
   const setCurYearChart = (chartInfo: any) => {
     const chartCopyData = JSON.parse(JSON.stringify(chartData));
@@ -55,6 +52,7 @@ const CarbonAll = () => {
       0
     );
     const mostWasteIdx = findMostWasteIdxArr(usages);
+    setYearList(carbonData?.map((item: any) => item.year).reverse());
     setMostWasteSeasonIdx(mostWasteIdx);
     setMostWaste(usages ? usages[mostWasteIdx] : 0);
     setTotalCarbon(totalUsage);
@@ -82,7 +80,7 @@ const CarbonAll = () => {
               '10.4rem',
               '10.9rem',
               'middle',
-              carbonData?.map((item: any) => item.year),
+              yearList,
               setCurYear,
               setIsDropdownOn
             )}
