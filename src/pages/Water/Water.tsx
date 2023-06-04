@@ -55,7 +55,7 @@ const Water = () => {
       ?.filter(
         (item: chartInfoType) => item.year === parseInt(rightCategory)
       )[0]
-      .usages.map((item: chartInfoUsageType) => {
+      ?.usages.map((item: chartInfoUsageType) => {
         if (item?.data) return 'rgb(91,125,177,0.9)';
         return 'rgb(0,0,0,0.1)';
       });
@@ -68,7 +68,7 @@ const Water = () => {
       (item: chartInfoType) => item.year === parseInt(rightCategory)
     )[0];
 
-    const usageList = targetData?.usages.map((item: chartInfoUsageType) => {
+    const usageList = targetData?.usages?.map((item: chartInfoUsageType) => {
       if (item?.data) return item?.data;
       return item?.prediction;
     });

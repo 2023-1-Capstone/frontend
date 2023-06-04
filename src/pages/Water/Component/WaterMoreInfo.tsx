@@ -36,9 +36,20 @@ const MonthlyMoreInfo = ({
     // 도넛 차트에 물 정보 세팅
     const chartStateCopy = JSON.parse(JSON.stringify(chartData));
     chartStateCopy.datasets[0].data = chartState.datasets[0].data;
-    chartStateCopy.datasets[0].borderColor = doughnutColor;
-    chartStateCopy.labels = monthCategory.map((item: any) => item + '월');
+    const predictArray = waterInfo?.filter(
+      (item: any) => item.year === parseInt(curYear)
+    )[0].usages;
 
+    const validColor = doughnutColor.map((color: string, idx: number) => {
+      if (predictArray && predictArray[idx]?.data) {
+        return color;
+      }
+      return 'rgb(0,0,0,0.1)';
+    });
+
+    chartStateCopy.datasets[0].backgroundColor = validColor;
+    chartStateCopy.datasets[0].borderColor = validColor;
+    chartStateCopy.labels = monthCategory.map((item: any) => item + '월');
     //총 사용량
     const totalWaterWaste = chartStateCopy?.datasets[0].data?.reduce(
       (acc: number, cur: number) => acc + cur,
