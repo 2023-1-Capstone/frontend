@@ -18,7 +18,7 @@ import {
 import { chartInfoType, chartInfoUsageType } from '../../type/Types';
 import test from '../../api/test';
 import api from '../../api/api';
-
+import CategoryNavigation from '../../components/CategoryHeader/CategoryNavigation';
 import {
   monthlyInitData,
   buildingCode,
@@ -30,6 +30,8 @@ import {
 
 ChartJS.register(Tooltip, Legend);
 
+const arr = ['건물별', '전체', '면적별', '계절별'];
+
 const BuildingElectricity = () => {
   const [selectedBuilding, setSelectedBuilding] = useState<string>('본관');
   const [chartData, setChartData] = useState<chartInfoType[]>([]);
@@ -40,6 +42,7 @@ const BuildingElectricity = () => {
   const [rightDropdown, setRightDropDown] = useState(yearCategory);
   const [isLeftDropdownOn, setIsLeftDropDownOn] = useState<Boolean>(false);
   const [isRightDropdownOn, setIsRightDropDownOn] = useState<Boolean>(false);
+  const [predictArray, setPredictArray] = useState<any>([]);
   const { data: userInfo } = useQuery(['getProfile'], () =>
     api('/api/buildings')
   );
@@ -63,7 +66,7 @@ const BuildingElectricity = () => {
       return data.prediction;
     });
     chartStateCopy.datasets[0].data = usageArr;
-
+    setPredictArray(target);
     //   backgroundColor: ['rgb(75, 192, 192)'],
 
     chartStateCopy.datasets[0].backgroundColor = target.map((data: any) => {
@@ -71,9 +74,11 @@ const BuildingElectricity = () => {
       else return 'rgb(0,0,0,0.1)';
     });
 
-    const years = rData.result.map((val: any) => {
-      return val.year;
-    });
+    const years = rData.result
+      .map((val: any) => {
+        return val.year;
+      })
+      .reverse();
 
     chartStateCopy.labels = monthCategory;
 
@@ -121,7 +126,7 @@ const BuildingElectricity = () => {
       const target = chartData.filter(
         (val: any) => val.year == rightCategory
       )[0]?.usages;
-
+      setPredictArray(target);
       // 타겟의 데이터 뽑아내기
       chartStateCopy.datasets[0].data = target?.map((val: chartInfoUsageType) =>
         val.data ? val.data : val.prediction
@@ -160,94 +165,87 @@ const BuildingElectricity = () => {
   useEffect(setChartByCategory, [chartCategory]);
   useEffect(setChartByDropdown, [rightCategory]);
 
-  useEffect(() => {
-    console.log(userInfo);
-  }, [userInfo]);
-
   return (
-    <Wrapper
+    <WrapperInner
       onClick={(e: React.MouseEvent<HTMLDivElement>) => {
         setIsLeftDropDownOn(false);
         setIsRightDropDownOn(false);
       }}
     >
-      <Header></Header>
-      <WrapperInner>
-        <S.BuildingTitle>건물별 전기에너지를 확인해보세요!</S.BuildingTitle>
-        <S.BuildingElectricityInner>
-          <S.CarouselFrame>
-            <Carousel
-              buildingList={userInfo?.data.result}
-              setSelectedBuilding={setSelectedBuilding}
-            ></Carousel>
-          </S.CarouselFrame>
-          <S.Container>
-            <S.ChartTopFrame>
-              <S.ChartCategoryBox onClick={leftDropdownHandler}>
-                {chartCategory} &nbsp;<img src={downArrow}></img>
-              </S.ChartCategoryBox>
-              <S.ChartYearBox onClick={rightDropdownHandler}>
-                {rightCategory}&nbsp;{' '}
-                {rightCategory && <img src={downArrow}></img>}
-              </S.ChartYearBox>
-            </S.ChartTopFrame>
-            <S.ChartChangeFrame></S.ChartChangeFrame>
-            <S.ChartContainer>
-              <Bar
-                width="350"
-                height="250"
-                data={chartState}
-                options={options}
-              ></Bar>
-            </S.ChartContainer>
-            <S.ChartTitle>
-              {selectedBuilding}
-              {userInfo?.data.result.filter(
-                (item: any) => item.name === selectedBuilding
-              )[0].elecDescription
-                ? `(${
-                    userInfo?.data.result.filter(
-                      (item: any) => item.name === selectedBuilding
-                    )[0].elecDescription
-                  })`
-                : null}
-            </S.ChartTitle>
-          </S.Container>
-          <BuildingMoreInfo
-            categoryState={chartCategory}
-            chartState={chartState}
-            curYear={rightCategory}
-          ></BuildingMoreInfo>
-          {isLeftDropdownOn && (
-            <Dropdown
-              dropDownInfo={dropdownInfoCreater(
-                '9.6rem',
-                '1.7rem',
-                '25.7rem',
-                'large',
-                electricityChartCategory,
-                setChartCategory,
-                setIsLeftDropDownOn
-              )}
-            ></Dropdown>
-          )}
-          {isRightDropdownOn && (
-            <Dropdown
-              dropDownInfo={dropdownInfoCreater(
-                '9.6rem',
-                '16.2rem',
-                '25.7rem',
-                'middle',
-                rightDropdown,
-                setRightCategory,
-                setIsRightDropDownOn
-              )}
-            ></Dropdown>
-          )}
-        </S.BuildingElectricityInner>
-      </WrapperInner>
-      <NavigationBar navigationStatus="electricity"></NavigationBar>
-    </Wrapper>
+      <S.BuildingTitle>건물별 전기에너지를 확인해보세요!</S.BuildingTitle>
+      <S.BuildingElectricityInner>
+        <S.CarouselFrame>
+          <Carousel
+            buildingList={userInfo?.data.result}
+            setSelectedBuilding={setSelectedBuilding}
+          ></Carousel>
+        </S.CarouselFrame>
+        <S.Container>
+          <S.ChartTopFrame>
+            <S.ChartCategoryBox onClick={leftDropdownHandler}>
+              {chartCategory} &nbsp;<img src={downArrow}></img>
+            </S.ChartCategoryBox>
+            <S.ChartYearBox onClick={rightDropdownHandler}>
+              {rightCategory}&nbsp;{' '}
+              {rightCategory && <img src={downArrow}></img>}
+            </S.ChartYearBox>
+          </S.ChartTopFrame>
+          <S.ChartChangeFrame></S.ChartChangeFrame>
+          <S.ChartContainer>
+            <Bar
+              width="350"
+              height="250"
+              data={chartState}
+              options={options}
+            ></Bar>
+          </S.ChartContainer>
+          <S.ChartTitle>
+            {selectedBuilding}
+            {userInfo?.data.result.filter(
+              (item: any) => item.name === selectedBuilding
+            )[0].elecDescription
+              ? `(${
+                  userInfo?.data.result.filter(
+                    (item: any) => item.name === selectedBuilding
+                  )[0].elecDescription
+                })`
+              : null}
+          </S.ChartTitle>
+        </S.Container>
+        <BuildingMoreInfo
+          categoryState={chartCategory}
+          chartState={chartState}
+          curYear={rightCategory}
+          predictArray={predictArray}
+        ></BuildingMoreInfo>
+        {isLeftDropdownOn && (
+          <Dropdown
+            dropDownInfo={dropdownInfoCreater(
+              '9.6rem',
+              '1.7rem',
+              '27.7rem',
+              'large',
+              electricityChartCategory,
+              setChartCategory,
+              setIsLeftDropDownOn
+            )}
+          ></Dropdown>
+        )}
+        {isRightDropdownOn && (
+          <Dropdown
+            dropDownInfo={dropdownInfoCreater(
+              '9.6rem',
+              '16.2rem',
+              '27.7rem',
+              'middle',
+              rightDropdown,
+              setRightCategory,
+              setIsRightDropDownOn
+            )}
+          ></Dropdown>
+        )}
+      </S.BuildingElectricityInner>
+    </WrapperInner>
   );
 };
 

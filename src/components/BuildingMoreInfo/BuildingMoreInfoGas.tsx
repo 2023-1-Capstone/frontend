@@ -18,9 +18,11 @@ ChartJS.register(Tooltip, Legend, ChartDataLabels);
 const MonthlyMoreInfo = ({
   chartState,
   curYear,
+  predictArray,
 }: {
   chartState: any;
   curYear: any;
+  predictArray: any;
 }) => {
   const { data: feeData } = useQuery(['getFee'], () =>
     api('/api/gas/fee').then((data: any) => data?.data?.result)
@@ -54,8 +56,12 @@ const MonthlyMoreInfo = ({
   useEffect(() => {
     if (chartState) {
       const chartStateCopy = JSON.parse(JSON.stringify(chartState));
-      chartStateCopy.datasets[0].backgroundColor = doughnutColor;
-      chartStateCopy.datasets[0].borderColor = doughnutColor;
+      const validColor = doughnutColor.map((color: string, idx: number) => {
+        if (predictArray && predictArray[idx]?.data) return color;
+        return 'rgb(0,0,0,0.1)';
+      });
+      chartStateCopy.datasets[0].backgroundColor = validColor;
+      chartStateCopy.datasets[0].borderColor = validColor;
       chartStateCopy.labels = monthCategory.map((item: any) => item + '월');
       const usageArr = chartStateCopy.datasets[0].data;
       const mostWasteMonth = findMostWasteIdx(usageArr) + 1;
@@ -121,16 +127,19 @@ const BuildingMoreInfoGas = ({
   categoryState,
   chartState,
   curYear,
+  predictArray,
 }: {
   categoryState: string;
   chartState: any;
   curYear: any;
+  predictArray: any;
 }) => {
   if (categoryState === '월별 가스 사용량') {
     return (
       <MonthlyMoreInfo
         curYear={curYear}
         chartState={chartState}
+        predictArray={predictArray}
       ></MonthlyMoreInfo>
     );
   }

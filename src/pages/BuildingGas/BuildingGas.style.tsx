@@ -25,13 +25,15 @@ const BuildingTitle = styled.div`
   color: #fefefe;
   width: fit-content;
   height: 2.7rem;
+
   font-family: 'Pretendard';
   left: 50%;
   transform: translateX(-50%);
   font-style: normal;
   font-weight: 400;
-  font-size: 2.1rem;
+  font-size: 2rem;
   line-height: 2.4rem;
+  margin-top: 2rem;
 `;
 
 const ChartChangeFrame = styled.div`
@@ -41,7 +43,7 @@ const ChartChangeFrame = styled.div`
   flex-direction: column;
   left: 50%;
   transform: translateX(-50%);
-  margin-top: 2rem;
+
   margin-bottom: 1rem;
 `;
 
@@ -69,7 +71,7 @@ const ChartTitle = styled.div`
   border-radius: 0.3rem;
   font-family: 'Pretendard';
   font-style: normal;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 1.8rem;
   line-height: 2rem;
   /* or 286% */
@@ -77,6 +79,7 @@ const ChartTitle = styled.div`
   display: flex;
   align-items: center;
   justify-content: right;
+
   color: #000000;
 
   /* Inside auto layout */
@@ -110,8 +113,8 @@ const ChartCategoryBox = styled.div`
   line-height: 1.7rem;
   display: flex;
   align-items: center;
-  opacity: 0.7;
-  color: #000000;
+
+  color: #777777;
 
   /* Inside auto layout */
 
@@ -122,7 +125,7 @@ const ChartCategoryBox = styled.div`
 
 const ChartYearBox = styled.div`
   position: absolute;
-  width: fit-content;
+  width: 7.5rem;
   height: 2.7rem;
   padding: 5px;
 
@@ -147,8 +150,8 @@ const ChartYearBox = styled.div`
   display: flex;
   align-items: center;
   text-align: center;
-  opacity: 0.7;
-  color: #000000;
+
+  color: #777777;
 
   /* Inside auto layout */
 

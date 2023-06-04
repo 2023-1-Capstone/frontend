@@ -33,6 +33,7 @@ const BuildingTitle = styled.div`
   font-weight: 400;
   font-size: 2rem;
   line-height: 2.4rem;
+  margin-top: 2rem;
 `;
 
 const ChartChangeFrame = styled.div`
@@ -113,7 +114,7 @@ const ChartCategoryBox = styled.div`
   display: flex;
   align-items: center;
 
-  color: #000000;
+  color: #777777;
 
   /* Inside auto layout */
 
@@ -124,7 +125,7 @@ const ChartCategoryBox = styled.div`
 
 const ChartYearBox = styled.div`
   position: absolute;
-  width: fit-content;
+  width: 7.5rem;
   height: 2.7rem;
   padding: 5px;
 
@@ -150,7 +151,7 @@ const ChartYearBox = styled.div`
   align-items: center;
   text-align: center;
 
-  color: #000000;
+  color: #777777;
 
   /* Inside auto layout */
 
