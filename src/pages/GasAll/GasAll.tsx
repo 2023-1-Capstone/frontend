@@ -81,7 +81,7 @@ const GasAll = () => {
   };
 
   const setYearChart = () => {
-    const yearList = gasInfo?.map((item: any) => item.year);
+    const yearList = gasInfo?.map((item: any) => item.year).reverse();
     const copyChartState = JSON.parse(JSON.stringify(yearChartState));
     const yearUsageList = gasInfo?.map((item: any) => {
       return item.feeResponses?.reduce((acc: any, cur: any) => {
@@ -96,7 +96,7 @@ const GasAll = () => {
 
   useEffect(() => {
     setMonthChart();
-    const yearList = gasInfo?.map((item: any) => item.year);
+    const yearList = gasInfo?.map((item: any) => item.year).reverse();
     setYearChart();
     setRightDropDown(yearList);
   }, [gasInfo]);
@@ -146,55 +146,51 @@ const GasAll = () => {
   };
 
   return (
-    <Wrapper
+    <WrapperInner
       onClick={(e: React.MouseEvent<HTMLDivElement>) => {
         setIsLeftDropDownOn(false);
         setIsRightDropDownOn(false);
       }}
     >
-      <Header></Header>
-      <WrapperInner>
-        <S.BuildingTitle>
-          인하대학교의 가스 사용량을 확인해보세요!
-        </S.BuildingTitle>
-        {isLeftDropdownOn && (
-          <Dropdown
-            dropDownInfo={dropdownInfoCreater(
-              '9.6rem',
-              '1.5rem',
-              '9.6rem',
-              'large',
-              waterCategory,
-              setChartCategory,
-              setIsRightDropDownOn
-            )}
-          ></Dropdown>
-        )}
-        {isRightDropdownOn && (
-          <Dropdown
-            dropDownInfo={dropdownInfoCreater(
-              '9.6rem',
-              '16.2rem',
-              '9.6rem',
-              'middle',
-              rightDropdown,
-              setRightCategory,
-              setIsRightDropDownOn
-            )}
-          ></Dropdown>
-        )}
-        <S.BuildingElectricityInner>
-          {charts[chartCategory]}
-        </S.BuildingElectricityInner>
-        <WaterMoreInfo
-          categoryState={chartCategory}
-          curYear={rightCategory}
-          chartState={chartState}
-          gasInfo={gasInfo}
-        ></WaterMoreInfo>
-      </WrapperInner>
-      <NavigationBar navigationStatus=""></NavigationBar>
-    </Wrapper>
+      <S.BuildingTitle>
+        인하대학교의 가스 사용량을 확인해보세요!
+      </S.BuildingTitle>
+      {isLeftDropdownOn && (
+        <Dropdown
+          dropDownInfo={dropdownInfoCreater(
+            '9.6rem',
+            '1.5rem',
+            '9.6rem',
+            'large',
+            waterCategory,
+            setChartCategory,
+            setIsRightDropDownOn
+          )}
+        ></Dropdown>
+      )}
+      {isRightDropdownOn && (
+        <Dropdown
+          dropDownInfo={dropdownInfoCreater(
+            '9.6rem',
+            '16.2rem',
+            '9.6rem',
+            'middle',
+            rightDropdown,
+            setRightCategory,
+            setIsRightDropDownOn
+          )}
+        ></Dropdown>
+      )}
+      <S.BuildingElectricityInner>
+        {charts[chartCategory]}
+      </S.BuildingElectricityInner>
+      <WaterMoreInfo
+        categoryState={chartCategory}
+        curYear={rightCategory}
+        chartState={chartState}
+        gasInfo={gasInfo}
+      ></WaterMoreInfo>
+    </WrapperInner>
   );
 };
 
