@@ -7,17 +7,17 @@ const TreeTransItem = ({ carbonWaste }: { carbonWaste: number }) => {
   const TreeItem = [
     {
       treeName: '소나무',
-      value: `${Math.floor(carbonWaste / 118.8)}그루`,
+      value: Math.floor(carbonWaste / 118.8),
       src: pineTree,
     },
     {
       treeName: '잣나무',
-      value: `${Math.floor(carbonWaste / 180.8)}그루`,
+      value: Math.floor(carbonWaste / 180.8),
       src: koreanPineTree,
     },
     {
       treeName: '편백나무',
-      value: `${Math.floor(carbonWaste / 118.8)}그루`,
+      value: Math.floor(carbonWaste / 118.8),
       src: cypress,
     },
   ];
@@ -35,7 +35,9 @@ const TreeTransItem = ({ carbonWaste }: { carbonWaste: number }) => {
             <S.TreeTransItem key={idx}>
               <S.TreeTransImage src={item.src}></S.TreeTransImage>
               <S.TreeTransTreeName>{item.treeName}</S.TreeTransTreeName>
-              <S.TreeTransTreeCount>{item.value}</S.TreeTransTreeCount>
+              <S.TreeTransTreeCount>
+                {item.value.toLocaleString('ko-KR')}그루
+              </S.TreeTransTreeCount>
             </S.TreeTransItem>
           );
         })}
