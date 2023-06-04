@@ -31,11 +31,10 @@ const category: homeCategoryType[] = [
   },
   {
     id: 3,
-    route: 'indicator',
+    route: 'carbon',
     src: indicator,
-    descriptTop: '다양한 형식의 지표',
-    descriptBottom:
-      `학교 건물들의 에너지 사용량을` + `\n` + `다양한 방식으로 확인해보세요!`,
+    descriptTop: '우리학교 탄소 사용량 확인하기',
+    descriptBottom: `인하대학교의` + `\n` + `탄소 배출량을 확인해보세요!`,
   },
 ];
 
