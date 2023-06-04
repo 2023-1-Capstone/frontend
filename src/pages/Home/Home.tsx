@@ -7,6 +7,7 @@ import Header from '../../components/Header/Header';
 import category from './HomeObject';
 import { homeCategoryType } from '../../type/Types';
 import silentRefresh from '../../api/silentRefresh';
+import induck from '../../assets/svg/mascot.svg';
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -16,30 +17,44 @@ const HomePage = () => {
       <Header></Header>
       <WrapperInner>
         <S.HomeCategoryList>
-          {category?.map((item: homeCategoryType) => {
-            return (
-              <S.HomeCategoryFrame
-                key={item.id}
-                onClick={() => navigate(`/${item.route}`)}
-              >
-                <S.HomeCategoryInner>
-                  <S.HomeCategoryIcon src={item.src}></S.HomeCategoryIcon>
-                  <S.HomeCategoryDescriptionFrame>
-                    <S.HomeCategoryDescriptionTop>
-                      {item.descriptTop}
-                    </S.HomeCategoryDescriptionTop>
-                    <S.HomeCategoryDescriptionBottom>
-                      {item.descriptBottom}
-                    </S.HomeCategoryDescriptionBottom>
-                  </S.HomeCategoryDescriptionFrame>
-                </S.HomeCategoryInner>
-              </S.HomeCategoryFrame>
-            );
-          })}
+          <S.HomeCategoryIcon src={induck}></S.HomeCategoryIcon>
+          <S.HomeRepresentText>인하대학교 에너지 사용량을 알아보세요!</S.HomeRepresentText>
+          <S.HomeRepresentContainer>
+              {renderItems()}
+          </S.HomeRepresentContainer>
         </S.HomeCategoryList>
       </WrapperInner>
     </Wrapper>
   );
+
+  function renderItems() {
+      const renderIcons = (category: homeCategoryType) => (
+          <S.HomeIconContainer key={category.id} onClick={() => navigate(`/${category.route}`)}>
+              <S.HomeCategoryIcon src={category.src}/>
+              <S.HomeTextContainer>{category.descriptSummary}</S.HomeTextContainer>
+          </S.HomeIconContainer>
+      );
+
+      const renderPartitions = () => {
+          const partitions = [];
+          for (let i = 0; i < category.length; i += 2) {
+              partitions.push(
+                  <S.HomeContainerPartition key={i}>
+                      {renderIcons(category[i])}
+                      {renderIcons(category[i + 1])}
+                  </S.HomeContainerPartition>
+              );
+          }
+          return partitions;
+      };
+
+      return (
+          <S.HomeRepresentContainer>
+              {renderPartitions()}
+          </S.HomeRepresentContainer>
+      );
+  }
+
 };
 
 export default HomePage;

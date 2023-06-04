@@ -9,6 +9,7 @@ type homeCategoryType = {
   id: number;
   route: string;
   src: string;
+  descriptSummary: string;
   descriptTop: string;
   descriptBottom: string;
 };
