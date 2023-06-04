@@ -79,8 +79,8 @@ const CarbonAll = () => {
           <Dropdown
             dropDownInfo={dropdownInfoCreater(
               '10rem',
-              '11.2rem',
-              '8.7rem',
+              '10.4rem',
+              '10.9rem',
               'middle',
               carbonData?.map((item: any) => item.year),
               setCurYear,
@@ -92,7 +92,7 @@ const CarbonAll = () => {
           <S.ChartTopFrame>
             <S.ChartCategoryBox>탄소 배출량</S.ChartCategoryBox>
             <S.ChartYearBox onClick={() => setIsDropdownOn(true)}>
-              {curYear}년 &nbsp;<img src={downArrow}></img>
+              {curYear} &nbsp;<img src={downArrow}></img>
             </S.ChartYearBox>
           </S.ChartTopFrame>
           <Bar
