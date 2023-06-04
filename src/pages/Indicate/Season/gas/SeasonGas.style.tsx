@@ -17,7 +17,8 @@ const SeasonTitle = styled.div`
   font-weight: 400;
   font-size: 2.4rem;
   line-height: 2.9rem;
-  margin-top: 1rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
   color: #ffffff;
 `;
 
@@ -107,7 +108,7 @@ const ChartCategoryBox = styled.div`
 
 const ChartYearBox = styled.div`
   position: absolute;
-  width: fit-content;
+  width: 7.5rem;
   height: 2.7rem;
   padding: 5px;
 
@@ -156,7 +157,6 @@ const BottomWrapper = styled.div`
   align-items: center;
   width: 36rem;
   height: 82.5rem;
-
   background: #ffffff;
   border-radius: 0.5rem;
 `;
@@ -236,8 +236,8 @@ const Container = styled.div`
   width: 36rem;
   height: fit-content;
   border-radius: 0.5rem;
+  margin-bottom: 0rem;
 `;
-
 const BuildingMoreInfoTitle = styled.div`
   position: relative;
   width: fit-content;
@@ -263,6 +263,7 @@ const Calculate = styled.div`
   text-align: right;
   font-size: 1.7rem;
   justify-content: flex-end;
+  margin-top: -1rem;
   color: #fff;
   font-weight: 400;
 `;
@@ -280,8 +281,8 @@ const BuildingInfoFrame = styled.div<{ modalState: string }>`
   flex-direction: column;
   gap: 1rem;
   width: fit-content;
-  top: 7.5rem;
-  right: 2rem;
+  top: 9rem;
+  right: 1.5rem;
   height: fit-content;
   border-radius: 0.5rem;
   background-color: #fefbf6;
