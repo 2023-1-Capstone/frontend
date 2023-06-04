@@ -85,16 +85,9 @@ const CarbonBuildingMoreInfo = ({ chartState }: { chartState: any }) => {
           탄소배출량은 전기, 가스, 수도 사용량을 기반으로 계산했습니다.
         </S.Li>
       </S.BuildingMoreInfoSummary>
-      <S.BottomTitle>
-        해당 시기 탄소 배출량은...
-        <S.RefreshButton
-          src={refreshSVG}
-          onClick={() => setRandomIdxList(getUniqueNumberList(4, 8))}
-        ></S.RefreshButton>
-      </S.BottomTitle>
       <TransItem
         type={'carbon'}
-        randomIdxList={randomIdxList}
+        curYear={2023}
         waste={moreInfo.totalCarbonWaste}
       ></TransItem>
       <TreeTransItem carbonWaste={moreInfo.totalCarbonWaste}></TreeTransItem>

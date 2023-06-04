@@ -123,17 +123,10 @@ const CarbonAll = () => {
               많은 양의 탄소를 배출했습니다.
             </S.Li>
           </S.BottomInfoBox>
-          <S.BottomTitle>
-            이 탄소 배출량은...
-            <S.RefreshButton
-              src={refreshSVG}
-              onClick={() => setRandomIdxList(getUniqueNumberList(4, 8))}
-            ></S.RefreshButton>
-          </S.BottomTitle>
           <TransItem
             type={'carbon'}
             waste={totalCarbon}
-            randomIdxList={randomIdxList}
+            curYear={curYear}
           ></TransItem>
           <TreeTransItem carbonWaste={totalCarbon}></TreeTransItem>
         </S.BottomWrapper>
