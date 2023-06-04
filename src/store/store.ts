@@ -91,6 +91,30 @@ const monthlyInitWaterData: any = {
   ],
 };
 
+const monthlyInitAllData: any = {
+  labels: monthCategory,
+  datasets: [
+    {
+      backgroundColor: ['#6E85B7'],
+      yAxisID: 'y-left',
+      maxBarThickness: 35,
+      borderRadius: 3,
+      data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      label: '사용량',
+    },
+    {
+      type: 'line',
+      yAxisID: 'y-right',
+      backgroundColor: ['#FFFFFF'],
+      borderColor: ['#9BA4B5'],
+      maxBarThickness: 35,
+      borderRadius: 3,
+      data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      label: '요금',
+    },
+  ],
+};
+
 const monthlyInitDatas: any = {
   labels: monthCategory,
   datasets: [
@@ -107,12 +131,8 @@ const seasonInitData: any = {
   datasets: [
     {
       maxBarThickness: 35,
-      backgroundColor: [
-        'rgba(100, 99, 132, 0.5)',
-        'rgba(125, 99, 132, 0.5)',
-        'rgba(150, 99, 132, 0.5)',
-        'rgba(175, 99, 132, 0.5)',
-      ],
+      backgroundColor: ['#6E85B7'],
+      borderRadius: 3,
       data: [],
     },
   ],
@@ -310,7 +330,7 @@ const optionsElectricityAll: any = {
       display: false,
     },
     legend: {
-      display: false,
+      display: true,
     },
     tooltip: {
       callbacks: {
@@ -580,7 +600,7 @@ const optionsArea: any = {
       formatter: (value: any, context: any) => {
         return value?.toLocaleString('ko-KR') + 'Kwh/㎡';
       },
-      color: '#fff'
+      color: '#fff',
     },
     legend: {
       display: false,
@@ -619,7 +639,7 @@ const optionsAreaGas: any = {
       formatter: (value: any, context: any) => {
         return value?.toLocaleString('ko-KR') + 'm3/㎡';
       },
-      color: '#fff'
+      color: '#fff',
     },
     legend: {
       display: false,
@@ -979,4 +999,5 @@ export {
   optionsSeason,
   optionsElectricityAll,
   optionsGasAll,
+  monthlyInitAllData,
 };
