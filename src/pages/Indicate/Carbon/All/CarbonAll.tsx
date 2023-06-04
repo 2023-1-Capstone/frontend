@@ -1,30 +1,20 @@
 import { useEffect } from 'react';
 import { useState } from 'react';
-import {
-  Wrapper,
-  WrapperInner,
-} from '../../../../components/Wrapper/Wrapper.style';
-import Header from '../../../../components/Header/Header';
-import NavigationBar from '../../../../components/NavigationBar/NavigationBar';
+import { WrapperInner } from '../../../../components/Wrapper/Wrapper.style';
 import { Chart as ChartJS, Tooltip, Legend } from 'chart.js/auto';
 import { Bar } from 'react-chartjs-2';
-import {
-  optionsCarbonAll,
-  monthlyInitData,
-  season,
-} from '../../../../store/store';
+import { optionsCarbonAll, monthlyInitData } from '../../../../store/store';
 import downArrow from '../../../../assets/svg/downArrow.svg';
 import * as S from './CarbonAll.style';
 import { Dropdown } from '../../../../components/Dropdown/Dropdown';
 import { dropdownInfoCreater } from '../../../BuildingElectricity/util';
 import { useQuery } from '@tanstack/react-query';
-import { getAverageFee, findMostWasteIdxArr } from '../util';
+import { findMostWasteIdxArr } from '../util';
 import api from '../../../../api/api';
 import TransItem from '../../Component/TrasnItem/TransItem';
-import refreshSVG from '../../../../assets/svg/refresh.svg';
-import { getUniqueNumberList } from '../util';
 import TreeTransItem from '../../Component/TreeTransItem/TreeTransItem';
 import CarbonAllMoreInfo from './Component/CarbonAllMoreInfo';
+import { SummaryFrame, Li } from '../../../../components/Summary/Summary.style';
 
 ChartJS.register(Tooltip, Legend);
 
@@ -102,25 +92,25 @@ const CarbonAll = () => {
         </S.Container>
         <S.BottomWrapper>
           <CarbonAllMoreInfo chartState={chartData}></CarbonAllMoreInfo>
-          <S.BottomInfoBox>
-            <S.Li>
+          <SummaryFrame>
+            <Li>
               {curYear}년 총 탄소 배출량은{' '}
               {Math.floor(totalCarbon * 1000).toLocaleString('ko-KR')}
               kg입니다.
-            </S.Li>
-            <S.Li>
+            </Li>
+            <Li>
               사회적 탄소 배출 비용은{' '}
               {Math.floor((totalCarbon * 55400 * 1000) / 1000).toLocaleString(
                 'ko-KR'
               )}
               원 입니다.
-            </S.Li>
-            <S.Li>
+            </Li>
+            <Li>
               {mostWasteSeasonIdx + 1}월에{' '}
               {Math.floor(mostWaste * 1000).toLocaleString('ko-KR')}kg로 가장
               많은 양의 탄소를 배출했습니다.
-            </S.Li>
-          </S.BottomInfoBox>
+            </Li>
+          </SummaryFrame>
           <TransItem
             type={'carbon'}
             waste={totalCarbon}

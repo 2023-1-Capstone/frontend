@@ -20,7 +20,7 @@ const Wrapper = styled.div`
 const WrapperInner = styled.div`
   position: relative;
   left: 0rem;
-  top: 10rem;
+  top: 8rem;
   width: 39rem;
   background-color: #99bfcf;
   padding-bottom: 1rem;
@@ -30,7 +30,7 @@ const WrapperInner = styled.div`
     display: none;
   }
   padding: 0 2rem;
-  padding-bottom: 3rem;
+  padding-bottom: 5rem;
 `;
 
 export { Wrapper, WrapperInner };

@@ -9,11 +9,11 @@ import CarbonBuildings from '../Indicate/Carbon/Buildings/CarbonBuildings';
 const arr = ['전체', '건물별'];
 
 const Carbon = () => {
-  const [category, setCategory] = useState('건물별');
+  const [category, setCategory] = useState('전체');
 
   const contents: any = {
-    건물별: <CarbonAll></CarbonAll>,
-    전체: <CarbonBuildings></CarbonBuildings>,
+    건물별: <CarbonBuildings></CarbonBuildings>,
+    전체: <CarbonAll></CarbonAll>,
   };
 
   return (
@@ -25,7 +25,7 @@ const Carbon = () => {
         categoryState={category}
       ></CategoryNavigation>
       {contents[category]}
-      <NavigationBar navigationStatus="electricity"></NavigationBar>
+      <NavigationBar navigationStatus="carbon"></NavigationBar>
     </Wrapper>
   );
 };

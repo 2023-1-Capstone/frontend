@@ -22,6 +22,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getBuildingTargetDataGas, findMostWasteIdx } from '../util';
 import api from '../../../../api/api';
 import informationSVG from '../../../../assets/svg/information.svg';
+import { SummaryFrame, Li } from '../../../../components/Summary/Summary.style';
 
 ChartJS.register(Tooltip, Legend);
 
@@ -101,7 +102,7 @@ const AreaGas = () => {
       }}
     >
       <S.SeasonWrapper>
-        <S.SeasonTitle>👑면적당 가스 사용 순위</S.SeasonTitle>
+        <S.SeasonTitle>면적당 가스 사용량</S.SeasonTitle>
         <S.BuildingInfoFrame modalState={infoModalState}>
           <S.BuildingInfoNotice>
             ※ 아래는 가스 사용량에 포함된 건물들 정보에요.
@@ -191,12 +192,12 @@ const AreaGas = () => {
           <S.BottomTitle>
             해당시기 사용 1위는 '{buildingByIdx[mostWasteIdx]}' 입니다.
           </S.BottomTitle>
-          <S.BottomInfoBox>
-            <S.Li>
+          <SummaryFrame>
+            <Li>
               1㎡당 {chartData?.datasets[0].data[mostWasteIdx]}m3를
               사용하였습니다.
-            </S.Li>
-            <S.Li>
+            </Li>
+            <Li>
               1㎡당{' '}
               {parseFloat(
                 (
@@ -207,16 +208,16 @@ const AreaGas = () => {
                 ).toFixed(2)
               ).toLocaleString('ko-KR')}
               원 정도를 사용하였습니다.
-            </S.Li>
-            <S.Li>
+            </Li>
+            <Li>
               평균 사용량 대비 &nbsp;
               {getPercentage(
                 chartData?.datasets[0].data[mostWasteIdx],
                 getAverageWaste(chartData?.datasets[0].data)
               )}
               % 높은 수치입니다.
-            </S.Li>
-          </S.BottomInfoBox>
+            </Li>
+          </SummaryFrame>
         </S.BottomWrapper>
       </S.SeasonWrapper>
     </WrapperInner>

@@ -1,11 +1,6 @@
 import { useEffect } from 'react';
 import { useState } from 'react';
-import {
-  Wrapper,
-  WrapperInner,
-} from '../../../../components/Wrapper/Wrapper.style';
-import Header from '../../../../components/Header/Header';
-import NavigationBar from '../../../../components/NavigationBar/NavigationBar';
+import { WrapperInner } from '../../../../components/Wrapper/Wrapper.style';
 import { Chart as ChartJS, Tooltip, Legend } from 'chart.js/auto';
 import { Bar, Doughnut } from 'react-chartjs-2';
 import {
@@ -22,10 +17,10 @@ import { useQuery } from '@tanstack/react-query';
 import { getAverageFee, findMostWasteIdx } from '../util';
 import api from '../../../../api/api';
 import TransItem from '../../Component/TrasnItem/TransItem';
-import refreshSVG from '../../../../assets/svg/refresh.svg';
 import informationSVG from '../../../../assets/svg/information.svg';
 import { getUniqueNumberList } from '../util';
 import { BuildingGasPlugin } from '../../../../store/chartPlugin';
+import { SummaryFrame, Li } from '../../../../components/Summary/Summary.style';
 
 ChartJS.register(Tooltip, Legend);
 
@@ -164,7 +159,7 @@ const SeasonGas = () => {
   return (
     <WrapperInner>
       <S.SeasonWrapper>
-        <S.SeasonTitle>👑계절별 가스 사용량 순위</S.SeasonTitle>
+        <S.SeasonTitle>계절별 가스 사용량</S.SeasonTitle>
         {isDropdownOn && (
           <Dropdown
             dropDownInfo={dropdownInfoCreater(
@@ -235,28 +230,21 @@ const SeasonGas = () => {
             data={chartData}
             plugins={[BuildingGasPlugin]}
           ></Doughnut>
-          <S.BottomInfoBoxInner>
-            <S.Li>
+          <SummaryFrame>
+            <Li>
               해당년도 사용 1위는 '{season[mostWasteSeasonIdx]}'이며 계절 평균
               대비 &nbsp;
               {getPercent(chartData?.datasets[0].data, infoData?.watt)}%가
               높습니다.
-            </S.Li>
-            <S.Li>
+            </Li>
+            <Li>
               총 사용량은 {infoData.watt.toLocaleString('ko-KR')}m3 입니다.
-            </S.Li>
-            <S.Li>
+            </Li>
+            <Li>
               예상 사용 요금은 &nbsp;
               {Math.floor(infoData.fee).toLocaleString('ko-KR')}원 입니다.
-            </S.Li>
-          </S.BottomInfoBoxInner>
-          <S.BottomTitle>
-            이 가스 사용량으로...
-            <S.RefreshButton
-              src={refreshSVG}
-              onClick={() => setRandomIdxList(getUniqueNumberList(4, 6))}
-            ></S.RefreshButton>
-          </S.BottomTitle>
+            </Li>
+          </SummaryFrame>
           <TransItem
             type={'resource'}
             waste={infoData.fee}

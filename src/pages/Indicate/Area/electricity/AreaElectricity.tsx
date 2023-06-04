@@ -85,7 +85,7 @@ const AreaElectricity = () => {
       }}
     >
       <S.SeasonWrapper>
-        <S.SeasonTitle>👑면적당 전기 사용 순위</S.SeasonTitle>
+        <S.SeasonTitle>👑면적당 전기 사용량</S.SeasonTitle>
         <S.BuildingInfoFrame modalState={infoModalState}>
           <S.BuildingInfoNotice>
             ※ 아래는 전기 사용량에 포함된 건물들 정보에요.

@@ -190,7 +190,19 @@ const BuildingGas = () => {
               options={optionsGas}
             ></Bar>
           </S.ChartContainer>
-          <S.ChartTitle>{selectedBuilding}</S.ChartTitle>
+          <S.ChartTitle>
+            {' '}
+            {selectedBuilding}
+            {buildingInfo?.data.result.filter(
+              (item: any) => item.name === selectedBuilding
+            )[0].elecDescription
+              ? `(${
+                  buildingInfo?.data.result.filter(
+                    (item: any) => item.name === selectedBuilding
+                  )[0].elecDescription
+                })`
+              : null}
+          </S.ChartTitle>
         </S.Container>
         <BuildingMoreInfoGas
           categoryState={chartCategory}

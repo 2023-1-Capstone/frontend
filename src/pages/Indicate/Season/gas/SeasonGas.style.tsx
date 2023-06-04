@@ -156,8 +156,8 @@ const BottomWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   width: 36rem;
-  height: 82.5rem;
-  background: #ffffff;
+  height: 68.5rem;
+  background: #f5f5f5;
   border-radius: 0.5rem;
 `;
 

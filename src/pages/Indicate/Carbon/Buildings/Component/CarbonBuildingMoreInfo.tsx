@@ -14,8 +14,12 @@ import {
 import { plugin } from '../../../../../store/chartPlugin';
 import TransItem from '../../../Component/TrasnItem/TransItem';
 import { getUniqueNumberList } from '../../util';
-import refreshSVG from '../../../../../assets/svg/refresh.svg';
 import TreeTransItem from '../../../Component/TreeTransItem/TreeTransItem';
+import {
+  SummaryFrame,
+  Li,
+} from '../../../../../components/Summary/Summary.style';
+
 ChartJS.register(Tooltip, Legend, ChartDataLabels);
 
 const CarbonBuildingMoreInfo = ({ chartState }: { chartState: any }) => {
@@ -73,18 +77,16 @@ const CarbonBuildingMoreInfo = ({ chartState }: { chartState: any }) => {
           plugins={[plugin]}
         ></Doughnut>
       </S.Container>
-      <S.BuildingMoreInfoSummary>
-        <S.Li>
+      <SummaryFrame>
+        <Li>
           가장 많은 탄소를 배출한 건물은 '{moreInfo.mostWasteBuilding}'입니다.
-        </S.Li>
-        <S.Li>
+        </Li>
+        <Li>
           가장 적은 탄소를 배출한 건물은 '{moreInfo.lessWasteBuilding}'입니다.
-        </S.Li>
-        <S.Li>건물 평균 {moreInfo.averageWaste}kg를 배출하였습니다.</S.Li>
-        <S.Li>
-          탄소배출량은 전기, 가스, 수도 사용량을 기반으로 계산했습니다.
-        </S.Li>
-      </S.BuildingMoreInfoSummary>
+        </Li>
+        <Li>건물 평균 {moreInfo.averageWaste}kg를 배출하였습니다.</Li>
+        <Li>탄소배출량은 전기, 가스, 수도 사용량을 기반으로 계산했습니다.</Li>
+      </SummaryFrame>
       <TransItem
         type={'carbon'}
         curYear={2023}

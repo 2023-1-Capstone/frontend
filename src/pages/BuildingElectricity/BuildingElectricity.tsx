@@ -70,6 +70,9 @@ const BuildingElectricity = () => {
     //   backgroundColor: ['rgb(75, 192, 192)'],
 
     chartStateCopy.datasets[0].backgroundColor = target.map((data: any) => {
+      console.log(data);
+
+      if (data.prediction && data?.data > data?.prediction) return 'red';
       if (data.data) return 'rgb(91,125,177,0.9)';
       else return 'rgb(0,0,0,0.1)';
     });
