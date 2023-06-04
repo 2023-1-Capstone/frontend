@@ -110,7 +110,7 @@ const ChartCategoryBox = styled.div`
 
 const ChartYearBox = styled.div`
   position: absolute;
-  width: fit-content;
+  width: 7.5rem;
   height: 2.7rem;
   padding: 5px;
 
