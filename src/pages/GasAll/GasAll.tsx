@@ -1,16 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Wrapper, WrapperInner } from '../../components/Wrapper/Wrapper.style';
-import Header from '../../components/Header/Header';
-import NavigationBar from '../../components/NavigationBar/NavigationBar';
+import { WrapperInner } from '../../components/Wrapper/Wrapper.style';
 import * as S from './GasAll.style';
 import { Chart as ChartJS, Tooltip, Legend } from 'chart.js/auto';
-import { Bar, Line } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 import downArrow from '../../assets/svg/downArrow.svg';
 import { Dropdown } from '../../components/Dropdown/Dropdown';
-
 import { dropdownInfoCreater } from './util';
-import { chartInfoType, chartInfoUsageType } from '../../type/Types';
 import api from '../../api/api';
 import {
   monthlyInitData,
@@ -19,6 +15,7 @@ import {
   yearCategory,
 } from '../../store/store';
 import WaterMoreInfo from './Component/GasAllMoreInfo';
+import { findTargetData, getBackgroundColor } from './util';
 
 const waterCategory = ['월별 가스 사용량', '연간 가스 사용량'];
 
@@ -49,33 +46,21 @@ const GasAll = () => {
     else setIsRightDropDownOn(true);
   };
 
-  const getBackgroundColor = (elecInfo: chartInfoType[]) => {
-    return elecInfo
-      ?.filter(
-        (item: chartInfoType) => item.year === parseInt(rightCategory)
-      )[0]
-      .usages.map((item: chartInfoUsageType) => {
-        if (item?.data) return 'rgb(91,125,177,0.9)';
-        return 'rgb(0,0,0,0.1)';
-      });
-  };
-
-  const findTargetData = (curYear: string, info: any) => {
-    const targetData = info?.filter(
-      (item: any) => item.year === parseInt(curYear)
-    )[0];
-    return targetData;
-  };
-
   const setMonthChart = () => {
     const targetData = findTargetData(rightCategory, gasInfo)?.feeResponses;
     const chartStateCopy = JSON.parse(JSON.stringify(chartState));
     chartStateCopy.datasets[0].data = targetData?.map((item: any) =>
-      item?.usages ? item?.usages : 0
+      item?.usages ? item?.usages : item?.prediction
     );
 
+    const backgroundColor = getBackgroundColor(targetData);
+
+    chartStateCopy.datasets[0].backgroundColor = backgroundColor;
+    chartStateCopy.datasets[1].backgroundColor = backgroundColor;
     chartStateCopy.datasets[1].data = targetData?.map((item: any) =>
-      Math.floor(item?.fee / 10000)
+      item?.fee
+        ? Math.floor(item?.fee / 10000)
+        : Math.floor(item?.fee_prediction / 10000)
     );
     setChartState(chartStateCopy);
   };
