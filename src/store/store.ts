@@ -131,7 +131,18 @@ const seasonInitData: any = {
   datasets: [
     {
       maxBarThickness: 35,
-      backgroundColor: ['#6E85B7'],
+      backgroundColor: [
+        'rgba(98, 182, 203,0.7)',
+        'rgba(190, 233, 232,0.7)',
+        'rgba(95, 168, 211,0.7)',
+        'rgba(27, 73, 101,0.7)',
+      ],
+      borderColor: [
+        'rgba(98, 182, 203,0.7)',
+        'rgba(190, 233, 232,0.7)',
+        'rgba(95, 168, 211,0.7)',
+        'rgba(27, 73, 101,0.7)',
+      ],
       borderRadius: 3,
       data: [],
     },

@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-const BuildingMoreInfoFrame = styled.div`
+const BuildingMoreInfoFrame = styled.div<{ size: number }>`
   position: relative;
   width: 36rem;
-  height: 50rem;
+  height: ${(props) => props.size}rem;
   background: #f5f5f5;
   border-radius: 1rem;
   display: flex;
@@ -87,6 +87,23 @@ const ChartIndicatorLine = styled.div`
   border: 0.1rem solid #757575;
 `;
 
+const BottomTitle = styled.div`
+  position: relative;
+  width: 26.5rem;
+  height: 2.6rem;
+  left: -3rem;
+  margin-top: 1.2rem;
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #000000;
+`;
+
 export {
   BuildingMoreInfoTitle,
   BuildingMoreInfoFrame,
@@ -94,4 +111,5 @@ export {
   Container,
   BuildingMoreInfoSummary,
   ChartIndicatorLine,
+  BottomTitle,
 };
