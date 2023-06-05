@@ -35,7 +35,7 @@ const CarbonAll = () => {
     const chartCopyData = JSON.parse(JSON.stringify(chartData));
     const usages = chartInfo
       ?.filter((item: any) => item.year === parseInt(curYear))[0]
-      .usages.map((item: number) => item / 1000);
+      .usages.map((item: any) => (item ? item?.data / 1000 : 0));
     chartCopyData.datasets[0].data = usages;
     const totalUsage = usages?.reduce(
       (acc: number, cur: number) => acc + cur,
@@ -50,6 +50,8 @@ const CarbonAll = () => {
   };
 
   useEffect(() => {
+    console.log(carbonData);
+
     if (carbonData) {
       setCurYearChart(carbonData);
     }
@@ -113,10 +115,10 @@ const CarbonAll = () => {
           </SummaryFrame>
           <TransItem
             type={'carbon'}
-            waste={totalCarbon}
+            waste={totalCarbon * 1000}
             curYear={curYear}
           ></TransItem>
-          <TreeTransItem carbonWaste={totalCarbon}></TreeTransItem>
+          <TreeTransItem carbonWaste={totalCarbon * 1000}></TreeTransItem>
         </S.BottomWrapper>
       </S.SeasonWrapper>
     </WrapperInner>
