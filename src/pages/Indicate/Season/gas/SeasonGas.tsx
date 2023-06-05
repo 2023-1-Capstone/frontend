@@ -2,13 +2,11 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { WrapperInner } from '../../../../components/Wrapper/Wrapper.style';
 import { Chart as ChartJS, Tooltip, Legend } from 'chart.js/auto';
-import { Bar, Doughnut } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 import {
-  optionsGas,
+  optionsSeasonGas,
   seasonInitData,
   seasonInitDataDoughnut,
-  season,
-  optionsDoughnut,
 } from '../../../../store/store';
 import downArrow from '../../../../assets/svg/downArrow.svg';
 import * as S from './SeasonGas.style';
@@ -17,10 +15,8 @@ import { dropdownInfoCreater } from '../../../BuildingElectricity/util';
 import { useQuery } from '@tanstack/react-query';
 import { getAverageFee, findMostWasteIdx } from '../util';
 import api from '../../../../api/api';
-import TransItem from '../../Component/TrasnItem/TransItem';
 import informationSVG from '../../../../assets/svg/information.svg';
-import { BuildingGasPlugin } from '../../../../store/chartPlugin';
-import { SummaryFrame, Li } from '../../../../components/Summary/Summary.style';
+import SeasonGasMoreInfo from './SeasonGasMoreInfo/SeasonGasMoreInfo';
 
 ChartJS.register(Tooltip, Legend);
 
@@ -225,38 +221,15 @@ const SeasonGas = () => {
             width="350"
             height="250"
             data={chartData}
-            options={optionsGas}
+            options={optionsSeasonGas}
           ></Bar>
         </S.Container>
-        <S.BottomWrapper>
-          <S.BuildingMoreInfoTitle>요약 정보</S.BuildingMoreInfoTitle>
-          <S.ChartIndicatorLine></S.ChartIndicatorLine>
-          <Doughnut
-            options={optionsDoughnut}
-            data={chartDataDoughnut}
-            plugins={[BuildingGasPlugin]}
-          ></Doughnut>
-          <SummaryFrame>
-            <Li>
-              해당년도 사용 1위는 '{season[mostWasteSeasonIdx]}'이며 계절 평균
-              대비 &nbsp;
-              {getPercent(chartData?.datasets[0].data, infoData?.watt)}%가
-              높습니다.
-            </Li>
-            <Li>
-              총 사용량은 {infoData.watt.toLocaleString('ko-KR')}m3 입니다.
-            </Li>
-            <Li>
-              예상 사용 요금은 &nbsp;
-              {Math.floor(infoData.fee).toLocaleString('ko-KR')}원 입니다.
-            </Li>
-          </SummaryFrame>
-          <TransItem
-            type={'resource'}
-            waste={infoData.fee}
-            curYear={curYear}
-          ></TransItem>
-        </S.BottomWrapper>
+        <SeasonGasMoreInfo
+          chartState={chartData}
+          curYear={curYear}
+          mostWasteSeasonIdx={mostWasteSeasonIdx}
+          infoData={infoData}
+        ></SeasonGasMoreInfo>
       </S.SeasonWrapper>
     </WrapperInner>
   );

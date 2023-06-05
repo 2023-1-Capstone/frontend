@@ -734,6 +734,39 @@ const optionsSeason: any = {
   },
 };
 
+const optionsSeasonGas: any = {
+  reponsive: false,
+  plugins: {
+    datalabels: {
+      display: false,
+    },
+    legend: {
+      display: false,
+    },
+    tooltip: {
+      callbacks: {
+        title: (context: any) => context[0].label,
+        label: (context: any) => {
+          let label = context.dataset.label + '' || '';
+          return context.parsed.y !== null ? context.parsed.y + 'm3' : null;
+        },
+      },
+    },
+  },
+  scales: {
+    x: {
+      grid: {
+        display: false,
+      },
+    },
+    y: {
+      grid: {
+        display: false,
+      },
+    },
+  },
+};
+
 const optionsDoughnut: any = {
   layout: {
     padding: {
@@ -1290,4 +1323,5 @@ export {
   optionsBuildingElectricitiy,
   monthlyInitDataCarbonAll,
   optionsBuildingGas,
+  optionsSeasonGas,
 };

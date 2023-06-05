@@ -17,11 +17,8 @@ import { dropdownInfoCreater } from '../../../BuildingElectricity/util';
 import { useQuery } from '@tanstack/react-query';
 import { getAverageFee, findMostWasteIdx } from '../util';
 import api from '../../../../api/api';
-import TransItem from '../../Component/TrasnItem/TransItem';
-import { getUniqueNumberList } from '../util';
-import { BuildingElectricityPlugin } from '../../../../store/chartPlugin';
 import informationSVG from '../../../../assets/svg/information.svg';
-import { SummaryFrame, Li } from '../../../../components/Summary/Summary.style';
+import SeasonElectricityMoreInfo from './Component/SeasonElectricityMoreInfo';
 
 ChartJS.register(Tooltip, Legend);
 
@@ -47,9 +44,6 @@ const SeasonElectricity = () => {
 
   const [mostWasteSeasonIdx, setMostWasteSeasonIdx] = useState<number>(0);
   const [chartData, setChartData] = useState(seasonInitData);
-  const [chartDataDoughnut, setChartDataDoughtnut] = useState(
-    seasonInitDataDoughnut
-  );
   const [isDropdownOn, setIsDropdownOn] = useState<Boolean>(false);
   const [yearList, setYearList] = useState([]);
   const [curYear, setCurYear] = useState<string>('');
@@ -76,23 +70,19 @@ const SeasonElectricity = () => {
       );
       // 차트 정보 세팅
       const chartDataCopy = JSON.parse(JSON.stringify(chartData));
-      const chartDataDoughnutCopy = JSON.parse(
-        JSON.stringify(chartDataDoughnut)
-      );
+
       const usageList = validData[validData.length - 1].usages;
       chartDataCopy.datasets[0].data = usageList.filter(
         (val: number) => val !== 0
       );
-      chartDataDoughnut.datasets[0].data = usageList.filter(
-        (val: number) => val !== 0
-      );
-      setChartData(chartDataCopy);
-      setChartDataDoughtnut(chartDataDoughnutCopy);
+
       //유효하지 않은 계절 제거
       const validSeason = usageList
         .filter((item: any) => item !== 0)
         .map((item: any, idx: number) => seasonInfo[idx].season);
       chartDataCopy.labels = validSeason;
+
+      setChartData(chartDataCopy);
 
       // 가장 사용을 많이 한 계절 인덱스 탐색
       const targetSeasonIdx = findMostWasteIdx(validData);
@@ -228,37 +218,12 @@ const SeasonElectricity = () => {
             options={optionsSeason}
           ></Bar>
         </S.Container>
-        <S.BottomWrapper>
-          <S.BuildingMoreInfoTitle>요약 정보</S.BuildingMoreInfoTitle>
-          <S.ChartIndicatorLine></S.ChartIndicatorLine>
-          <Doughnut
-            options={optionsDoughnut}
-            data={chartDataDoughnut}
-            plugins={[BuildingElectricityPlugin]}
-          ></Doughnut>
-          <SummaryFrame>
-            <Li>
-              해당년도 사용 1위는 '{season[mostWasteSeasonIdx]}'이며 계절 평균
-              대비 &nbsp;
-              {getPercent(chartData?.datasets[0].data, infoData?.watt)}%가
-              높습니다.
-            </Li>
-            <Li>
-              총 사용 전기량은 &nbsp;
-              {(infoData.watt * 1000).toLocaleString('ko-KR')}
-              kwh 입니다.
-            </Li>
-            <Li>
-              예상 사용 요금은 &nbsp;
-              {Math.floor(infoData.fee).toLocaleString('ko-KR')}원 입니다.
-            </Li>
-          </SummaryFrame>
-          <TransItem
-            curYear={curYear}
-            type={'resource'}
-            waste={infoData.fee}
-          ></TransItem>
-        </S.BottomWrapper>
+        <SeasonElectricityMoreInfo
+          chartState={chartData}
+          mostWasteSeasonIdx={mostWasteSeasonIdx}
+          infoData={infoData}
+          curYear={curYear}
+        ></SeasonElectricityMoreInfo>
       </S.SeasonWrapper>
     </WrapperInner>
   );
