@@ -6,6 +6,7 @@ import { Bar, Doughnut } from 'react-chartjs-2';
 import {
   optionsGas,
   seasonInitData,
+  seasonInitDataDoughnut,
   season,
   optionsDoughnut,
 } from '../../../../store/store';
@@ -18,7 +19,6 @@ import { getAverageFee, findMostWasteIdx } from '../util';
 import api from '../../../../api/api';
 import TransItem from '../../Component/TrasnItem/TransItem';
 import informationSVG from '../../../../assets/svg/information.svg';
-import { getUniqueNumberList } from '../util';
 import { BuildingGasPlugin } from '../../../../store/chartPlugin';
 import { SummaryFrame, Li } from '../../../../components/Summary/Summary.style';
 
@@ -46,14 +46,14 @@ const SeasonGas = () => {
 
   const [mostWasteSeasonIdx, setMostWasteSeasonIdx] = useState<number>(0);
   const [chartData, setChartData] = useState(seasonInitData);
+  const [chartDataDoughnut, setChartDataDoughtnut] = useState(
+    seasonInitDataDoughnut
+  );
   const [yearList, setYearList] = useState([]);
   const [isDropdownOn, setIsDropdownOn] = useState<Boolean>(false);
   const [curYear, setCurYear] = useState<string>('2023');
   const [infoData, setInfoData] = useState({ watt: 0, fee: 0 });
   const [infoModalState, setInfoModalState] = useState<string>('hidden');
-  const [randomIdxList, setRandomIdxList] = useState<number[]>(
-    getUniqueNumberList(4, 6)
-  );
 
   const getPercent = (usageArr: number[], targetUsage: number) => {
     let numOfNotNullSeason = 0;
@@ -76,8 +76,14 @@ const SeasonGas = () => {
       );
       // 차트 정보 세팅
       const chartDataCopy = JSON.parse(JSON.stringify(chartData));
+      const chartDataDoughnutCopy = JSON.parse(
+        JSON.stringify(chartDataDoughnut)
+      );
       const usageList = validData[validData.length - 1].usages;
       chartDataCopy.datasets[0].data = usageList.filter(
+        (val: number) => val !== 0
+      );
+      chartDataDoughnut.datasets[0].data = usageList.filter(
         (val: number) => val !== 0
       );
       setChartData(chartDataCopy);
@@ -227,7 +233,7 @@ const SeasonGas = () => {
           <S.ChartIndicatorLine></S.ChartIndicatorLine>
           <Doughnut
             options={optionsDoughnut}
-            data={chartData}
+            data={chartDataDoughnut}
             plugins={[BuildingGasPlugin]}
           ></Doughnut>
           <SummaryFrame>

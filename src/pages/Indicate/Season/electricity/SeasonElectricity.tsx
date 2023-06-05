@@ -8,6 +8,7 @@ import {
   seasonInitData,
   season,
   optionsDoughnut,
+  seasonInitDataDoughnut,
 } from '../../../../store/store';
 import downArrow from '../../../../assets/svg/downArrow.svg';
 import * as S from './SeasonElectricity.style';
@@ -46,13 +47,13 @@ const SeasonElectricity = () => {
 
   const [mostWasteSeasonIdx, setMostWasteSeasonIdx] = useState<number>(0);
   const [chartData, setChartData] = useState(seasonInitData);
+  const [chartDataDoughnut, setChartDataDoughtnut] = useState(
+    seasonInitDataDoughnut
+  );
   const [isDropdownOn, setIsDropdownOn] = useState<Boolean>(false);
   const [yearList, setYearList] = useState([]);
   const [curYear, setCurYear] = useState<string>('');
   const [infoData, setInfoData] = useState({ watt: 0, fee: 0 });
-  const [randomIdxList, setRandomIdxList] = useState<number[]>(
-    getUniqueNumberList(4, 6)
-  );
   const [infoModalState, setInfoModalState] = useState<string>('hidden');
 
   const getPercent = (usageArr: number[], targetUsage: number) => {
@@ -75,12 +76,18 @@ const SeasonElectricity = () => {
       );
       // 차트 정보 세팅
       const chartDataCopy = JSON.parse(JSON.stringify(chartData));
+      const chartDataDoughnutCopy = JSON.parse(
+        JSON.stringify(chartDataDoughnut)
+      );
       const usageList = validData[validData.length - 1].usages;
       chartDataCopy.datasets[0].data = usageList.filter(
         (val: number) => val !== 0
       );
+      chartDataDoughnut.datasets[0].data = usageList.filter(
+        (val: number) => val !== 0
+      );
       setChartData(chartDataCopy);
-
+      setChartDataDoughtnut(chartDataDoughnutCopy);
       //유효하지 않은 계절 제거
       const validSeason = usageList
         .filter((item: any) => item !== 0)
@@ -226,7 +233,7 @@ const SeasonElectricity = () => {
           <S.ChartIndicatorLine></S.ChartIndicatorLine>
           <Doughnut
             options={optionsDoughnut}
-            data={chartData}
+            data={chartDataDoughnut}
             plugins={[BuildingElectricityPlugin]}
           ></Doughnut>
           <SummaryFrame>

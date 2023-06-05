@@ -140,6 +140,19 @@ const seasonInitData: any = {
   datasets: [
     {
       maxBarThickness: 35,
+      backgroundColor: ['#6E85B7'],
+      borderColor: ['#6E85B7'],
+      borderRadius: 3,
+      data: [],
+    },
+  ],
+};
+
+const seasonInitDataDoughnut: any = {
+  labels: ['봄', '여름', '가을', '겨울'],
+  datasets: [
+    {
+      maxBarThickness: 35,
       backgroundColor: [
         'rgba(98, 182, 203,0.7)',
         'rgba(190, 233, 232,0.7)',
@@ -1070,6 +1083,7 @@ export {
   yearCategory,
   indicateCategory,
   seasonInitData,
+  seasonInitDataDoughnut,
   gasChartCategory,
   buildingSrc,
   seasonIdx,
