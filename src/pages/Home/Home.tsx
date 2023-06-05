@@ -10,6 +10,34 @@ import silentRefresh from '../../api/silentRefresh';
 import induck from '../../assets/svg/mascot.svg';
 
 const HomePage = () => {
+    function renderItems() {
+        const renderIcons = (category: homeCategoryType, index: number) => (
+            <S.HomeIconContainer key={category.id} onClick={() => navigate(`/${category.route}`)} corner={index}>
+                <S.HomeCategoryIcon src={category.src}/>
+                <S.HomeTextContainer>{category.descriptSummary}</S.HomeTextContainer>
+            </S.HomeIconContainer>
+        );
+
+        const renderPartitions = () => {
+            const partitions = [];
+            for (let i = 0; i < category.length; i += 2) {
+                partitions.push(
+                    <S.HomeContainerPartition key={i}>
+                        {renderIcons(category[i], i)}
+                        {renderIcons(category[i + 1], i + 1)}
+                    </S.HomeContainerPartition>
+                );
+            }
+            return partitions;
+        };
+
+        return (
+            <S.HomeRepresentContainer>
+                {renderPartitions()}
+            </S.HomeRepresentContainer>
+        );
+    }
+
   const navigate = useNavigate();
 
   return (
@@ -26,34 +54,6 @@ const HomePage = () => {
       </WrapperInner>
     </Wrapper>
   );
-
-  function renderItems() {
-      const renderIcons = (category: homeCategoryType) => (
-          <S.HomeIconContainer key={category.id} onClick={() => navigate(`/${category.route}`)}>
-              <S.HomeCategoryIcon src={category.src}/>
-              <S.HomeTextContainer>{category.descriptSummary}</S.HomeTextContainer>
-          </S.HomeIconContainer>
-      );
-
-      const renderPartitions = () => {
-          const partitions = [];
-          for (let i = 0; i < category.length; i += 2) {
-              partitions.push(
-                  <S.HomeContainerPartition key={i}>
-                      {renderIcons(category[i])}
-                      {renderIcons(category[i + 1])}
-                  </S.HomeContainerPartition>
-              );
-          }
-          return partitions;
-      };
-
-      return (
-          <S.HomeRepresentContainer>
-              {renderPartitions()}
-          </S.HomeRepresentContainer>
-      );
-  }
 
 };
 

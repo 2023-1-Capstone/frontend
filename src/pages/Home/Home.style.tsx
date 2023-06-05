@@ -139,9 +139,8 @@ const HomeRepresentContainer = styled.div`
   align-items: center;
   width: 30rem;
   height: 30rem;
-  gap: 2rem;
+  gap: 0.5rem;
   border-radius: 1.5rem;
-  background-color: white; // 임시
 `;
 
 const HomeContainerPartition = styled.div`
@@ -154,11 +153,20 @@ const HomeContainerPartition = styled.div`
   border-radius: 1.5rem;
 `;
 
-const HomeIconContainer = styled.div`
+const HomeIconContainer = styled.div<{corner: number}>`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: white;
+  border-radius: ${props => {
+    switch (props.corner) {
+      case 0: return '20px 0 0 0';
+      case 1: return '0 20px 0 0';
+      case 2: return '0 0 0 20px';
+      case 3: return '0 0 20px 0';
+    }
+  }};
   
   width: 14rem;
   height: 14rem;
@@ -168,9 +176,6 @@ const HomeIconContainer = styled.div`
   &:hover{
     & > img{
       transform: scale(1.1);
-    }
-    & > div{
-      visibility: visible;
     }
   }
 `;
@@ -183,8 +188,12 @@ const HomeTextContainer = styled.div`
 const HomeMascotAndText = styled.div`
   display: flex;
   flex-direction: row;
-  
 `;
+
+/*const HomeCategoryIconWrapper = styled.div`
+  background-color: white;
+  border-radius: ${props => props.idx === 1 ?};
+`;*/
 
 export {
   HomeCategoryList,
@@ -200,4 +209,5 @@ export {
   HomeIconContainer,
   HomeTextContainer,
   HomeMascotAndText,
+  //HomeCategoryIconWrapper,
 };
