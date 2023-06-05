@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Wrapper, WrapperInner } from '../../components/Wrapper/Wrapper.style';
-import Header from '../../components/Header/Header';
-import NavigationBar from '../../components/NavigationBar/NavigationBar';
+import { WrapperInner } from '../../components/Wrapper/Wrapper.style';
 import * as S from './BuildingElectricity.style';
 import { Chart as ChartJS, Tooltip, Legend } from 'chart.js/auto';
 import { Bar } from 'react-chartjs-2';
@@ -70,9 +68,7 @@ const BuildingElectricity = () => {
     //   backgroundColor: ['rgb(75, 192, 192)'],
 
     chartStateCopy.datasets[0].backgroundColor = target.map((data: any) => {
-      console.log(data);
-
-      if (data.prediction && data?.data > data?.prediction) return 'red';
+      if (data.prediction && data?.data > data?.prediction) return '#ff6666';
       if (data.data) return 'rgb(91,125,177,0.9)';
       else return 'rgb(0,0,0,0.1)';
     });
