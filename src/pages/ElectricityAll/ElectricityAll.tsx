@@ -50,15 +50,11 @@ const ElectricityAll = () => {
     else setIsRightDropDownOn(true);
   };
 
-  const getBackgroundColor = (elecInfo: chartInfoType[]) => {
-    return elecInfo
-      ?.filter(
-        (item: chartInfoType) => item.year === parseInt(rightCategory)
-      )[0]
-      .usages.map((item: chartInfoUsageType) => {
-        if (item?.data) return 'rgb(91,125,177,0.9)';
-        return 'rgb(0,0,0,0.1)';
-      });
+  const getBackgroundColor = (elecInfo: any) => {
+    return elecInfo?.map((item: any) => {
+      if (item?.usages) return 'rgb(91,125,177,0.9)';
+      return 'rgb(0,0,0,0.1)';
+    });
   };
 
   const findTargetData = (curYear: string, info: any) => {
@@ -75,11 +71,17 @@ const ElectricityAll = () => {
     )?.feeResponses;
     const chartStateCopy = JSON.parse(JSON.stringify(chartState));
     chartStateCopy.datasets[0].data = targetData?.map((item: any) =>
-      item?.usages ? item?.usages : 0
+      item?.usages ? item?.usages : item?.prediction
     );
 
+    const backgroundColor = getBackgroundColor(targetData);
+
+    chartStateCopy.datasets[0].backgroundColor = backgroundColor;
+
     chartStateCopy.datasets[1].data = targetData?.map((item: any) =>
-      Math.floor(item?.fee / 10000)
+      item?.fee
+        ? Math.floor(item?.fee / 10000)
+        : Math.floor(item?.fee_prediction / 10000)
     );
 
     setChartState(chartStateCopy);
@@ -101,6 +103,7 @@ const ElectricityAll = () => {
 
   useEffect(() => {
     setMonthChart();
+    console.log(electricityInfo);
     const yearList = electricityInfo?.map((item: any) => item.year).reverse();
     setYearChart();
     setRightDropDown(yearList);
