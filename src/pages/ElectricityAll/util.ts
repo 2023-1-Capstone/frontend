@@ -63,4 +63,24 @@ const createChartCategoryArray = (
   return matchChartCategory;
 };
 
-export { dropdownInfoCreater, createChartCategoryArray, findMostWasteIdx };
+const getBackgroundColor = (elecInfo: any) => {
+  return elecInfo?.map((item: any) => {
+    if (item?.usages) return 'rgba(91,125,177,0.9)';
+    return '#D8D8D8';
+  });
+};
+
+const findTargetData = (curYear: string, info: any) => {
+  const targetData = info?.filter(
+    (item: any) => item.year === parseInt(curYear)
+  )[0];
+  return targetData;
+};
+
+export {
+  dropdownInfoCreater,
+  createChartCategoryArray,
+  findMostWasteIdx,
+  getBackgroundColor,
+  findTargetData,
+};
