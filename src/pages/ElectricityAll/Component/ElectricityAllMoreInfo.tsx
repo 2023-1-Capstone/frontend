@@ -13,6 +13,7 @@ import { findMostWasteIdx } from '../../BuildingElectricity/util';
 import { BuildingElectricityPlugin } from '../../../store/chartPlugin';
 import TransItem from '../../Indicate/Component/TrasnItem/TransItem';
 import { SummaryFrame, Li } from '../../../components/Summary/Summary.style';
+import { getBackgroundColor, findTargetData } from '../util';
 
 ChartJS.register(Tooltip, Legend, ChartDataLabels);
 
@@ -35,8 +36,14 @@ const MonthlyMoreInfo = ({
   useEffect(() => {
     // 도넛 차트에 물 정보 세팅
     const chartStateCopy = JSON.parse(JSON.stringify(chartData));
+    const targetData = findTargetData(curYear, elecInfo)?.feeResponses;
+    const validColor = doughnutColor.map((color: string, idx: number) => {
+      if (targetData && targetData[idx]?.usages) return color;
+      return 'rgb(0,0,0,0.1)';
+    });
     chartStateCopy.datasets[0].data = chartState.datasets[0].data;
-    chartStateCopy.datasets[0].borderColor = doughnutColor;
+    chartStateCopy.datasets[0].backgroundColor = validColor;
+    chartStateCopy.datasets[0].borderColor = validColor;
     chartStateCopy.labels = monthCategory.map((item: any) => item + '월');
 
     //총 사용량 prediction이 들어오면 가스와 함께 수정 해줘야한다.
