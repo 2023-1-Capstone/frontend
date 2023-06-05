@@ -11,7 +11,7 @@ import api from '../../api/api';
 import {
   monthlyInitData,
   optionsGasAll,
-  monthlyInitWaterData,
+  monthlyInitAllData,
   yearCategory,
 } from '../../store/store';
 import WaterMoreInfo from './Component/GasAllMoreInfo';
@@ -22,7 +22,7 @@ const waterCategory = ['월별 가스 사용량', '연간 가스 사용량'];
 ChartJS.register(Tooltip, Legend);
 
 const GasAll = () => {
-  const [chartState, setChartState] = useState(monthlyInitWaterData);
+  const [chartState, setChartState] = useState(monthlyInitAllData);
   const [yearChartState, setYearChartState] = useState(monthlyInitData);
   const [chartCategory, setChartCategory] =
     useState<string>('월별 가스 사용량');
@@ -49,15 +49,15 @@ const GasAll = () => {
   const setMonthChart = () => {
     const targetData = findTargetData(rightCategory, gasInfo)?.feeResponses;
     const chartStateCopy = JSON.parse(JSON.stringify(chartState));
-    chartStateCopy.datasets[0].data = targetData?.map((item: any) =>
+    chartStateCopy.datasets[1].data = targetData?.map((item: any) =>
       item?.usages ? item?.usages : item?.prediction
     );
 
     const backgroundColor = getBackgroundColor(targetData);
 
-    chartStateCopy.datasets[0].backgroundColor = backgroundColor;
     chartStateCopy.datasets[1].backgroundColor = backgroundColor;
-    chartStateCopy.datasets[1].data = targetData?.map((item: any) =>
+    chartStateCopy.datasets[0].backgroundColor = backgroundColor;
+    chartStateCopy.datasets[0].data = targetData?.map((item: any) =>
       item?.fee
         ? Math.floor(item?.fee / 10000)
         : Math.floor(item?.fee_prediction / 10000)

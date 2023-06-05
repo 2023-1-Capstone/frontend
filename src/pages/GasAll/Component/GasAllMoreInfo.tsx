@@ -35,7 +35,7 @@ const MonthlyMoreInfo = ({
   useEffect(() => {
     // 도넛 차트에 물 정보 세팅
     const chartStateCopy = JSON.parse(JSON.stringify(chartData));
-    chartStateCopy.datasets[0].data = chartState.datasets[0].data;
+    chartStateCopy.datasets[0].data = chartState.datasets[1].data;
     chartStateCopy.datasets[0].borderColor = doughnutColor;
     chartStateCopy.labels = monthCategory.map((item: any) => item + '월');
 
