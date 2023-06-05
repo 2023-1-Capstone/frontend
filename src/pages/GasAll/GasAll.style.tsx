@@ -13,10 +13,10 @@ const Container = styled.div`
 `;
 
 const ChartContainer = styled.div`
-  width: 35rem;
+  position: relative;
+  width: 36rem;
   left: 50%;
   transform: translateX(-50%);
-  position: relative;
   margin-bottom: 3px;
 `;
 

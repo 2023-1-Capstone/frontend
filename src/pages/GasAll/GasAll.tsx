@@ -106,7 +106,7 @@ const GasAll = () => {
           <S.ChartContainer>
             <Bar
               width="350"
-              height="250"
+              height="300"
               data={chartState}
               options={optionsGasAll}
             ></Bar>

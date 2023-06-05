@@ -49,8 +49,9 @@ const MonthlyMoreInfo = ({
     console.log(targetData);
 
     //총 사용량 prediction이 들어오면 가스와 함께 수정 해줘야한다.
-    const totalGasWaste = chartStateCopy?.datasets[1]?.data?.reduce(
-      (acc: number, cur: number) => acc + cur,
+    const totalGasWaste = targetData?.reduce(
+      (acc: any, cur: any) =>
+        cur?.usages ? acc + cur?.usages : acc + cur?.prediction,
       0
     );
 

@@ -52,15 +52,15 @@ const ElectricityAll = () => {
       electricityInfo
     )?.feeResponses;
     const chartStateCopy = JSON.parse(JSON.stringify(chartState));
-    chartStateCopy.datasets[0].data = targetData?.map((item: any) =>
+    chartStateCopy.datasets[1].data = targetData?.map((item: any) =>
       item?.usages ? item?.usages : item?.prediction
     );
 
     const backgroundColor = getBackgroundColor(targetData);
 
-    chartStateCopy.datasets[0].backgroundColor = backgroundColor;
     chartStateCopy.datasets[1].backgroundColor = backgroundColor;
-    chartStateCopy.datasets[1].data = targetData?.map((item: any) =>
+    chartStateCopy.datasets[0].backgroundColor = backgroundColor;
+    chartStateCopy.datasets[0].data = targetData?.map((item: any) =>
       item?.fee
         ? Math.floor(item?.fee / 10000)
         : Math.floor(item?.fee_prediction / 10000)

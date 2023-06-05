@@ -13,7 +13,7 @@ import { findMostWasteIdx } from '../../BuildingElectricity/util';
 import { BuildingElectricityPlugin } from '../../../store/chartPlugin';
 import TransItem from '../../Indicate/Component/TrasnItem/TransItem';
 import { SummaryFrame, Li } from '../../../components/Summary/Summary.style';
-import { getBackgroundColor, findTargetData } from '../util';
+import { findTargetData } from '../util';
 
 ChartJS.register(Tooltip, Legend, ChartDataLabels);
 
@@ -41,21 +41,22 @@ const MonthlyMoreInfo = ({
       if (targetData && targetData[idx]?.usages) return color;
       return 'rgb(0,0,0,0.1)';
     });
-    chartStateCopy.datasets[0].data = chartState.datasets[0].data;
+    chartStateCopy.datasets[0].data = chartState.datasets[1].data;
     chartStateCopy.datasets[0].backgroundColor = validColor;
     chartStateCopy.datasets[0].borderColor = validColor;
     chartStateCopy.labels = monthCategory.map((item: any) => item + '월');
 
     //총 사용량 prediction이 들어오면 가스와 함께 수정 해줘야한다.
-    const totalWattWaste = chartStateCopy?.datasets[0].data?.reduce(
-      (acc: number, cur: number) => acc + cur,
+    const totalWattWaste = targetData?.reduce(
+      (acc: any, cur: any) =>
+        cur?.usages ? acc + cur?.usages : acc + cur?.prediction,
       0
     );
 
     /**
      * 총 요금 사용량 prediction이 들어오면 수정 해줘야한다.
      */
-    const totalFee = chartState?.datasets[1].data?.reduce(
+    const totalFee = chartState?.datasets[0].data?.reduce(
       (acc: number, cur: number) => {
         if (cur) return acc + cur;
         return acc;
