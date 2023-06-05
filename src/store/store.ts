@@ -108,6 +108,7 @@ const monthlyInitWaterData: any = {
       yAxisID: 'y-left',
       maxBarThickness: 35,
       borderRadius: 3,
+      label: '사용량',
       data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     },
     {
@@ -117,7 +118,16 @@ const monthlyInitWaterData: any = {
       borderColor: ['#9BA4B5'],
       maxBarThickness: 35,
       borderRadius: 3,
+      borderWidth: 1,
+      label: '요금',
       data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    },
+    {
+      type: 'pie',
+      yAxisID: 'y-left',
+      backgroundColor: ['#D8D8D8'],
+      borderColor: ['#D8D8D8'],
+      label: '예측값',
     },
   ],
 };
@@ -345,7 +355,45 @@ const optionsWater: any = {
       display: false,
     },
     legend: {
-      display: false,
+      display: true,
+      onClick: (click: any, legendItem: any, legend: any) => {
+        const datasets = legend.legendItems.map(
+          (dataset: any, index: number) => {
+            return dataset.text;
+          }
+        );
+
+        const index = datasets.indexOf(legendItem.text);
+        if (legend.chart.isDatasetVisible(index) === true)
+          legend.chart.hide(index);
+        else legend.chart.show(index);
+      },
+      labels: {
+        usePointStyle: true,
+        generateLabels: function (chart: any) {
+          let visibility: any = [];
+          for (let i = 0; i < chart.data.datasets.length; i++) {
+            if (chart.isDatasetVisible(i) === true) visibility.push(false);
+            else visibility.push(true);
+          }
+
+          let pointStyle: any = [];
+          chart.data.datasets.forEach((dataset: any) => {
+            if (dataset.type === 'line') pointStyle.push('line');
+            else pointStyle.push('rect');
+          });
+
+          return chart.data.datasets.map((dataset: any, idx: number) => ({
+            text: dataset.label,
+            fillStyle: dataset.backgroundColor
+              ? dataset?.backgroundColor[0]
+              : null,
+            strokeStyle: dataset.borderColor,
+            pointStyle: pointStyle[idx],
+            hidden: visibility[idx],
+          }));
+        },
+      },
     },
     tooltip: {
       callbacks: {
