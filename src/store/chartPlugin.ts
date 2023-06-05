@@ -41,9 +41,10 @@ const BuildingElectricityPlugin = {
     } = chart;
 
     let total = 0;
-
     chart.data.datasets.forEach((dataset: any, idx: number) => {
-      total = dataset.data?.reduce((acc: number, cur: number) => acc + cur, 0);
+      total = dataset.data?.reduce((acc: number, cur: number) => {
+        return acc + cur;
+      }, 0);
     });
 
     ctx.save();

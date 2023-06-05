@@ -24,7 +24,7 @@ const createChartCategoryArray = (
   chart: chartInfoType[],
   monthCategory: any
 ) => {
-  const yearData = chart.map((item: chartInfoType) => item.year);
+  const yearData = chart.map((item: chartInfoType) => item.year).reverse();
   const yearLabel = yearData.map((year: any) => year.toString());
   const yearTotalWaste = chart.map((item: chartInfoType) =>
     item.usages.reduce((acc: any, cur: any) => {
@@ -42,7 +42,7 @@ const createChartCategoryArray = (
   });
 
   const matchChartCategory: any = {
-    '월별 가스 사용량': ['2023', yearData.reverse(), monthLabel],
+    '월별 가스 사용량': ['2023', yearData, monthLabel],
     '연별 가스 사용량': [
       null,
       null,

@@ -8,27 +8,21 @@ import Carousel from '../../components/Carousel/Carousel';
 import downArrow from '../../assets/svg/downArrow.svg';
 import { Dropdown } from '../../components/Dropdown/Dropdown';
 import BuildingMoreInfo from '../../components/BuildingMoreInfo/BuildingMoreInfo';
-import {
-  dropdownInfoCreater,
-  createChartCategoryArray,
-  findMostWasteIdx,
-} from './util';
+import { dropdownInfoCreater, createChartCategoryArray } from './util';
 import { chartInfoType, chartInfoUsageType } from '../../type/Types';
 import test from '../../api/test';
 import api from '../../api/api';
-import CategoryNavigation from '../../components/CategoryHeader/CategoryNavigation';
 import {
   monthlyInitData,
   buildingCode,
   electricityChartCategory,
+  optionsBuildingElectricitiy,
   options,
   monthCategory,
   yearCategory,
 } from '../../store/store';
 
 ChartJS.register(Tooltip, Legend);
-
-const arr = ['건물별', '전체', '면적별', '계절별'];
 
 const BuildingElectricity = () => {
   const [selectedBuilding, setSelectedBuilding] = useState<string>('본관');
@@ -133,6 +127,7 @@ const BuildingElectricity = () => {
 
       // 타겟이 예측인지 아닌지 뽑아내서 색깔 변경주기
       chartStateCopy.datasets[0].backgroundColor = target?.map((data: any) => {
+        if (data.prediction && data?.data > data?.prediction) return '#ff6666';
         if (data.data) return 'rgb(91,125,177,0.9)';
         return 'rgb(0,0,0,0.1)';
       });
@@ -195,7 +190,11 @@ const BuildingElectricity = () => {
               width="350"
               height="250"
               data={chartState}
-              options={options}
+              options={
+                chartCategory === '월별 전기 사용량'
+                  ? options
+                  : optionsBuildingElectricitiy
+              }
             ></Bar>
           </S.ChartContainer>
           <S.ChartTitle>

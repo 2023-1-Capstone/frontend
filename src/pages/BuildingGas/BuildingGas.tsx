@@ -1,8 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Wrapper, WrapperInner } from '../../components/Wrapper/Wrapper.style';
-import Header from '../../components/Header/Header';
-import NavigationBar from '../../components/NavigationBar/NavigationBar';
+import { WrapperInner } from '../../components/Wrapper/Wrapper.style';
 import * as S from './BuildingGas.style';
 import { Chart as ChartJS, Tooltip, Legend } from 'chart.js/auto';
 import { Bar } from 'react-chartjs-2';
@@ -18,6 +16,7 @@ import {
   buildingCode,
   gasChartCategory,
   optionsGas,
+  optionsBuildingGas,
   monthCategory,
   yearCategory,
 } from '../../store/store';
@@ -52,14 +51,15 @@ const BuildingGas = () => {
     const chartStateCopy = JSON.parse(JSON.stringify(chartState));
     const target = rData.result[rData.result.length - 1].usages;
     chartStateCopy.datasets[0].data = target.map((data: any) => {
-      if (data.prediction) return data.prediction;
-      return data.data;
+      if (data.data) return data.data;
+      return data.prediction;
     });
     //   backgroundColor: ['rgb(75, 192, 192)'],
     setPredictArray(target);
     chartStateCopy.datasets[0].backgroundColor = rData.result[
       rData.result.length - 1
     ].usages.map((data: any) => {
+      if (data.prediction && data?.data > data?.prediction) return '#ff6666';
       if (data.data) return 'rgb(91,125,177,0.9)';
       return 'rgb(0,0,0,0.1)';
     });
@@ -124,6 +124,7 @@ const BuildingGas = () => {
 
       // 타겟이 예측인지 아닌지 뽑아내서 색깔 변경주기
       chartStateCopy.datasets[0].backgroundColor = target?.map((data: any) => {
+        if (data.prediction && data?.data > data?.prediction) return '#ff6666';
         if (data.data) return 'rgb(91,125,177,0.9)';
         return 'rgb(0,0,0,0.1)';
       });
@@ -187,7 +188,11 @@ const BuildingGas = () => {
               width="350"
               height="250"
               data={chartState}
-              options={optionsGas}
+              options={
+                chartCategory === '월별 가스 사용량'
+                  ? optionsGas
+                  : optionsBuildingGas
+              }
             ></Bar>
           </S.ChartContainer>
           <S.ChartTitle>

@@ -3,7 +3,10 @@ import { useState } from 'react';
 import { WrapperInner } from '../../../../components/Wrapper/Wrapper.style';
 import { Chart as ChartJS, Tooltip, Legend } from 'chart.js/auto';
 import { Bar } from 'react-chartjs-2';
-import { optionsCarbonAll, monthlyInitData } from '../../../../store/store';
+import {
+  optionsCarbonAll,
+  monthlyInitDataCarbonAll,
+} from '../../../../store/store';
 import downArrow from '../../../../assets/svg/downArrow.svg';
 import * as S from './CarbonAll.style';
 import { Dropdown } from '../../../../components/Dropdown/Dropdown';
@@ -25,7 +28,7 @@ const CarbonAll = () => {
 
   const [mostWasteSeasonIdx, setMostWasteSeasonIdx] = useState<number>(0);
   const [mostWaste, setMostWaste] = useState<number>(0);
-  const [chartData, setChartData] = useState(monthlyInitData);
+  const [chartData, setChartData] = useState(monthlyInitDataCarbonAll);
   const [isDropdownOn, setIsDropdownOn] = useState<Boolean>(false);
   const [curYear, setCurYear] = useState<string>('2023');
   const [totalCarbon, setTotalCarbon] = useState(0);

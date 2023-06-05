@@ -46,31 +46,28 @@ const MonthlyMoreInfo = ({
     let count = 0;
     return (
       arr?.reduce((acc: any, cur: any) => {
-        if (cur?.fee) {
-          count++;
-          return acc + cur.fee / (cur.usages * 1000);
-        }
-        return acc;
+        count++;
+        return cur?.fee
+          ? acc + cur.fee / cur.usages
+          : acc + cur.fee_prediction / cur.prediction;
       }, 0) / count
     );
   };
 
   useEffect(() => {
     if (chartState) {
-      const chartStateCopy = JSON.parse(JSON.stringify(chartState));
+      const chartStateCopy = JSON.parse(JSON.stringify(chartData));
       const validColor = doughnutColor.map((color: string, idx: number) => {
         if (predictArray && predictArray[idx]?.data) return color;
         return 'rgb(0,0,0,0.1)';
       });
+      chartStateCopy.datasets[0].data = chartState.datasets[0].data;
       chartStateCopy.datasets[0].backgroundColor = validColor;
       chartStateCopy.datasets[0].borderColor = validColor;
       chartStateCopy.labels = monthCategory.map((item: any) => item + '월');
       const usageArr = chartStateCopy.datasets[0].data;
       const mostWasteMonth = findMostWasteIdx(usageArr) + 1;
-      const totalWatt = usageArr?.reduce(
-        (acc: any, cur: any) => acc + cur * 1000,
-        0
-      );
+      const totalGas = usageArr?.reduce((acc: any, cur: any) => acc + cur, 0);
 
       const targetFeeData = feeData?.filter(
         (item: any) => item.year === parseInt(curYear)
@@ -78,7 +75,7 @@ const MonthlyMoreInfo = ({
 
       setMoreInfo({
         ...moreInfo,
-        totalWatt: totalWatt,
+        totalWatt: totalGas,
         mostWasteMonth: `${mostWasteMonth}월`,
         averageFee: getAverageFee(targetFeeData),
       });

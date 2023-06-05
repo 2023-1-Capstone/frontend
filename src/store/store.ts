@@ -62,9 +62,40 @@ const monthlyInitData: any = {
   datasets: [
     {
       backgroundColor: ['#6E85B7'],
+      borderColor: ['#6E85B7'],
       maxBarThickness: 35,
       borderRadius: 3,
       data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      label: '사용량',
+    },
+
+    {
+      type: 'pie',
+      backgroundColor: ['#D8D8D8'],
+      borderColor: ['#D8D8D8'],
+      label: '예측값',
+    },
+    {
+      backgroundColor: ['#ff6666'],
+      borderColor: ['#ff6666'],
+      type: 'pie',
+      maxBarThickness: 35,
+      borderRadius: 3,
+      label: '실사용 > 예측',
+    },
+  ],
+};
+
+const monthlyInitDataCarbonAll: any = {
+  labels: monthCategory,
+  datasets: [
+    {
+      backgroundColor: ['#6E85B7'],
+      borderColor: ['#6E85B7'],
+      maxBarThickness: 35,
+      borderRadius: 3,
+      data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      label: '사용량',
     },
   ],
 };
@@ -533,6 +564,79 @@ const options: any = {
     datalabels: {
       display: false,
     },
+
+    legend: {
+      display: true,
+      onClick: (click: any, legendItem: any, legend: any) => {
+        const datasets = legend.legendItems.map(
+          (dataset: any, index: number) => {
+            return dataset.text;
+          }
+        );
+
+        const index = datasets.indexOf(legendItem.text);
+        if (legend.chart.isDatasetVisible(index) === true)
+          legend.chart.hide(index);
+        else legend.chart.show(index);
+      },
+      labels: {
+        usePointStyle: true,
+        generateLabels: function (chart: any) {
+          let visibility: any = [];
+          for (let i = 0; i < chart.data.datasets.length; i++) {
+            if (chart.isDatasetVisible(i) === true) visibility.push(false);
+            else visibility.push(true);
+          }
+
+          let pointStyle: any = [];
+          chart.data.datasets.forEach((dataset: any) => {
+            if (dataset.type === 'line') pointStyle.push('line');
+            else pointStyle.push('rect');
+          });
+
+          return chart.data.datasets.map((dataset: any, idx: number) => ({
+            text: dataset.label,
+            fillStyle: dataset.backgroundColor
+              ? dataset?.backgroundColor[0]
+              : null,
+            strokeStyle: dataset.borderColor,
+            pointStyle: pointStyle[idx],
+            hidden: visibility[idx],
+          }));
+        },
+      },
+    },
+
+    tooltip: {
+      callbacks: {
+        title: (context: any) => context[0].label + '월',
+        label: (context: any) => {
+          let label = context.dataset.label + '' || '';
+          return context.parsed.y !== null ? context.parsed.y + 'Mwh' : null;
+        },
+      },
+    },
+  },
+  scales: {
+    x: {
+      grid: {
+        display: false,
+      },
+    },
+    y: {
+      grid: {
+        display: false,
+      },
+    },
+  },
+};
+
+const optionsBuildingElectricitiy: any = {
+  reponsive: false,
+  plugins: {
+    datalabels: {
+      display: false,
+    },
     legend: {
       display: false,
     },
@@ -541,7 +645,44 @@ const options: any = {
         title: (context: any) => context[0].label + '월',
         label: (context: any) => {
           let label = context.dataset.label + '' || '';
-          return context.parsed.y !== null ? context.parsed.y + 'Mwh' : null;
+          return context.parsed.y !== null
+            ? context.parsed.y.toLocaleString('ko-KR') + 'Mwh'
+            : null;
+        },
+      },
+    },
+  },
+  scales: {
+    x: {
+      grid: {
+        display: false,
+      },
+    },
+    y: {
+      grid: {
+        display: false,
+      },
+    },
+  },
+};
+
+const optionsBuildingGas: any = {
+  reponsive: false,
+  plugins: {
+    datalabels: {
+      display: false,
+    },
+    legend: {
+      display: false,
+    },
+    tooltip: {
+      callbacks: {
+        title: (context: any) => context[0].label + '월',
+        label: (context: any) => {
+          let label = context.dataset.label + '' || '';
+          return context.parsed.y !== null
+            ? context.parsed.y.toLocaleString('ko-KR') + 'm3'
+            : null;
         },
       },
     },
@@ -603,10 +744,6 @@ const optionsDoughnut: any = {
   },
   cutout: '65%',
   plugins: {
-    title: {
-      display: false,
-      text: '월별 에너지 사용량 비율',
-    },
     tooltips: {
       callbacks: {
         title: (context: any) => context[0].label + '월',
@@ -787,8 +924,47 @@ const optionsGas: any = {
       display: false,
     },
     legend: {
-      display: false,
+      display: true,
+      onClick: (click: any, legendItem: any, legend: any) => {
+        const datasets = legend.legendItems.map(
+          (dataset: any, index: number) => {
+            return dataset.text;
+          }
+        );
+
+        const index = datasets.indexOf(legendItem.text);
+        if (legend.chart.isDatasetVisible(index) === true)
+          legend.chart.hide(index);
+        else legend.chart.show(index);
+      },
+      labels: {
+        usePointStyle: true,
+        generateLabels: function (chart: any) {
+          let visibility: any = [];
+          for (let i = 0; i < chart.data.datasets.length; i++) {
+            if (chart.isDatasetVisible(i) === true) visibility.push(false);
+            else visibility.push(true);
+          }
+
+          let pointStyle: any = [];
+          chart.data.datasets.forEach((dataset: any) => {
+            if (dataset.type === 'line') pointStyle.push('line');
+            else pointStyle.push('rect');
+          });
+
+          return chart.data.datasets.map((dataset: any, idx: number) => ({
+            text: dataset.label,
+            fillStyle: dataset.backgroundColor
+              ? dataset?.backgroundColor[0]
+              : null,
+            strokeStyle: dataset.borderColor,
+            pointStyle: pointStyle[idx],
+            hidden: visibility[idx],
+          }));
+        },
+      },
     },
+
     tooltip: {
       callbacks: {
         title: (context: any) => context[0].label + '월',
@@ -1111,4 +1287,7 @@ export {
   optionsElectricityAll,
   optionsGasAll,
   monthlyInitAllData,
+  optionsBuildingElectricitiy,
+  monthlyInitDataCarbonAll,
+  optionsBuildingGas,
 };
