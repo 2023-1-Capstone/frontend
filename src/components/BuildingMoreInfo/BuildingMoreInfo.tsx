@@ -13,6 +13,8 @@ import { useQuery } from '@tanstack/react-query';
 import api from '../../api/api';
 import { findMostWasteIdx } from '../../pages/BuildingElectricity/util';
 import { BuildingElectricityPlugin } from '../../store/chartPlugin';
+import { determineTrend, calculateMovingAverage } from './util';
+import { SummaryFrame, Li } from '../Summary/Summary.style';
 
 ChartJS.register(Tooltip, Legend, ChartDataLabels);
 
@@ -86,7 +88,7 @@ const MonthlyMoreInfo = ({
   }, [chartState, feeData]);
 
   return (
-    <S.BuildingMoreInfoFrame>
+    <S.BuildingMoreInfoFrame size={50}>
       <S.BuildingMoreInfoTitle>요약 정보</S.BuildingMoreInfoTitle>
       <S.ChartIndicatorLine></S.ChartIndicatorLine>
       <S.Container>
@@ -124,6 +126,53 @@ const MonthlyMoreInfo = ({
   );
 };
 
+const YearlyMoreInfo = ({ chartState }: { chartState: any }) => {
+  const [usageTrend, setUsageTrend] = useState('');
+  const [ratio, setRatio] = useState(0);
+  const [feeRatio, setFeeRatio] = useState(0);
+  useEffect(() => {
+    const data: number[] = chartState.datasets[0].data;
+    const windowSize: number = 2; // 이동 평균 계산을 위한 윈도우 크기 설정
+    const movingAverages: number[] = calculateMovingAverage(data, windowSize);
+    const curYearRatio = (data[data.length - 1] / data[data.length - 2]) * 100;
+
+    const trend: string = determineTrend(movingAverages);
+    setUsageTrend(trend);
+    setFeeRatio(Math.abs(data[data.length - 1] - data[data.length - 2]));
+    setRatio(curYearRatio);
+  }, [chartState]);
+
+  return (
+    <S.BuildingMoreInfoFrame size={22}>
+      <S.BuildingMoreInfoTitle>요약 정보</S.BuildingMoreInfoTitle>
+      <S.ChartIndicatorLine></S.ChartIndicatorLine>
+      <S.BottomTitle>최근 동향 - '{usageTrend}'</S.BottomTitle>
+      <SummaryFrame>
+        <Li>
+          최근 3년 동안 해당 건물의 에너지 소비량이 {usageTrend}를 보이고
+          있습니다.
+        </Li>
+        <Li>
+          전년도 대비 에너지 사용량이{' '}
+          {ratio - 100 < 0
+            ? `${Math.abs(ratio - 100).toFixed(2)}% 감소 할 것으로 예상됩니다.`
+            : `${Math.abs(ratio - 100).toFixed(2)}% 증가 할 것으로 예상됩니다.`}
+        </Li>
+        <Li>
+          {' '}
+          {ratio - 100 < 0
+            ? `사용요금이 ${(feeRatio * 1000 * 120).toLocaleString(
+                'ko-KR'
+              )}원 감소 할 것으로 예상됩니다.`
+            : `사용요금이 ${(feeRatio * 1000 * 120).toLocaleString(
+                'ko-KR'
+              )}원 증가 할 것으로 예상됩니다.`}
+        </Li>
+      </SummaryFrame>
+    </S.BuildingMoreInfoFrame>
+  );
+};
+
 const BuildingMoreInfo = ({
   categoryState,
   chartState,
@@ -143,7 +192,8 @@ const BuildingMoreInfo = ({
         predictArray={predictArray}
       ></MonthlyMoreInfo>
     );
-  }
+  } else if (categoryState === '연별 전기 사용량')
+    return <YearlyMoreInfo chartState={chartState}></YearlyMoreInfo>;
   return <></>;
 };
 
