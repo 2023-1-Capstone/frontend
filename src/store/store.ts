@@ -95,14 +95,6 @@ const monthlyInitAllData: any = {
   labels: monthCategory,
   datasets: [
     {
-      backgroundColor: ['#6E85B7'],
-      yAxisID: 'y-left',
-      maxBarThickness: 35,
-      borderRadius: 3,
-      data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-      label: '사용량',
-    },
-    {
       type: 'line',
       yAxisID: 'y-right',
       backgroundColor: ['#FFFFFF'],
@@ -113,6 +105,15 @@ const monthlyInitAllData: any = {
       data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
       label: '요금',
     },
+    {
+      backgroundColor: ['#6E85B7'],
+      yAxisID: 'y-left',
+      maxBarThickness: 35,
+      borderRadius: 3,
+      data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      label: '사용량',
+    },
+
     {
       type: 'pie',
       yAxisID: 'y-left',
@@ -373,7 +374,6 @@ const optionsElectricityAll: any = {
 
           let pointStyle: any = [];
           chart.data.datasets.forEach((dataset: any) => {
-            console.log(dataset.backgroundColor);
             if (dataset.type === 'line') pointStyle.push('line');
             else pointStyle.push('rect');
           });
@@ -395,7 +395,7 @@ const optionsElectricityAll: any = {
         title: (context: any) => context[0].label + '월',
         label: (context: any) => {
           let targetLabel = '';
-          if (context.datasetIndex === 0)
+          if (context.datasetIndex === 1)
             targetLabel = context.parsed.y.toLocaleString('ko-KR') + 'Mwh';
           else targetLabel = context.parsed.y.toLocaleString('ko-KR') + '만원';
           let label = context.dataset.label + '' || '';
@@ -435,14 +435,52 @@ const optionsGasAll: any = {
       display: false,
     },
     legend: {
-      display: false,
+      display: true,
+      onClick: (click: any, legendItem: any, legend: any) => {
+        const datasets = legend.legendItems.map(
+          (dataset: any, index: number) => {
+            return dataset.text;
+          }
+        );
+
+        const index = datasets.indexOf(legendItem.text);
+        if (legend.chart.isDatasetVisible(index) === true)
+          legend.chart.hide(index);
+        else legend.chart.show(index);
+      },
+      labels: {
+        usePointStyle: true,
+        generateLabels: function (chart: any) {
+          let visibility: any = [];
+          for (let i = 0; i < chart.data.datasets.length; i++) {
+            if (chart.isDatasetVisible(i) === true) visibility.push(false);
+            else visibility.push(true);
+          }
+
+          let pointStyle: any = [];
+          chart.data.datasets.forEach((dataset: any) => {
+            if (dataset.type === 'line') pointStyle.push('line');
+            else pointStyle.push('rect');
+          });
+
+          return chart.data.datasets.map((dataset: any, idx: number) => ({
+            text: dataset.label,
+            fillStyle: dataset.backgroundColor
+              ? dataset?.backgroundColor[0]
+              : null,
+            strokeStyle: dataset.borderColor,
+            pointStyle: pointStyle[idx],
+            hidden: visibility[idx],
+          }));
+        },
+      },
     },
     tooltip: {
       callbacks: {
         title: (context: any) => context[0].label + '월',
         label: (context: any) => {
           let targetLabel = '';
-          if (context.datasetIndex === 0)
+          if (context.datasetIndex === 1)
             targetLabel = context.parsed.y.toLocaleString('ko-KR') + 'm3';
           else targetLabel = context.parsed.y.toLocaleString('ko-KR') + '만원';
           let label = context.dataset.label + '' || '';
@@ -460,7 +498,7 @@ const optionsGasAll: any = {
     'y-left': {
       type: 'linear',
       position: 'left',
-      grace: '200%',
+      grace: '100%',
       grid: {
         display: false,
       },
@@ -468,6 +506,7 @@ const optionsGasAll: any = {
     'y-right': {
       type: 'linear',
       position: 'right',
+      grace: '50',
       grid: {
         display: false,
       },
