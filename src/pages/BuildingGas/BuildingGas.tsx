@@ -25,7 +25,7 @@ import BuildingMoreInfoGas from '../../components/BuildingMoreInfo/BuildingMoreI
 
 ChartJS.register(Tooltip, Legend);
 
-const BuildingElectricity = () => {
+const BuildingGas = () => {
   const [selectedBuilding, setSelectedBuilding] = useState<string>('본관');
   const [chartData, setChartData] = useState<chartInfoType[]>([]);
   const [chartState, setChartState] = useState(monthlyInitData);
@@ -38,7 +38,7 @@ const BuildingElectricity = () => {
   const { data: buildingInfo } = useQuery(['getBuildingInfo'], () =>
     api('/api/buildings')
   );
-
+  const [predictArray, setPredictArray] = useState<any>([]);
   /**
    * API 호출이 들어가야 할 부분
    * @param selectedBuilding
@@ -50,14 +50,13 @@ const BuildingElectricity = () => {
     setChartData(rData?.result);
     // 깊은 복사를 하지 않으면 chartJS서 변동 감지를 못함 JSON.parse, JSON.stringify로 깊은 복사
     const chartStateCopy = JSON.parse(JSON.stringify(chartState));
-    chartStateCopy.datasets[0].data = rData.result[
-      rData.result.length - 1
-    ].usages.map((data: any) => {
+    const target = rData.result[rData.result.length - 1].usages;
+    chartStateCopy.datasets[0].data = target.map((data: any) => {
       if (data.prediction) return data.prediction;
       return data.data;
     });
     //   backgroundColor: ['rgb(75, 192, 192)'],
-
+    setPredictArray(target);
     chartStateCopy.datasets[0].backgroundColor = rData.result[
       rData.result.length - 1
     ].usages.map((data: any) => {
@@ -65,9 +64,11 @@ const BuildingElectricity = () => {
       return 'rgb(0,0,0,0.1)';
     });
 
-    const years = rData.result.map((val: any) => {
-      return val.year;
-    });
+    const years = rData.result
+      .map((val: any) => {
+        return val.year;
+      })
+      .reverse();
 
     chartStateCopy.labels = monthCategory;
 
@@ -115,7 +116,7 @@ const BuildingElectricity = () => {
       const target = chartData.filter(
         (val: any) => val.year == rightCategory
       )[0]?.usages;
-
+      setPredictArray(target);
       // 타겟의 데이터 뽑아내기
       chartStateCopy.datasets[0].data = target?.map((val: chartInfoUsageType) =>
         val.data ? val.data : val.prediction
@@ -155,81 +156,90 @@ const BuildingElectricity = () => {
   useEffect(setChartByDropdown, [rightCategory]);
 
   return (
-    <Wrapper
+    <WrapperInner
       onClick={(e: React.MouseEvent<HTMLDivElement>) => {
         setIsLeftDropDownOn(false);
         setIsRightDropDownOn(false);
       }}
     >
-      <Header></Header>
-      <WrapperInner>
-        <S.BuildingTitle>건물별 가스에너지를 확인해보세요!</S.BuildingTitle>
-        <S.BuildingElectricityInner>
-          <S.CarouselFrame>
-            <Carousel
-              buildingList={buildingInfo?.data.result}
-              setSelectedBuilding={setSelectedBuilding}
-            ></Carousel>
-          </S.CarouselFrame>
+      <S.BuildingTitle>건물별 가스에너지를 확인해보세요!</S.BuildingTitle>
+      <S.BuildingElectricityInner>
+        <S.CarouselFrame>
+          <Carousel
+            buildingList={buildingInfo?.data.result}
+            setSelectedBuilding={setSelectedBuilding}
+          ></Carousel>
+        </S.CarouselFrame>
 
-          <S.Container>
-            <S.ChartTopFrame>
-              <S.ChartCategoryBox onClick={leftDropdownHandler}>
-                {chartCategory} &nbsp;<img src={downArrow}></img>
-              </S.ChartCategoryBox>
-              <S.ChartYearBox onClick={rightDropdownHandler}>
-                {rightCategory}&nbsp;{' '}
-                {rightCategory && <img src={downArrow}></img>}
-              </S.ChartYearBox>
-            </S.ChartTopFrame>
-            <S.ChartChangeFrame></S.ChartChangeFrame>
-            <S.ChartContainer>
-              <Bar
-                width="350"
-                height="250"
-                data={chartState}
-                options={optionsGas}
-              ></Bar>
-            </S.ChartContainer>
-            <S.ChartTitle>{selectedBuilding}</S.ChartTitle>
-          </S.Container>
-          <BuildingMoreInfoGas
-            categoryState={chartCategory}
-            chartState={chartState}
-            curYear={rightCategory}
-          ></BuildingMoreInfoGas>
-          {isLeftDropdownOn && (
-            <Dropdown
-              dropDownInfo={dropdownInfoCreater(
-                '9.6rem',
-                '1.7rem',
-                '25.7rem',
-                'large',
-                gasChartCategory,
-                setChartCategory,
-                setIsLeftDropDownOn
-              )}
-            ></Dropdown>
-          )}
+        <S.Container>
+          <S.ChartTopFrame>
+            <S.ChartCategoryBox onClick={leftDropdownHandler}>
+              {chartCategory} &nbsp;<img src={downArrow}></img>
+            </S.ChartCategoryBox>
+            <S.ChartYearBox onClick={rightDropdownHandler}>
+              {rightCategory}&nbsp;{' '}
+              {rightCategory && <img src={downArrow}></img>}
+            </S.ChartYearBox>
+          </S.ChartTopFrame>
+          <S.ChartChangeFrame></S.ChartChangeFrame>
+          <S.ChartContainer>
+            <Bar
+              width="350"
+              height="250"
+              data={chartState}
+              options={optionsGas}
+            ></Bar>
+          </S.ChartContainer>
+          <S.ChartTitle>
+            {' '}
+            {selectedBuilding}
+            {buildingInfo?.data.result.filter(
+              (item: any) => item.name === selectedBuilding
+            )[0].elecDescription
+              ? `(${
+                  buildingInfo?.data.result.filter(
+                    (item: any) => item.name === selectedBuilding
+                  )[0].elecDescription
+                })`
+              : null}
+          </S.ChartTitle>
+        </S.Container>
+        <BuildingMoreInfoGas
+          categoryState={chartCategory}
+          chartState={chartState}
+          curYear={rightCategory}
+          predictArray={predictArray}
+        ></BuildingMoreInfoGas>
+        {isLeftDropdownOn && (
+          <Dropdown
+            dropDownInfo={dropdownInfoCreater(
+              '9.6rem',
+              '1.7rem',
+              '27.9rem',
+              'large',
+              gasChartCategory,
+              setChartCategory,
+              setIsLeftDropDownOn
+            )}
+          ></Dropdown>
+        )}
 
-          {isRightDropdownOn && (
-            <Dropdown
-              dropDownInfo={dropdownInfoCreater(
-                '9.6rem',
-                '16.2rem',
-                '25.7rem',
-                'middle',
-                rightDropdown,
-                setRightCategory,
-                setIsRightDropDownOn
-              )}
-            ></Dropdown>
-          )}
-        </S.BuildingElectricityInner>
-      </WrapperInner>
-      <NavigationBar navigationStatus="gas"></NavigationBar>
-    </Wrapper>
+        {isRightDropdownOn && (
+          <Dropdown
+            dropDownInfo={dropdownInfoCreater(
+              '9.6rem',
+              '16.2rem',
+              '27.9rem',
+              'middle',
+              rightDropdown,
+              setRightCategory,
+              setIsRightDropDownOn
+            )}
+          ></Dropdown>
+        )}
+      </S.BuildingElectricityInner>
+    </WrapperInner>
   );
 };
 
-export default BuildingElectricity;
+export default BuildingGas;

@@ -1,4 +1,5 @@
 import * as S from './TransItem.style';
+import { useState } from 'react';
 import { stuffPrice } from '../../../../store/store';
 import { getUniqueNumberList } from '../../Season/util';
 import iphone from '../../../../assets/transImage/iphone.jpg';
@@ -14,15 +15,16 @@ import laundryMachine from '../../../../assets/transImage/laundryMachine.svg';
 import refridgerator from '../../../../assets/transImage/refridgerator.svg';
 import americano from '../../../../assets/transImage/americano.svg';
 import water from '../../../../assets/transImage/water.svg';
+import refreshSVG from '../../../../assets/svg/refresh.svg';
 
 const TransItem = ({
   waste,
-  randomIdxList,
   type,
+  curYear,
 }: {
   waste: number;
-  randomIdxList: number[];
   type: string;
+  curYear: any;
 }) => {
   const resource: any = [
     {
@@ -105,8 +107,21 @@ const TransItem = ({
     carbon: carbon,
   };
 
+  const [randomIdxList, setRandomIdxList] = useState<number[]>(
+    getUniqueNumberList(3, 6)
+  );
+
   return (
     <S.BottomInfoTransWrapper>
+      <S.BottomTitle>
+        {type === 'carbon'
+          ? `해당시기 탄소배출량은...`
+          : `${curYear}년 사용 요금은...`}
+        <S.RefreshButton
+          src={refreshSVG}
+          onClick={() => setRandomIdxList(getUniqueNumberList(3, 6))}
+        ></S.RefreshButton>
+      </S.BottomTitle>
       {randomIdxList.map((item: number, idx: number) => {
         return (
           <S.BottomInfoTransItem key={idx}>

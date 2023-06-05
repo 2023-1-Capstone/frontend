@@ -3,7 +3,7 @@ import * as S from './NavigationBar.style';
 import home from '../../assets/svg/home.svg';
 import gas from '../../assets/svg/gas.svg';
 import electricity from '../../assets/svg/eletricity.svg';
-import indicator from '../../assets/svg/indicator.svg';
+import carbonIcon from '../../assets/svg/carbonIcon.svg';
 import waterMaterial from '../../assets/svg/waterMaterial.svg';
 import { navigationItemType } from '../../type/Types';
 import { useNavigate } from 'react-router-dom';
@@ -35,9 +35,9 @@ const SIDEBARITEMS: navigationItemType[] = [
   },
   {
     id: '5',
-    src: indicator,
-    message: '지표',
-    status: 'indicator',
+    src: carbonIcon,
+    message: '탄소',
+    status: 'carbon',
   },
 ];
 

@@ -13,14 +13,18 @@ import api from '../../api/api';
 import { findMostWasteIdx } from '../../pages/BuildingElectricity/util';
 import { BuildingGasPlugin } from '../../store/chartPlugin';
 import { monthCategory } from '../../store/store';
+import { determineTrend, calculateMovingAverage } from './util';
+import { SummaryFrame, Li } from '../Summary/Summary.style';
 ChartJS.register(Tooltip, Legend, ChartDataLabels);
 
 const MonthlyMoreInfo = ({
   chartState,
   curYear,
+  predictArray,
 }: {
   chartState: any;
   curYear: any;
+  predictArray: any;
 }) => {
   const { data: feeData } = useQuery(['getFee'], () =>
     api('/api/gas/fee').then((data: any) => data?.data?.result)
@@ -54,8 +58,12 @@ const MonthlyMoreInfo = ({
   useEffect(() => {
     if (chartState) {
       const chartStateCopy = JSON.parse(JSON.stringify(chartState));
-      chartStateCopy.datasets[0].backgroundColor = doughnutColor;
-      chartStateCopy.datasets[0].borderColor = doughnutColor;
+      const validColor = doughnutColor.map((color: string, idx: number) => {
+        if (predictArray && predictArray[idx]?.data) return color;
+        return 'rgb(0,0,0,0.1)';
+      });
+      chartStateCopy.datasets[0].backgroundColor = validColor;
+      chartStateCopy.datasets[0].borderColor = validColor;
       chartStateCopy.labels = monthCategory.map((item: any) => item + '월');
       const usageArr = chartStateCopy.datasets[0].data;
       const mostWasteMonth = findMostWasteIdx(usageArr) + 1;
@@ -79,7 +87,7 @@ const MonthlyMoreInfo = ({
   }, [chartState, feeData]);
 
   return (
-    <S.BuildingMoreInfoFrame>
+    <S.BuildingMoreInfoFrame size={50}>
       <S.BuildingMoreInfoTitle>요약 정보</S.BuildingMoreInfoTitle>
       <S.ChartIndicatorLine></S.ChartIndicatorLine>
       <S.Container>
@@ -117,23 +125,77 @@ const MonthlyMoreInfo = ({
   );
 };
 
+const YearlyMoreInfo = ({ chartState }: { chartState: any }) => {
+  const [usageTrend, setUsageTrend] = useState('');
+  const [ratio, setRatio] = useState(0);
+  const [feeRatio, setFeeRatio] = useState(0);
+  useEffect(() => {
+    const len = chartState.datasets[0].data.length;
+    const data: number[] = chartState.datasets[0].data;
+    const windowSize: number = 2; // 이동 평균 계산을 위한 윈도우 크기 설정
+    const movingAverages: number[] = calculateMovingAverage(
+      data.slice(len - 4, len - 1),
+      windowSize
+    );
+    const curYearRatio = (data[data.length - 1] / data[data.length - 2]) * 100;
+    const trend: string = determineTrend(movingAverages);
+    setUsageTrend(trend);
+    setFeeRatio(Math.abs(data[data.length - 1] - data[data.length - 2]));
+    setRatio(curYearRatio);
+  }, [chartState]);
+
+  return (
+    <S.BuildingMoreInfoFrame size={22}>
+      <S.BuildingMoreInfoTitle>요약 정보</S.BuildingMoreInfoTitle>
+      <S.ChartIndicatorLine></S.ChartIndicatorLine>
+      <S.BottomTitle>최근 동향 - '{usageTrend}'</S.BottomTitle>
+      <SummaryFrame>
+        <Li>
+          최근 3년 동안 해당 건물의 에너지 소비량이 {usageTrend}를 보이고
+          있습니다.
+        </Li>
+        <Li>
+          전년도 대비 에너지 사용량이{' '}
+          {ratio - 100 < 0
+            ? `${Math.abs(ratio - 100).toFixed(2)}% 감소 할 것으로 예상됩니다.`
+            : `${Math.abs(ratio - 100).toFixed(2)}% 증가 할 것으로 예상됩니다.`}
+        </Li>
+        <Li>
+          {' '}
+          {ratio - 100 < 0
+            ? `사용요금이 ${(feeRatio * 1000 * 120).toLocaleString(
+                'ko-KR'
+              )}원 감소 할 것으로 예상됩니다.`
+            : `사용요금이 ${(feeRatio * 1000 * 120).toLocaleString(
+                'ko-KR'
+              )}원 증가 할 것으로 예상됩니다.`}
+        </Li>
+      </SummaryFrame>
+    </S.BuildingMoreInfoFrame>
+  );
+};
+
 const BuildingMoreInfoGas = ({
   categoryState,
   chartState,
   curYear,
+  predictArray,
 }: {
   categoryState: string;
   chartState: any;
   curYear: any;
+  predictArray: any;
 }) => {
   if (categoryState === '월별 가스 사용량') {
     return (
       <MonthlyMoreInfo
         curYear={curYear}
         chartState={chartState}
+        predictArray={predictArray}
       ></MonthlyMoreInfo>
     );
-  }
+  } else if (categoryState === '연별 가스 사용량')
+    return <YearlyMoreInfo chartState={chartState}></YearlyMoreInfo>;
   return <></>;
 };
 

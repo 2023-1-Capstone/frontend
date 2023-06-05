@@ -4,7 +4,7 @@ const BuildingMoreInfoFrame = styled.div`
   position: relative;
   width: 32.8rem;
   height: 75rem;
-  background: #ffffff;
+  background: #f5f5f5;
   border-radius: 1rem;
   display: flex;
   flex-direction: row;

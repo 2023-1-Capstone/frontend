@@ -22,7 +22,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getBuildingTargetDataElectricity, findMostWasteIdx } from '../util';
 import api from '../../../../api/api';
 import AreaElectricityMoreInfo from './Component/AreaElectricityMoreInfo';
-import informationSVG from "../../../../assets/svg/information.svg";
+import informationSVG from '../../../../assets/svg/information.svg';
 
 ChartJS.register(Tooltip, Legend);
 
@@ -78,116 +78,107 @@ const AreaElectricity = () => {
   }, [curMonth, curYear]);
 
   return (
-    <>
-      <Wrapper
-        onClick={(e: React.MouseEvent<HTMLDivElement>) => {
-          setIsMonthDropdownOn(false);
-          setIsYearDropdownOn(false);
-        }}
-      >
-        <Header></Header>
-        <WrapperInner>
-          <S.SeasonWrapper>
-            <S.SeasonTitle>👑면적당 전기 사용 순위</S.SeasonTitle>
-
-            <S.BuildingInfoFrame modalState={infoModalState}>
-              <S.BuildingInfoNotice>
-                ※ 아래는 전기 사용량에 포함된 건물들 정보에요.
-              </S.BuildingInfoNotice>
-              <S.BuildingInfoItem>
-                <S.BuildingInfoItemTitle>전기사용량⚡</S.BuildingInfoItemTitle>
-                {buildingData?.map((item: any) => {
-                  return (
-                      <>
-                        {item.elecDescription ? (
-                            <S.BuildingInfoItemContent>{`- ${item.name} : ${item.elecDescription}`}</S.BuildingInfoItemContent>
-                        ) : null}
-                      </>
-                  );
-                })}
-              </S.BuildingInfoItem>
-            </S.BuildingInfoFrame>
-            <S.Calculate>
-              건물정보
-              <S.InfoImage
-                  width="20px"
-                  height="20px"
-                  src={informationSVG}
-                  onMouseEnter={() => {
-                    setInfoModalState("visible");
-                  }}
-                  onMouseLeave={() => {
-                    setInfoModalState("hidden");
-                  }}
-              ></S.InfoImage>
-            </S.Calculate>
-
-            <S.Container>
-              <S.ChartChangeFrame>
-                {isYearDropdownOn && (
-                  <Dropdown
-                    dropDownInfo={dropdownInfoCreater(
-                      '10rem',
-                      '20.2rem',
-                      '2.3rem',
-                      'middle',
-                      areaData[0]?.usagesList.map((item: any) => item.year),
-                      setCurYear,
-                      setIsYearDropdownOn
-                    )}
-                  ></Dropdown>
-                )}
-                {isMonthDropdownOn && (
-                  <Dropdown
-                    dropDownInfo={dropdownInfoCreater(
-                      '10rem',
-                      '27.2rem',
-                      '2.3rem',
-                      'middle',
-                      monthCategory,
-                      setCurMonth,
-                      setIsMonthDropdownOn
-                    )}
-                  ></Dropdown>
-                )}
-                <S.ChartTopFrame>
-                  <S.ChartYearBox
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setIsYearDropdownOn(true);
-                    }}
-                  >
-                    {curYear}년 &nbsp;<img src={downArrow}></img>
-                  </S.ChartYearBox>
-                  <S.ChartMonthBox
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setIsMonthDropdownOn(true);
-                    }}
-                  >
-                    {curMonth}월 &nbsp;<img src={downArrow}></img>
-                  </S.ChartMonthBox>
-                </S.ChartTopFrame>
-              </S.ChartChangeFrame>
-                <Bar
-                  data={chartData}
-                  options={optionsArea}
-                  width="270"
-                  height="250"
-                ></Bar>
-            </S.Container>
-            <AreaElectricityMoreInfo
-              chartState={chartData}
-              buildingData={buildingData}
-              areaData={areaData}
-              curYear={curYear}
-              curMonth={curMonth}
-            ></AreaElectricityMoreInfo>
-          </S.SeasonWrapper>
-        </WrapperInner>
-        <NavigationBar navigationStatus="indicator"></NavigationBar>
-      </Wrapper>
-    </>
+    <WrapperInner
+      onClick={(e: React.MouseEvent<HTMLDivElement>) => {
+        setIsMonthDropdownOn(false);
+        setIsYearDropdownOn(false);
+      }}
+    >
+      <S.SeasonWrapper>
+        <S.SeasonTitle>면적당 전기 사용량</S.SeasonTitle>
+        <S.BuildingInfoFrame modalState={infoModalState}>
+          <S.BuildingInfoNotice>
+            ※ 아래는 전기 사용량에 포함된 건물들 정보에요.
+          </S.BuildingInfoNotice>
+          <S.BuildingInfoItem>
+            <S.BuildingInfoItemTitle>전기사용량⚡</S.BuildingInfoItemTitle>
+            {buildingData?.map((item: any) => {
+              return (
+                <>
+                  {item.elecDescription ? (
+                    <S.BuildingInfoItemContent>{`- ${item.name} : ${item.elecDescription}`}</S.BuildingInfoItemContent>
+                  ) : null}
+                </>
+              );
+            })}
+          </S.BuildingInfoItem>
+        </S.BuildingInfoFrame>
+        <S.Calculate>
+          건물정보
+          <S.InfoImage
+            width="20px"
+            height="20px"
+            src={informationSVG}
+            onMouseEnter={() => {
+              setInfoModalState('visible');
+            }}
+            onMouseLeave={() => {
+              setInfoModalState('hidden');
+            }}
+          ></S.InfoImage>
+        </S.Calculate>
+        <S.Container>
+          {isYearDropdownOn && (
+            <Dropdown
+              dropDownInfo={dropdownInfoCreater(
+                '10rem',
+                '0.5rem',
+                '1rem',
+                'middle',
+                areaData[0]?.usagesList.map((item: any) => item.year).reverse(),
+                setCurYear,
+                setIsYearDropdownOn
+              )}
+            ></Dropdown>
+          )}
+          {isMonthDropdownOn && (
+            <Dropdown
+              dropDownInfo={dropdownInfoCreater(
+                '10rem',
+                '8.5rem',
+                '1rem',
+                'small',
+                monthCategory,
+                setCurMonth,
+                setIsMonthDropdownOn
+              )}
+            ></Dropdown>
+          )}
+          <S.ChartTopFrame>
+            <S.ChartYearBox
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsYearDropdownOn(true);
+              }}
+            >
+              {curYear} &nbsp;<img src={downArrow}></img>
+            </S.ChartYearBox>
+            <S.ChartMonthBox
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsMonthDropdownOn(true);
+              }}
+            >
+              {curMonth.toString().padStart(2, '0')} &nbsp;
+              <img src={downArrow}></img>
+            </S.ChartMonthBox>
+          </S.ChartTopFrame>
+          <Bar
+            data={chartData}
+            options={optionsArea}
+            width="270"
+            height="250"
+          ></Bar>
+        </S.Container>
+        <AreaElectricityMoreInfo
+          chartState={chartData}
+          buildingData={buildingData}
+          areaData={areaData}
+          curYear={curYear}
+          curMonth={curMonth}
+        ></AreaElectricityMoreInfo>
+      </S.SeasonWrapper>
+    </WrapperInner>
   );
 };
 

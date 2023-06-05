@@ -6,8 +6,8 @@ const BuildingMoreInfoFrame = styled.div`
   align-items: center;
   display: flex;
   width: 36rem;
-  height: 100rem;
-  background: #fff;
+  height: 87rem;
+  background: #f5f5f5;
   border-radius: 0.7rem;
 `;
 
@@ -31,28 +31,22 @@ const BuildingMoreInfoSummary = styled.div`
   width: 33rem;
   height: fit-content;
   display: flex;
+  margin-top: 1.5rem;
   flex-direction: column;
-  font-family: 'Pretendard';
+  font-family: Pretendard;
   font-style: normal;
   font-weight: 400;
   font-size: 1.5rem;
-  /* or 164% */
-
-  background-color: #eee;
+  border: 2px solid rgb(255, 255, 255);
+  background-color: rgb(238, 238, 238);
   border-radius: 1rem;
   padding: 1rem;
   letter-spacing: 0.02rem;
   position: relative;
-
-  /* Black/600 */
   gap: 0.8rem;
-  color: #757575;
-  top: -7rem;
-  /* Inside auto layout */
-
-  flex: none;
+  color: rgb(117, 117, 117);
+  flex: 0 0 auto;
   order: 0;
-  flex-grow: 0;
 `;
 
 const Li = styled.li`
@@ -90,6 +84,7 @@ const Container = styled.div`
   position: relative;
   width: 39rem;
   top: -7rem;
+  margin-bottom: -8rem;
 `;
 
 const ChartIndicatorLine = styled.div`

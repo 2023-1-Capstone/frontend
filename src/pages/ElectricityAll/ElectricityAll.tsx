@@ -16,7 +16,7 @@ import {
   monthlyInitData,
   optionsElectricityAll,
   options,
-  monthlyInitWaterData,
+  monthlyInitAllData,
   yearCategory,
 } from '../../store/store';
 import WaterMoreInfo from './Component/ElectricityAllMoreInfo';
@@ -26,7 +26,7 @@ const waterCategory = ['월별 전기 사용량', '연간 전기 사용량'];
 ChartJS.register(Tooltip, Legend);
 
 const ElectricityAll = () => {
-  const [chartState, setChartState] = useState(monthlyInitWaterData);
+  const [chartState, setChartState] = useState(monthlyInitAllData);
   const [yearChartState, setYearChartState] = useState(monthlyInitData);
   const [chartCategory, setChartCategory] =
     useState<string>('월별 전기 사용량');
@@ -81,6 +81,7 @@ const ElectricityAll = () => {
     chartStateCopy.datasets[1].data = targetData?.map((item: any) =>
       Math.floor(item?.fee / 10000)
     );
+
     setChartState(chartStateCopy);
   };
 
@@ -100,7 +101,7 @@ const ElectricityAll = () => {
 
   useEffect(() => {
     setMonthChart();
-    const yearList = electricityInfo?.map((item: any) => item.year);
+    const yearList = electricityInfo?.map((item: any) => item.year).reverse();
     setYearChart();
     setRightDropDown(yearList);
   }, [electricityInfo]);
@@ -125,7 +126,7 @@ const ElectricityAll = () => {
           <S.ChartContainer>
             <Bar
               width="350"
-              height="250"
+              height="300"
               data={chartState}
               options={optionsElectricityAll}
             ></Bar>
@@ -150,55 +151,51 @@ const ElectricityAll = () => {
   };
 
   return (
-    <Wrapper
+    <WrapperInner
       onClick={(e: React.MouseEvent<HTMLDivElement>) => {
         setIsLeftDropDownOn(false);
         setIsRightDropDownOn(false);
       }}
     >
-      <Header></Header>
-      <WrapperInner>
-        <S.BuildingTitle>
-          인하대학교의 전기 사용량을 확인해보세요!
-        </S.BuildingTitle>
-        {isLeftDropdownOn && (
-          <Dropdown
-            dropDownInfo={dropdownInfoCreater(
-              '9.6rem',
-              '1.5rem',
-              '9.6rem',
-              'large',
-              waterCategory,
-              setChartCategory,
-              setIsRightDropDownOn
-            )}
-          ></Dropdown>
-        )}
-        {isRightDropdownOn && (
-          <Dropdown
-            dropDownInfo={dropdownInfoCreater(
-              '9.6rem',
-              '16.2rem',
-              '9.6rem',
-              'middle',
-              rightDropdown,
-              setRightCategory,
-              setIsRightDropDownOn
-            )}
-          ></Dropdown>
-        )}
-        <S.BuildingElectricityInner>
-          {charts[chartCategory]}
-        </S.BuildingElectricityInner>
-        <WaterMoreInfo
-          categoryState={chartCategory}
-          curYear={rightCategory}
-          chartState={chartState}
-          elecInfo={electricityInfo}
-        ></WaterMoreInfo>
-      </WrapperInner>
-      <NavigationBar navigationStatus=""></NavigationBar>
-    </Wrapper>
+      <S.BuildingTitle>
+        인하대학교의 전기 사용량을 확인해보세요!
+      </S.BuildingTitle>
+      {isLeftDropdownOn && (
+        <Dropdown
+          dropDownInfo={dropdownInfoCreater(
+            '9.6rem',
+            '1.5rem',
+            '9.6rem',
+            'large',
+            waterCategory,
+            setChartCategory,
+            setIsRightDropDownOn
+          )}
+        ></Dropdown>
+      )}
+      {isRightDropdownOn && (
+        <Dropdown
+          dropDownInfo={dropdownInfoCreater(
+            '9.6rem',
+            '16.2rem',
+            '9.6rem',
+            'middle',
+            rightDropdown,
+            setRightCategory,
+            setIsRightDropDownOn
+          )}
+        ></Dropdown>
+      )}
+      <S.BuildingElectricityInner>
+        {charts[chartCategory]}
+      </S.BuildingElectricityInner>
+      <WaterMoreInfo
+        categoryState={chartCategory}
+        curYear={rightCategory}
+        chartState={chartState}
+        elecInfo={electricityInfo}
+      ></WaterMoreInfo>
+    </WrapperInner>
   );
 };
 
