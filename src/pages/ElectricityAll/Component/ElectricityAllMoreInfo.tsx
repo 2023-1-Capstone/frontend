@@ -12,8 +12,7 @@ import { useEffect, useState } from 'react';
 import { findMostWasteIdx } from '../../BuildingElectricity/util';
 import { BuildingElectricityPlugin } from '../../../store/chartPlugin';
 import TransItem from '../../Indicate/Component/TrasnItem/TransItem';
-import { getUniqueNumberList } from '../../Indicate/Season/util';
-import refreshSVG from '../../../assets/svg/refresh.svg';
+import { SummaryFrame, Li } from '../../../components/Summary/Summary.style';
 
 ChartJS.register(Tooltip, Legend, ChartDataLabels);
 
@@ -32,9 +31,6 @@ const MonthlyMoreInfo = ({
     totalFee: 0,
     mostWasteMonth: '',
   });
-  const [randomIdxList, setRandomIdxList] = useState<number[]>(
-    getUniqueNumberList(4, 6)
-  );
 
   useEffect(() => {
     // 도넛 차트에 물 정보 세팅
@@ -90,50 +86,41 @@ const MonthlyMoreInfo = ({
           plugins={[BuildingElectricityPlugin]}
         ></Doughnut>
       </S.Container>
-      <S.BuildingMoreInfoSummary>
+      <SummaryFrame>
         {checkThisYear(parseInt(curYear)) ? (
-          <S.Li>
+          <Li>
             총 예상 전기 사용량은 {moreInfo.totalWatt?.toLocaleString('ko-KR')}
             Kwh 입니다.
-          </S.Li>
+          </Li>
         ) : (
-          <S.Li>
+          <Li>
             총 전기 사용량은 {moreInfo.totalWatt?.toLocaleString('ko-KR')}Kwh
             입니다.
-          </S.Li>
+          </Li>
         )}
         {checkThisYear(parseInt(curYear)) ? (
-          <S.Li>
+          <Li>
             총 예상 전기 요금은 {moreInfo?.totalFee.toLocaleString('ko-KR')}원
             입니다.
-          </S.Li>
+          </Li>
         ) : (
-          <S.Li>
+          <Li>
             총 전기 요금은 {moreInfo?.totalFee.toLocaleString('ko-KR')}원
             입니다.
-          </S.Li>
+          </Li>
         )}
         {checkThisYear(parseInt(curYear)) ? (
-          <S.Li>
+          <Li>
             {moreInfo?.mostWasteMonth}에 전기 사용량이 가장 많을 것으로
             예상됩니다.
-          </S.Li>
+          </Li>
         ) : (
-          <S.Li>
-            {moreInfo?.mostWasteMonth}에 전기 사용량이 가장 많았습니다.
-          </S.Li>
+          <Li>{moreInfo?.mostWasteMonth}에 전기 사용량이 가장 많았습니다.</Li>
         )}
-      </S.BuildingMoreInfoSummary>
-      <S.BottomTitle>
-        {curYear}년 전기 사용량으로...
-        <S.RefreshButton
-          src={refreshSVG}
-          onClick={() => setRandomIdxList(getUniqueNumberList(4, 6))}
-        ></S.RefreshButton>
-      </S.BottomTitle>
+      </SummaryFrame>
       <TransItem
+        curYear={curYear}
         type={'resource'}
-        randomIdxList={randomIdxList}
         waste={moreInfo?.totalFee}
       ></TransItem>
     </S.BuildingMoreInfoFrame>

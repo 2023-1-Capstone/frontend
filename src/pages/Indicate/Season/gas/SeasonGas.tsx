@@ -1,11 +1,6 @@
 import { useEffect } from 'react';
 import { useState } from 'react';
-import {
-  Wrapper,
-  WrapperInner,
-} from '../../../../components/Wrapper/Wrapper.style';
-import Header from '../../../../components/Header/Header';
-import NavigationBar from '../../../../components/NavigationBar/NavigationBar';
+import { WrapperInner } from '../../../../components/Wrapper/Wrapper.style';
 import { Chart as ChartJS, Tooltip, Legend } from 'chart.js/auto';
 import { Bar, Doughnut } from 'react-chartjs-2';
 import {
@@ -22,10 +17,10 @@ import { useQuery } from '@tanstack/react-query';
 import { getAverageFee, findMostWasteIdx } from '../util';
 import api from '../../../../api/api';
 import TransItem from '../../Component/TrasnItem/TransItem';
-import refreshSVG from '../../../../assets/svg/refresh.svg';
 import informationSVG from '../../../../assets/svg/information.svg';
 import { getUniqueNumberList } from '../util';
 import { BuildingGasPlugin } from '../../../../store/chartPlugin';
+import { SummaryFrame, Li } from '../../../../components/Summary/Summary.style';
 
 ChartJS.register(Tooltip, Legend);
 
@@ -105,7 +100,9 @@ const SeasonGas = () => {
       const averageFee = getAverageFee(target, targetSeasonIdx);
 
       // 연도 리스트 세팅
-      const curYearList = validData?.map((item: any) => item.startYear);
+      const curYearList = validData
+        ?.map((item: any) => item.startYear)
+        .reverse();
 
       setYearList(curYearList);
       // 가장 사용량이 많은 계절 인덱스 세팅
@@ -160,115 +157,102 @@ const SeasonGas = () => {
   }, [curYear]);
 
   return (
-    <>
-      <Wrapper>
-        <Header></Header>
-        <WrapperInner>
-          <S.SeasonWrapper>
-            <S.SeasonTitle>👑계절별 가스 사용량 순위</S.SeasonTitle>
-            {isDropdownOn && (
-              <Dropdown
-                dropDownInfo={dropdownInfoCreater(
-                  '10rem',
-                  '12.7rem',
-                  '10.7rem',
-                  'middle',
-                  yearList,
-                  setCurYear,
-                  setIsDropdownOn
-                )}
-              ></Dropdown>
+    <WrapperInner>
+      <S.SeasonWrapper>
+        <S.SeasonTitle>계절별 가스 사용량</S.SeasonTitle>
+        {isDropdownOn && (
+          <Dropdown
+            dropDownInfo={dropdownInfoCreater(
+              '10rem',
+              '11.9rem',
+              '12.8rem',
+              'middle',
+              yearList,
+              setCurYear,
+              setIsDropdownOn
             )}
-            <S.BuildingInfoFrame modalState={infoModalState}>
-              <S.BuildingInfoNotice>
-                ※ 아래는 각 계절에 포함된 월에 대한 정보에요
-              </S.BuildingInfoNotice>
-              <S.BuildingInfoItem>
-                <S.SeasonInfoDescriptionFrame>
-                  {seasonInfo.map((item: any, idx: number) => {
-                    return (
-                      <S.SeasonInfoDescriptionItem key={idx}>
-                        <S.BuildingInfoItemTitle>
-                          {item.season}
-                        </S.BuildingInfoItemTitle>
-                        <S.BuildingInfoItemContent>
-                          {item.month}
-                        </S.BuildingInfoItemContent>
-                      </S.SeasonInfoDescriptionItem>
-                    );
-                  })}
-                </S.SeasonInfoDescriptionFrame>
-              </S.BuildingInfoItem>
-            </S.BuildingInfoFrame>
-            <S.Calculate>
-              계절정보
-              <S.InfoImage
-                width="20px"
-                height="20px"
-                src={informationSVG}
-                onMouseEnter={() => {
-                  setInfoModalState('visible');
-                }}
-                onMouseLeave={() => {
-                  setInfoModalState('hidden');
-                }}
-              ></S.InfoImage>
-            </S.Calculate>
-            <S.Container>
-              <S.ChartTopFrame>
-                <S.ChartCategoryBox>계절별 사용량</S.ChartCategoryBox>
-                <S.ChartYearBox onClick={() => setIsDropdownOn(true)}>
-                  {curYear} &nbsp;<img src={downArrow}></img>
-                </S.ChartYearBox>
-              </S.ChartTopFrame>
-              <Bar
-                width="350"
-                height="250"
-                data={chartData}
-                options={optionsGas}
-              ></Bar>
-            </S.Container>
-            <S.BottomWrapper>
-              <S.BuildingMoreInfoTitle>요약 정보</S.BuildingMoreInfoTitle>
-              <S.ChartIndicatorLine></S.ChartIndicatorLine>
-              <Doughnut
-                options={optionsDoughnut}
-                data={chartData}
-                plugins={[BuildingGasPlugin]}
-              ></Doughnut>
-              <S.BottomInfoBoxInner>
-                <S.Li>
-                  해당년도 사용 1위는 '{season[mostWasteSeasonIdx]}'이며 계절
-                  평균 대비 &nbsp;
-                  {getPercent(chartData?.datasets[0].data, infoData?.watt)}%가
-                  높습니다.
-                </S.Li>
-                <S.Li>
-                  총 사용량은 {infoData.watt.toLocaleString('ko-KR')}m3 입니다.
-                </S.Li>
-                <S.Li>
-                  예상 사용 요금은 &nbsp;
-                  {Math.floor(infoData.fee).toLocaleString('ko-KR')}원 입니다.
-                </S.Li>
-              </S.BottomInfoBoxInner>
-              <S.BottomTitle>
-                이 가스 사용량으로...
-                <S.RefreshButton
-                  src={refreshSVG}
-                  onClick={() => setRandomIdxList(getUniqueNumberList(4, 6))}
-                ></S.RefreshButton>
-              </S.BottomTitle>
-              <TransItem
-                type={'resource'}
-                waste={infoData.fee}
-                randomIdxList={randomIdxList}
-              ></TransItem>
-            </S.BottomWrapper>
-          </S.SeasonWrapper>
-        </WrapperInner>
-        <NavigationBar navigationStatus="indicator"></NavigationBar>
-      </Wrapper>
-    </>
+          ></Dropdown>
+        )}
+        <S.BuildingInfoFrame modalState={infoModalState}>
+          <S.BuildingInfoNotice>
+            ※ 아래는 각 계절에 포함된 월에 대한 정보에요
+          </S.BuildingInfoNotice>
+          <S.BuildingInfoItem>
+            <S.SeasonInfoDescriptionFrame>
+              {seasonInfo.map((item: any, idx: number) => {
+                return (
+                  <S.SeasonInfoDescriptionItem key={idx}>
+                    <S.BuildingInfoItemTitle>
+                      {item.season}
+                    </S.BuildingInfoItemTitle>
+                    <S.BuildingInfoItemContent>
+                      {item.month}
+                    </S.BuildingInfoItemContent>
+                  </S.SeasonInfoDescriptionItem>
+                );
+              })}
+            </S.SeasonInfoDescriptionFrame>
+          </S.BuildingInfoItem>
+        </S.BuildingInfoFrame>
+        <S.Calculate>
+          계절정보
+          <S.InfoImage
+            width="20px"
+            height="20px"
+            src={informationSVG}
+            onMouseEnter={() => {
+              setInfoModalState('visible');
+            }}
+            onMouseLeave={() => {
+              setInfoModalState('hidden');
+            }}
+          ></S.InfoImage>
+        </S.Calculate>
+        <S.Container>
+          <S.ChartTopFrame>
+            <S.ChartCategoryBox>계절별 사용량</S.ChartCategoryBox>
+            <S.ChartYearBox onClick={() => setIsDropdownOn(true)}>
+              {curYear} &nbsp;<img src={downArrow}></img>
+            </S.ChartYearBox>
+          </S.ChartTopFrame>
+          <Bar
+            width="350"
+            height="250"
+            data={chartData}
+            options={optionsGas}
+          ></Bar>
+        </S.Container>
+        <S.BottomWrapper>
+          <S.BuildingMoreInfoTitle>요약 정보</S.BuildingMoreInfoTitle>
+          <S.ChartIndicatorLine></S.ChartIndicatorLine>
+          <Doughnut
+            options={optionsDoughnut}
+            data={chartData}
+            plugins={[BuildingGasPlugin]}
+          ></Doughnut>
+          <SummaryFrame>
+            <Li>
+              해당년도 사용 1위는 '{season[mostWasteSeasonIdx]}'이며 계절 평균
+              대비 &nbsp;
+              {getPercent(chartData?.datasets[0].data, infoData?.watt)}%가
+              높습니다.
+            </Li>
+            <Li>
+              총 사용량은 {infoData.watt.toLocaleString('ko-KR')}m3 입니다.
+            </Li>
+            <Li>
+              예상 사용 요금은 &nbsp;
+              {Math.floor(infoData.fee).toLocaleString('ko-KR')}원 입니다.
+            </Li>
+          </SummaryFrame>
+          <TransItem
+            type={'resource'}
+            waste={infoData.fee}
+            curYear={curYear}
+          ></TransItem>
+        </S.BottomWrapper>
+      </S.SeasonWrapper>
+    </WrapperInner>
   );
 };
 

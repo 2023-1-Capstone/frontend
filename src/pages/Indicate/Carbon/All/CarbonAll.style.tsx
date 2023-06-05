@@ -11,7 +11,7 @@ const SeasonTitle = styled.div`
   position: relative;
   width: fit-content;
   height: fit-content;
-
+  margin-top: 2rem;
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 400;
@@ -110,7 +110,7 @@ const ChartCategoryBox = styled.div`
 
 const ChartYearBox = styled.div`
   position: absolute;
-  width: fit-content;
+  width: 7.5rem;
   height: 2.7rem;
   padding: 5px;
 
@@ -160,8 +160,8 @@ const BottomWrapper = styled.div`
   align-items: center;
   justify-content: center;
   width: 36rem;
-  height: 99rem;
-  background: #ffffff;
+  height: 88rem;
+  background: #f5f5f5;
   border-radius: 0.5rem;
 `;
 
@@ -182,26 +182,23 @@ const BottomTitle = styled.div`
 const BottomInfoBox = styled.div`
   width: 33rem;
   height: fit-content;
-
-  gap: 0.3rem;
-  font-family: 'Pretendard';
+  display: flex;
+  margin-top: 1.5rem;
+  flex-direction: column;
+  font-family: Pretendard;
   font-style: normal;
   font-weight: 400;
   font-size: 1.5rem;
-  line-height: 1.8rem;
-  /* or 164% */
-
-  letter-spacing: 0.02rem;
-  /* Black/600 */
-  margin-bottom: 2rem;
-  color: #757575;
-  padding: 1rem;
+  border: 2px solid rgb(255, 255, 255);
+  background-color: rgb(238, 238, 238);
   border-radius: 1rem;
-  /* Inside auto layout */
-  background-color: #eeeeee;
-  flex: none;
+  padding: 1rem;
+  letter-spacing: 0.02rem;
+  position: relative;
+  gap: 0.8rem;
+  color: rgb(117, 117, 117);
+  flex: 0 0 auto;
   order: 0;
-  flex-grow: 0;
 `;
 
 const BottomInfoTransWrapper = styled.div`

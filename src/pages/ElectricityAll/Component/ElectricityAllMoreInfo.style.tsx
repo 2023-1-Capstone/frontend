@@ -3,13 +3,13 @@ import styled from 'styled-components';
 const BuildingMoreInfoFrame = styled.div`
   position: relative;
   width: 36rem;
-  height: 74rem;
+  height: 67rem;
   background: #f5f5f5;
   border-radius: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+
   left: 50%;
   transform: translateX(-50%);
   top: 1.5rem;
@@ -35,6 +35,7 @@ const BuildingMoreInfoTitle = styled.div`
   font-style: normal;
   font-weight: 700;
   font-size: 2rem;
+  margin-top: 1rem;
   display: flex;
   align-items: center;
   opacity: 0.7;
@@ -42,31 +43,25 @@ const BuildingMoreInfoTitle = styled.div`
 `;
 
 const BuildingMoreInfoSummary = styled.div`
-  width: fit-content;
-  height: 7.6rem;
+  width: 33rem;
+  height: fit-content;
   display: flex;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   flex-direction: column;
-  font-family: 'Pretendard';
+  font-family: Pretendard;
   font-style: normal;
   font-weight: 400;
-  font-size: 1.4rem;
-  /* or 164% */
-  gap: 0.5rem;
+  font-size: 1.5rem;
+  border: 2px solid rgb(255, 255, 255);
+  background-color: rgb(238, 238, 238);
+  border-radius: 1rem;
+  padding: 1rem;
   letter-spacing: 0.02rem;
   position: relative;
-  border-radius: 0.3rem;
-  /* Black/600 */
-  justify-content: center;
-  padding-left: 1rem;
-  padding-right: 1rem;
   gap: 0.8rem;
-  color: #757575;
-  /* Inside auto layout */
-
-  flex: none;
+  color: rgb(117, 117, 117);
+  flex: 0 0 auto;
   order: 0;
-  flex-grow: 0;
 `;
 
 const Container = styled.div`
@@ -94,7 +89,7 @@ const RefreshButton = styled.img`
 `;
 
 const BottomTitle = styled.div`
-  width: 26.5rem;
+  width: 29.5rem;
   height: 2.6rem;
   margin-top: 1.2rem;
   font-family: 'Pretendard';
@@ -109,8 +104,8 @@ const BottomTitle = styled.div`
 `;
 
 const Li = styled.li`
-  padding-left: 21px;
-  text-indent: -1.8rem;
+  padding-left: 2.1rem;
+  text-indent: -2.1rem;
 `;
 
 export {

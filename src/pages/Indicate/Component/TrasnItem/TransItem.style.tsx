@@ -8,11 +8,11 @@ const BottomInfoTransItem = styled.div`
   align-items: center;
   padding: 0px;
 
-  width: 13.5rem;
+  width: 11rem;
   height: 11.2rem;
 
-  background: #fff;
-  border-radius: 1.1rem;
+  background: #f5f5f5;
+  border-radius: 0.5rem;
 
   /* Inside auto layout */
 
@@ -58,14 +58,33 @@ const BottomInfoTransWrapper = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 0.7rem;
-  gap: 0.6rem;
   position: relative;
-  width: 28.8rem;
+  width: 36rem;
   height: fit-content;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+
   flex-wrap: wrap;
-  background-color: #abcedf;
+  background-color: #f5f5f5;
+`;
+const RefreshButton = styled.img`
+  width: 2.5rem;
+  height: 2.5rem;
+  cursor: pointer;
+`;
+
+const BottomTitle = styled.div`
+  width: 29.5rem;
+  height: 2.6rem;
+  margin-top: 1.2rem;
+  margin-bottom: 1rem;
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #000000;
 `;
 
 export {
@@ -73,4 +92,6 @@ export {
   BottomInfoTransText,
   BottomInfoTransWrapper,
   BottomInfoTrasnImage,
+  RefreshButton,
+  BottomTitle,
 };

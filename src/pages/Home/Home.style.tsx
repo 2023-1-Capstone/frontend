@@ -5,25 +5,27 @@ const HomeCategoryList = styled.div`
   flex-direction: column;
   align-items: flex-start;
   padding: 0px;
-  gap: 4.3rem;
-
+  gap: 5rem;
   position: absolute;
-  width: 32rem;
+  width: fit-content;
   height: 47.3rem;
   left: 3.5rem;
-  top: 5.5rem;
+  top: 16.5rem;
+  left: 50%;
+  transform: translateX(-50%);
 `;
 
 const HomeCategoryFrame = styled.div`
-  width: 32rem;
-  height: 12.9rem;
+  width: 25rem;
+  height: 10rem;
 
   display: flex;
   justify-content: center;
   align-items: center;
-
-  background: #ffffff;
-  border-radius: 1.6rem;
+  background-color: #99bfcf;
+  border-bottom: 3px solid #e7e7e7;
+  border-radius: 2rem;
+  box-shadow: 2px 0px 0px 0px rgba(0, 0, 0, 0.3);
 
   /* Inside auto layout */
 
@@ -69,15 +71,16 @@ const HomeCategoryDescriptionTop = styled.div`
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
-  font-size: 1.6rem;
+  font-size: 2.7rem;
   line-height: 2rem;
   /* or 125% */
-
+  top: 2rem;
+  position: relative;
   letter-spacing: 0.05rem;
-
+  left: 3rem;
   /* Black/900 */
 
-  color: #212121;
+  color: #fff;
 
   /* Inside auto layout */
 
@@ -111,13 +114,23 @@ const HomeCategoryDescriptionBottom = styled.div`
 `;
 
 const HomeCategoryIcon = styled.img`
+  position : relative;
   background: url(${(props) => props.src})
-
   /* Inside auto layout */
-
+  width : 6.4rem;
+  height : 6.4rem;
   flex: none;
+  left : 3rem;
   order: 0;
   flex-grow: 0;
+`;
+
+const Nemo = styled.div`
+  position: relative;
+  border-left: 2px solid grey;
+  height: 7rem;
+  bottom: 4px;
+  left: 0.7rem;
 `;
 
 export {
@@ -128,4 +141,5 @@ export {
   HomeCategoryFrame,
   HomeCategoryInner,
   HomeCategoryIcon,
+  Nemo,
 };

@@ -8,7 +8,11 @@ import Header from '../../../../components/Header/Header';
 import NavigationBar from '../../../../components/NavigationBar/NavigationBar';
 import { Chart as ChartJS, Tooltip, Legend } from 'chart.js/auto';
 import { Bar } from 'react-chartjs-2';
-import {optionsAreaGas, areaInitData, optionsArea} from '../../../../store/store';
+import {
+  optionsAreaGas,
+  areaInitData,
+  optionsArea,
+} from '../../../../store/store';
 import downArrow from '../../../../assets/svg/downArrow.svg';
 import * as S from './AreaGas.style';
 import { Dropdown } from '../../../../components/Dropdown/Dropdown';
@@ -17,13 +21,14 @@ import { dropdownInfoCreater } from '../../../BuildingElectricity/util';
 import { useQuery } from '@tanstack/react-query';
 import { getBuildingTargetDataGas, findMostWasteIdx } from '../util';
 import api from '../../../../api/api';
-import informationSVG from "../../../../assets/svg/information.svg";
+import informationSVG from '../../../../assets/svg/information.svg';
+import { SummaryFrame, Li } from '../../../../components/Summary/Summary.style';
 
 ChartJS.register(Tooltip, Legend);
 
 const MJ = 43.181;
 const mjPerWon = 22;
-const AreaElectricity = () => {
+const AreaGas = () => {
   const { data: buildingData }: { data: any } = useQuery(
     ['getBuildingData'],
     () => api('/api/buildings').then((data: any) => data.data.result)
@@ -90,143 +95,133 @@ const AreaElectricity = () => {
   }, [curMonth, curYear]);
 
   return (
-    <>
-      <Wrapper
-        onClick={(e: React.MouseEvent<HTMLDivElement>) => {
-          setIsMonthDropdownOn(false);
-          setIsYearDropdownOn(false);
-        }}
-      >
-        <Header></Header>
-        <WrapperInner>
-          <S.SeasonWrapper>
-            <S.SeasonTitle>👑면적당 가스 사용 순위</S.SeasonTitle>
+    <WrapperInner
+      onClick={(e: React.MouseEvent<HTMLDivElement>) => {
+        setIsMonthDropdownOn(false);
+        setIsYearDropdownOn(false);
+      }}
+    >
+      <S.SeasonWrapper>
+        <S.SeasonTitle>면적당 가스 사용량</S.SeasonTitle>
+        <S.BuildingInfoFrame modalState={infoModalState}>
+          <S.BuildingInfoNotice>
+            ※ 아래는 가스 사용량에 포함된 건물들 정보에요.
+          </S.BuildingInfoNotice>
+          <S.BuildingInfoItem>
+            <S.BuildingInfoItemTitle>가스사용량⛽</S.BuildingInfoItemTitle>
+            {buildingData?.map((item: any) => {
+              return (
+                <>
+                  {item.gasDescription ? (
+                    <S.BuildingInfoItemContent>{`- ${item.name} : ${item.gasDescription}`}</S.BuildingInfoItemContent>
+                  ) : null}
+                </>
+              );
+            })}
+          </S.BuildingInfoItem>
+        </S.BuildingInfoFrame>
+        <S.Calculate>
+          건물정보
+          <S.InfoImage
+            width="20px"
+            height="20px"
+            src={informationSVG}
+            onMouseEnter={() => {
+              setInfoModalState('visible');
+            }}
+            onMouseLeave={() => {
+              setInfoModalState('hidden');
+            }}
+          ></S.InfoImage>
+        </S.Calculate>
 
-            <S.BuildingInfoFrame modalState={infoModalState}>
-              <S.BuildingInfoNotice>
-                ※ 아래는 가스 사용량에 포함된 건물들 정보에요.
-              </S.BuildingInfoNotice>
-              <S.BuildingInfoItem>
-                <S.BuildingInfoItemTitle>가스사용량⛽</S.BuildingInfoItemTitle>
-                {buildingData?.map((item: any) => {
-                  return (
-                      <>
-                        {item.gasDescription ? (
-                            <S.BuildingInfoItemContent>{`- ${item.name} : ${item.gasDescription}`}</S.BuildingInfoItemContent>
-                        ) : null}
-                      </>
-                  );
-                })}
-              </S.BuildingInfoItem>
-            </S.BuildingInfoFrame>
-            <S.Calculate>
-              건물정보
-              <S.InfoImage
-                  width="20px"
-                  height="20px"
-                  src={informationSVG}
-                  onMouseEnter={() => {
-                    setInfoModalState("visible");
-                  }}
-                  onMouseLeave={() => {
-                    setInfoModalState("hidden");
-                  }}
-              ></S.InfoImage>
-            </S.Calculate>
-
-              <S.Container>
-                <S.ChartChangeFrame>
-                  {isYearDropdownOn && (
-                    <Dropdown
-                      dropDownInfo={dropdownInfoCreater(
-                        '10rem',
-                        '20.2rem',
-                        '2.3rem',
-                        'middle',
-                        areaData[0]?.usagesList.map((item: any) => item.year),
-                        setCurYear,
-                        setIsYearDropdownOn
-                      )}
-                    ></Dropdown>
-                  )}
-                  {isMonthDropdownOn && (
-                    <Dropdown
-                      dropDownInfo={dropdownInfoCreater(
-                        '10rem',
-                        '27.2rem',
-                        '2.3rem',
-                        'middle',
-                        monthCategory,
-                        setCurMonth,
-                        setIsMonthDropdownOn
-                      )}
-                    ></Dropdown>
-                  )}
-                  <S.ChartTopFrame>
-                    <S.ChartYearBox
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setIsYearDropdownOn(true);
-                      }}
-                    >
-                      {curYear}년 &nbsp;<img src={downArrow}></img>
-                    </S.ChartYearBox>
-                    <S.ChartMonthBox
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setIsMonthDropdownOn(true);
-                      }}
-                    >
-                      {curMonth}월 &nbsp;<img src={downArrow}></img>
-                    </S.ChartMonthBox>
-                  </S.ChartTopFrame>
-                </S.ChartChangeFrame>
-                <Bar
-                  data={chartData}
-                  options={optionsAreaGas}
-                  width="270"
-                  height="250"
-                ></Bar>
-              </S.Container>
-            <S.BottomWrapper>
-              <S.BottomTitle>
-                해당시기 사용 1위는 '{buildingByIdx[mostWasteIdx]}' 입니다.
-              </S.BottomTitle>
-              <S.BottomInfoBox>
-                <S.BottomInfoBoxInner>
-                  <li>
-                    1㎡당 {chartData?.datasets[0].data[mostWasteIdx]}m3를
-                    사용하였습니다.
-                  </li>
-                  <li>
-                    1㎡당{' '}
-                    {parseFloat(
-                      (
-                        chartData?.datasets[0].data[mostWasteIdx] *
-                        MJ *
-                        mjPerWon *
-                        1.1
-                      ).toFixed(2)
-                    ).toLocaleString('ko-KR')}
-                    원 정도를 사용하였습니다.
-                  </li>
-                  <li>
-                    평균 사용량 대비 &nbsp;
-                    {getPercentage(
-                      chartData?.datasets[0].data[mostWasteIdx],
-                      getAverageWaste(chartData?.datasets[0].data)
-                    )}
-                    % 높은 수치입니다.
-                  </li>
-                </S.BottomInfoBoxInner>
-              </S.BottomInfoBox>
-            </S.BottomWrapper>
-          </S.SeasonWrapper>
-        </WrapperInner>
-        <NavigationBar navigationStatus="indicator"></NavigationBar>
-      </Wrapper>
-    </>
+        <S.Container>
+          {isYearDropdownOn && (
+            <Dropdown
+              dropDownInfo={dropdownInfoCreater(
+                '10rem',
+                '0.5rem',
+                '3rem',
+                'middle',
+                areaData[0]?.usagesList.map((item: any) => item.year).reverse(),
+                setCurYear,
+                setIsYearDropdownOn
+              )}
+            ></Dropdown>
+          )}
+          {isMonthDropdownOn && (
+            <Dropdown
+              dropDownInfo={dropdownInfoCreater(
+                '10rem',
+                '8.5rem',
+                '3rem',
+                'small',
+                monthCategory,
+                setCurMonth,
+                setIsMonthDropdownOn
+              )}
+            ></Dropdown>
+          )}
+          <S.ChartTopFrame>
+            <S.ChartYearBox
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsYearDropdownOn(true);
+              }}
+            >
+              {curYear}&nbsp;<img src={downArrow}></img>
+            </S.ChartYearBox>
+            <S.ChartMonthBox
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsMonthDropdownOn(true);
+              }}
+            >
+              {curMonth.toString().padStart(2, '0')}&nbsp;
+              <img src={downArrow}></img>
+            </S.ChartMonthBox>
+          </S.ChartTopFrame>
+          <Bar
+            data={chartData}
+            options={optionsAreaGas}
+            width="270"
+            height="250"
+          ></Bar>
+        </S.Container>
+        <S.BottomWrapper>
+          <S.BottomTitle>
+            해당시기 사용 1위는 '{buildingByIdx[mostWasteIdx]}' 입니다.
+          </S.BottomTitle>
+          <SummaryFrame>
+            <Li>
+              1㎡당 {chartData?.datasets[0].data[mostWasteIdx]}m3를
+              사용하였습니다.
+            </Li>
+            <Li>
+              1㎡당{' '}
+              {parseFloat(
+                (
+                  chartData?.datasets[0].data[mostWasteIdx] *
+                  MJ *
+                  mjPerWon *
+                  1.1
+                ).toFixed(2)
+              ).toLocaleString('ko-KR')}
+              원 정도를 사용하였습니다.
+            </Li>
+            <Li>
+              평균 사용량 대비 &nbsp;
+              {getPercentage(
+                chartData?.datasets[0].data[mostWasteIdx],
+                getAverageWaste(chartData?.datasets[0].data)
+              )}
+              % 높은 수치입니다.
+            </Li>
+          </SummaryFrame>
+        </S.BottomWrapper>
+      </S.SeasonWrapper>
+    </WrapperInner>
   );
 };
 
-export default AreaElectricity;
+export default AreaGas;

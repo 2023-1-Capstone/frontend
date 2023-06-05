@@ -17,7 +17,7 @@ const SeasonTitle = styled.div`
   font-weight: 400;
   font-size: 2.4rem;
   line-height: 2.9rem;
-  margin-top: 1rem;
+  margin-top: 2rem;
   margin-bottom: 2rem;
   color: #ffffff;
 `;
@@ -48,9 +48,10 @@ const ChartTopFrame = styled.div`
   justify-content: center;
   align-items: center;
   padding: 0px;
-  top: -1rem;
+  top: 0.5rem;
+  margin-bottom: 0.5rem;
   gap: 15rem;
-  left: 5px;
+  left: 0.5rem;
   position: relative;
   width: 33rem;
   height: 2.3rem;
@@ -91,7 +92,7 @@ const ChartCategoryBox = styled.div`
 
 const ChartYearBox = styled.div`
   position: absolute;
-  width: fit-content;
+  width: 7.5rem;
   height: 2.7rem;
   padding: 5px;
 
@@ -103,7 +104,7 @@ const ChartYearBox = styled.div`
 
   cursor: pointer;
 
-  left: 0.5rem;
+  left: 0rem;
 
   border-radius: 0.3rem;
   font-family: 'Pretendard';
@@ -128,7 +129,7 @@ const ChartYearBox = styled.div`
 
 const ChartMonthBox = styled.div`
   position: absolute;
-  width: fit-content;
+  width: 5.5rem;
   height: 2.7rem;
   padding: 5px;
 
@@ -140,7 +141,7 @@ const ChartMonthBox = styled.div`
 
   cursor: pointer;
 
-  left: 10rem;
+  left: 8rem;
 
   border-radius: 0.3rem;
   font-family: 'Pretendard';
@@ -176,15 +177,15 @@ const BottomWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 29.8rem;
-  height: 12.5rem;
+  width: 36rem;
+  height: 14.5rem;
 
   background: #eeeeee;
   border-radius: 1rem;
 `;
 
 const BottomTitle = styled.div`
-  width: 26.5rem;
+  width: 32rem;
   height: 2.6rem;
   margin-top: 1.2rem;
   font-family: 'Pretendard';
@@ -199,21 +200,33 @@ const BottomTitle = styled.div`
 `;
 
 const BottomInfoBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: start;
-  align-items: center;
-  padding: 1.2rem 1.6rem;
-  gap: 1rem;
-
   position: relative;
-  width: 26.8rem;
-  height: 7.3rem;
+  width: 33rem;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.5rem;
+  /* or 164% */
 
-  /* Black/300 */
+  border: 2px solid #fff;
+  background-color: #eee;
+  border-radius: 1rem;
+  padding: 1rem;
+  letter-spacing: 0.02rem;
+  position: relative;
 
-  background: #e0e0e0;
-  border-radius: 1.6rem;
+  /* Black/600 */
+  gap: 0.8rem;
+  color: #757575;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
 `;
 
 const BottomInfoBoxInner = styled.div`
@@ -399,6 +412,11 @@ const InfoImage = styled.img`
   cursor: pointer;
 `;
 
+const Li = styled.li`
+  text-indent: 0px;
+  padding-left: 21px;
+  text-indent: -21px;
+`;
 
 export {
   SeasonWrapper,
@@ -424,5 +442,6 @@ export {
   BuildingInfoNotice,
   BuildingInfoItemTitle,
   BuildingInfoItem,
-  InfoImage
+  InfoImage,
+  Li,
 };

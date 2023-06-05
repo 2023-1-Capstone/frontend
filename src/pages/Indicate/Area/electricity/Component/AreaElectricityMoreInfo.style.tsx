@@ -5,15 +5,15 @@ const BottomWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 35rem;
-  height: 60rem;
+  width: 36rem;
+  height: 15.5rem;
 
-  background: #eeeeee;
+  background: #f5f5f5;
   border-radius: 1rem;
 `;
 
 const BottomTitle = styled.div`
-  width: 26.5rem;
+  width: 32.3rem;
   height: 2.6rem;
   margin-top: 1.2rem;
   font-family: 'Pretendard';
@@ -23,42 +23,31 @@ const BottomTitle = styled.div`
   line-height: 1.8rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: start;
   color: #000000;
 `;
 
 const BottomInfoBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: start;
-  align-items: center;
-  padding: 1.2rem 1.6rem;
-  gap: 1rem;
-
   position: relative;
-  width: 26.8rem;
-  height: 7.3rem;
-
-  /* Black/300 */
-
-  background: #e0e0e0;
-  border-radius: 1.6rem;
-`;
-
-const BottomInfoBoxInner = styled.div`
-  width: fit-content;
-  height: 4.9rem;
+  width: 33rem;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 400;
-  font-size: 1.1rem;
-  line-height: 1.8rem;
+  font-size: 1.5rem;
   /* or 164% */
 
+  border: 2px solid #fff;
+  background-color: #eee;
+  border-radius: 1rem;
+  padding: 1rem;
   letter-spacing: 0.02rem;
+  position: relative;
 
   /* Black/600 */
-
+  gap: 0.8rem;
   color: #757575;
 
   /* Inside auto layout */
@@ -133,14 +122,45 @@ const Container = styled.div`
   border: 3px solid white;
 `;
 
+const Li = styled.li`
+  text-indent: 0px;
+  padding-left: 21px;
+  text-indent: -21px;
+`;
+
+const BuildingMoreInfoTitle = styled.div`
+  position: relative;
+  width: fit-content;
+  height: 2.6rem;
+
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  opacity: 0.7;
+  color: #000000;
+`;
+
+const ChartIndicatorLine = styled.div`
+  position: relative;
+  width: 7.5rem;
+  margin-bottom: 1rem;
+  border: 0.1rem solid #757575;
+`;
+
 export {
   BottomWrapper,
   BottomTitle,
   BottomInfoBox,
-  BottomInfoBoxInner,
   BottomInfoTransWrapper,
   BottomInfoTransItem,
   BottomInfoTransText,
   RefreshButton,
   Container,
+  Li,
+  BuildingMoreInfoTitle,
+  ChartIndicatorLine,
 };
