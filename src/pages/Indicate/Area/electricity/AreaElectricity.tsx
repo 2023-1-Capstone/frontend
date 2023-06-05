@@ -123,7 +123,7 @@ const AreaElectricity = () => {
               dropDownInfo={dropdownInfoCreater(
                 '10rem',
                 '0.5rem',
-                '1rem',
+                '3rem',
                 'middle',
                 areaData[0]?.usagesList.map((item: any) => item.year).reverse(),
                 setCurYear,
@@ -136,7 +136,7 @@ const AreaElectricity = () => {
               dropDownInfo={dropdownInfoCreater(
                 '10rem',
                 '8.5rem',
-                '1rem',
+                '3rem',
                 'small',
                 monthCategory,
                 setCurMonth,
