@@ -14,30 +14,25 @@ const HomePage = () => {
   return (
     <Wrapper>
       <Header></Header>
-      <WrapperInner>
-        <S.HomeCategoryList>
-          {category?.map((item: homeCategoryType) => {
-            return (
-              <S.HomeCategoryFrame
-                key={item.id}
-                onClick={() => navigate(`/${item.route}`)}
-              >
-                <S.HomeCategoryInner>
-                  <S.HomeCategoryIcon src={item.src}></S.HomeCategoryIcon>
-                  <S.HomeCategoryDescriptionFrame>
-                    <S.HomeCategoryDescriptionTop>
-                      {item.descriptTop}
-                    </S.HomeCategoryDescriptionTop>
-                    <S.HomeCategoryDescriptionBottom>
-                      {item.descriptBottom}
-                    </S.HomeCategoryDescriptionBottom>
-                  </S.HomeCategoryDescriptionFrame>
-                </S.HomeCategoryInner>
-              </S.HomeCategoryFrame>
-            );
-          })}
-        </S.HomeCategoryList>
-      </WrapperInner>
+      <S.HomeCategoryList>
+        {category?.map((item: homeCategoryType) => {
+          return (
+            <S.HomeCategoryFrame
+              key={item.id}
+              onClick={() => navigate(`/${item.route}`)}
+            >
+              <S.HomeCategoryInner>
+                <S.HomeCategoryIcon src={item.src}></S.HomeCategoryIcon>
+                <S.HomeCategoryDescriptionFrame>
+                  <S.HomeCategoryDescriptionTop>
+                    {item.descriptTop}
+                  </S.HomeCategoryDescriptionTop>
+                </S.HomeCategoryDescriptionFrame>
+              </S.HomeCategoryInner>
+            </S.HomeCategoryFrame>
+          );
+        })}
+      </S.HomeCategoryList>
     </Wrapper>
   );
 };
