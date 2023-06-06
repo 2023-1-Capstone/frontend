@@ -39,7 +39,7 @@ const CarbonBuildings = () => {
   const [curMonth, setCurMonth] = useState<string>('1');
   const [infoModalState, setInfoModalState] = useState<string>('hidden');
   const [yearList, setYearList] = useState([]);
-
+  const [monthList, setMonthList] = useState([]);
   useEffect(() => {
     const chartDataCopy = JSON.parse(JSON.stringify(chartData));
     const newChartData = getTargetBuildingsUsageArray(
@@ -52,6 +52,20 @@ const CarbonBuildings = () => {
       carbonData &&
         carbonData[0]?.usagesList?.map((item: any) => item.year).reverse()
     );
+    const arrayForMonth =
+      carbonData &&
+      carbonData[0]?.usagesList?.filter(
+        (item: any) => parseInt(curYear) === item.year
+      )[0].usages;
+
+    const monthArr =
+      arrayForMonth &&
+      arrayForMonth
+        ?.map((item: any, idx: number) =>
+          item?.data || item?.prediction ? idx + 1 : 0
+        )
+        .filter((item: number) => item !== 0);
+    setMonthList(monthArr);
     setChartData(chartDataCopy);
   }, [carbonData, curYear, curMonth]);
 
@@ -128,7 +142,7 @@ const CarbonBuildings = () => {
               '10rem',
               '15.5rem',
               'small',
-              monthCategory,
+              monthList,
               setCurMonth,
               setIsMonthDropdownOn
             )}
