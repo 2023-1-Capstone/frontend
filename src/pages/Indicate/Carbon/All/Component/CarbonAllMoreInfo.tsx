@@ -35,7 +35,7 @@ const CarbonAllMoreInfo = ({
   });
 
   useEffect(() => {
-    const chartDataCopy = JSON.parse(JSON.stringify(chartState));
+    const chartDataCopy = JSON.parse(JSON.stringify(chartData));
     const targetData = carbonInfo?.filter(
       (item: any) => item.year === parseInt(curYear)
     )[0].usages;
@@ -48,9 +48,6 @@ const CarbonAllMoreInfo = ({
     chartDataCopy.datasets[0].borderColor = validColor;
     chartDataCopy.labels = monthCategory.map((item: any) => item + '월');
     chartDataCopy.datasets[0].data = chartState.datasets[0].data;
-    const areaArr = buildingData?.map((item: any) =>
-      item.elecArea >= item.gasArea ? item.elecArea : item.gasArea
-    );
     const totalCarbonWaste = chartDataCopy.datasets[0].data?.reduce(
       (acc: number, cur: number) => acc + cur,
       0
