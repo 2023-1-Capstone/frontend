@@ -13,7 +13,15 @@ import { doughnutColor } from '../../../../../store/store';
 
 ChartJS.register(Tooltip, Legend, ChartDataLabels);
 
-const CarbonAllMoreInfo = ({ chartState }: { chartState: any }) => {
+const CarbonAllMoreInfo = ({
+  chartState,
+  carbonInfo,
+  curYear,
+}: {
+  chartState: any;
+  carbonInfo: any;
+  curYear: any;
+}) => {
   const { data: buildingData } = useQuery(['getBuilding'], () =>
     api('/api/buildings').then((data) => data.data.result)
   );
@@ -28,13 +36,18 @@ const CarbonAllMoreInfo = ({ chartState }: { chartState: any }) => {
 
   useEffect(() => {
     const chartDataCopy = JSON.parse(JSON.stringify(chartState));
-    const validData = chartState.datasets[0].data?.filter(
-      (val: number) => val !== 0
-    );
-    chartDataCopy.datasets[0].backgroundColor = doughnutColor;
-    chartDataCopy.datasets[0].borderColor = doughnutColor;
+    const targetData = carbonInfo?.filter(
+      (item: any) => item.year === parseInt(curYear)
+    )[0].usages;
+
+    const validColor = doughnutColor.map((color: string, idx: number) => {
+      if (targetData && targetData[idx]?.data) return color;
+      return 'rgb(0,0,0,0.1)';
+    });
+    chartDataCopy.datasets[0].backgroundColor = validColor;
+    chartDataCopy.datasets[0].borderColor = validColor;
     chartDataCopy.labels = monthCategory.map((item: any) => item + '월');
-    chartDataCopy.datasets[0].data = validData;
+    chartDataCopy.datasets[0].data = chartState.datasets[0].data;
     const areaArr = buildingData?.map((item: any) =>
       item.elecArea >= item.gasArea ? item.elecArea : item.gasArea
     );

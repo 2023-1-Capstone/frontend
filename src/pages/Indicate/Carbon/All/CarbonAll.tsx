@@ -64,8 +64,6 @@ const CarbonAll = () => {
   };
 
   useEffect(() => {
-    console.log(carbonData);
-
     if (carbonData) {
       setCurYearChart(carbonData);
     }
@@ -107,7 +105,11 @@ const CarbonAll = () => {
           ></Bar>
         </S.Container>
         <S.BottomWrapper>
-          <CarbonAllMoreInfo chartState={chartData}></CarbonAllMoreInfo>
+          <CarbonAllMoreInfo
+            carbonInfo={carbonData}
+            chartState={chartData}
+            curYear={curYear}
+          ></CarbonAllMoreInfo>
           <SummaryFrame>
             <Li>
               {curYear}년 총 탄소 배출량은{' '}
