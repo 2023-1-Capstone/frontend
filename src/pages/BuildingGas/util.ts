@@ -42,7 +42,7 @@ const createChartCategoryArray = (
   });
 
   const matchChartCategory: any = {
-    '월별 가스 사용량': ['2023', yearData, monthLabel],
+    '월별 가스 사용량': ['2023', yearData.reverse(), monthLabel],
     '연별 가스 사용량': [
       null,
       null,
