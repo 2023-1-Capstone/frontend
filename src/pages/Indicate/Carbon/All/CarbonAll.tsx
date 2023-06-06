@@ -24,7 +24,7 @@ const CarbonAll = () => {
   const { data: carbonData } = useQuery(['getCarbonData'], () =>
     api('/api/carbon/year').then((data: any) => data?.data.result)
   );
-
+  const date = new Date();
   const [mostWasteSeasonIdx, setMostWasteSeasonIdx] = useState<number>(0);
   const [mostWaste, setMostWaste] = useState<number>(0);
   const [chartData, setChartData] = useState(monthlyInitDataCarbonAll);
@@ -112,21 +112,33 @@ const CarbonAll = () => {
           ></CarbonAllMoreInfo>
           <SummaryFrame>
             <Li>
-              {curYear}년 총 탄소 배출량은{' '}
-              {Math.floor(totalCarbon * 1000).toLocaleString('ko-KR')}
-              kg입니다.
+              {parseInt(curYear) === date.getFullYear()
+                ? `${curYear}년 총 탄소 배출량은 ${Math.floor(
+                    totalCarbon * 1000
+                  ).toLocaleString('ko-KR')}kg 으로 예상됩니다.`
+                : `${curYear}년 총 탄소 배출량은 ${Math.floor(
+                    totalCarbon * 1000
+                  ).toLocaleString('ko-KR')}kg 입니다.`}
             </Li>
             <Li>
               사회적 탄소 배출 비용은{' '}
               {Math.floor((totalCarbon * 55400 * 1000) / 1000).toLocaleString(
                 'ko-KR'
               )}
-              원 입니다.
+              원으로 예상 됩니다.
             </Li>
             <Li>
-              {mostWasteSeasonIdx + 1}월에{' '}
-              {Math.floor(mostWaste * 1000).toLocaleString('ko-KR')}kg로 가장
-              많은 양의 탄소를 배출했습니다.
+              {parseInt(curYear) === date.getFullYear()
+                ? `${mostWasteSeasonIdx + 1}월에 ${Math.floor(
+                    mostWaste * 1000
+                  ).toLocaleString(
+                    'ko-KR'
+                  )}kg로 가장 많은 양의 탄소를 배출할 것으로 예상됩니다.`
+                : `${mostWasteSeasonIdx + 1}월에 ${Math.floor(
+                    mostWaste * 1000
+                  ).toLocaleString(
+                    'ko-KR'
+                  )}kg로 가장 많은 양의 탄소를 배출했습니다.`}
             </Li>
           </SummaryFrame>
           <TransItem
