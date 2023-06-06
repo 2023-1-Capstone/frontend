@@ -125,7 +125,7 @@ const ElectricityAll = () => {
       <S.ScrollChart>
         <S.ChartTopFrame>
           <S.ChartCategoryBox onClick={leftDropdownHandler}>
-            연간 전기 사용량
+            연간 전기 사용량&nbsp;<img src={downArrow}></img>
           </S.ChartCategoryBox>
         </S.ChartTopFrame>
         <S.YearWaterChartContainer>
