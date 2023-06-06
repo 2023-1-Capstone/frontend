@@ -18,7 +18,6 @@ import TransItem from '../../Component/TrasnItem/TransItem';
 import TreeTransItem from '../../Component/TreeTransItem/TreeTransItem';
 import CarbonAllMoreInfo from './Component/CarbonAllMoreInfo';
 import { SummaryFrame, Li } from '../../../../components/Summary/Summary.style';
-
 ChartJS.register(Tooltip, Legend);
 
 const CarbonAll = () => {
@@ -34,12 +33,24 @@ const CarbonAll = () => {
   const [totalCarbon, setTotalCarbon] = useState(0);
   const [yearList, setYearList] = useState([]);
 
+  const getBackgroundColor = (carbonInfo: any) => {
+    return carbonInfo?.map((item: any) => {
+      if (item?.data) return 'rgba(91,125,177,0.9)';
+      return '#D8D8D8';
+    });
+  };
+
   const setCurYearChart = (chartInfo: any) => {
     const chartCopyData = JSON.parse(JSON.stringify(chartData));
-    const usages = chartInfo
-      ?.filter((item: any) => item.year === parseInt(curYear))[0]
-      .usages.map((item: any) => (item ? item?.data / 1000 : 0));
+    const targetData = chartInfo?.filter(
+      (item: any) => item.year === parseInt(curYear)
+    )[0].usages;
+    const usages = targetData?.map((item: any) =>
+      item.data ? item?.data / 1000 : item?.prediction / 1000
+    );
+    const backgroundColor = getBackgroundColor(targetData);
     chartCopyData.datasets[0].data = usages;
+    chartCopyData.datasets[0].backgroundColor = backgroundColor;
     const totalUsage = usages?.reduce(
       (acc: number, cur: number) => acc + cur,
       0
