@@ -3,29 +3,29 @@ import styled from 'styled-components';
 const HomeCategoryList = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   padding: 0px;
-  gap: 5rem;
+  gap: 4rem;
+  top: 5.5rem;
+  border-radius: 2rem;
+  
   position: absolute;
-  width: fit-content;
-  height: 47.3rem;
+  width: 32rem;
+  height: 55rem;
   left: 3.5rem;
-  top: 16.5rem;
-  left: 50%;
-  transform: translateX(-50%);
+  //top: 5.5rem;
 `;
 
 const HomeCategoryFrame = styled.div`
-  width: 25rem;
-  height: 10rem;
+  width: 32rem;
+  height: 12.9rem;
 
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #99bfcf;
-  border-bottom: 3px solid #e7e7e7;
-  border-radius: 2rem;
-  box-shadow: 2px 0px 0px 0px rgba(0, 0, 0, 0.3);
+  
+  border-radius: 1.6rem;
 
   /* Inside auto layout */
 
@@ -71,16 +71,15 @@ const HomeCategoryDescriptionTop = styled.div`
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
-  font-size: 2.7rem;
+  font-size: 1.6rem;
   line-height: 2rem;
   /* or 125% */
-  top: 2rem;
-  position: relative;
+
   letter-spacing: 0.05rem;
-  left: 3rem;
+
   /* Black/900 */
 
-  color: #fff;
+  color: #212121;
 
   /* Inside auto layout */
 
@@ -114,24 +113,87 @@ const HomeCategoryDescriptionBottom = styled.div`
 `;
 
 const HomeCategoryIcon = styled.img`
-  position : relative;
-  background: url(${(props) => props.src})
+  //background: url(${(props) => props.src});
+
   /* Inside auto layout */
-  width : 6.4rem;
-  height : 6.4rem;
+
+  transition: transform 0.3s ease-in-out;
+  
   flex: none;
-  left : 3rem;
   order: 0;
   flex-grow: 0;
 `;
 
-const Nemo = styled.div`
-  position: relative;
-  border-left: 2px solid grey;
-  height: 7rem;
-  bottom: 4px;
-  left: 0.7rem;
+const HomeRepresentText = styled.div`
+  display: flex;
+  justify-content: center;
+  font-family: 'Pretendard';
+  font-size: 2rem;
+  color: white;
 `;
+
+const HomeRepresentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 30rem;
+  height: 30rem;
+  gap: 0.5rem;
+  border-radius: 1.5rem;
+`;
+
+const HomeContainerPartition = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  width: 30rem;
+  height: 15rem;
+  
+  border-radius: 1.5rem;
+`;
+
+const HomeIconContainer = styled.div<{corner: number}>`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border-radius: ${props => {
+    switch (props.corner) {
+      case 0: return '20px 0 0 0';
+      case 1: return '0 20px 0 0';
+      case 2: return '0 0 0 20px';
+      case 3: return '0 0 20px 0';
+    }
+  }};
+  
+  width: 14rem;
+  height: 14rem;
+  margin: auto;
+  gap: 1rem;
+  
+  &:hover{
+    & > img{
+      transform: scale(1.1);
+    }
+  }
+`;
+
+const HomeTextContainer = styled.div`
+  font-size: large;
+  font-family: Pretendard;
+`;
+
+const HomeMascotAndText = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+/*const HomeCategoryIconWrapper = styled.div`
+  background-color: white;
+  border-radius: ${props => props.idx === 1 ?};
+`;*/
 
 export {
   HomeCategoryList,
@@ -141,5 +203,11 @@ export {
   HomeCategoryFrame,
   HomeCategoryInner,
   HomeCategoryIcon,
-  Nemo,
+  HomeRepresentText,
+  HomeRepresentContainer,
+  HomeContainerPartition,
+  HomeIconContainer,
+  HomeTextContainer,
+  HomeMascotAndText,
+  //HomeCategoryIconWrapper,
 };
