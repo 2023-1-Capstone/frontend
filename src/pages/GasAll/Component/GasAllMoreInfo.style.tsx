@@ -72,6 +72,7 @@ const Container = styled.div`
   width: 33rem;
   height: 33rem;
   top: 1.2rem;
+  margin-bottom: 1rem;
   border-radius: 1rem;
 `;
 

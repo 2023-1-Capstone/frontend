@@ -62,9 +62,40 @@ const monthlyInitData: any = {
   datasets: [
     {
       backgroundColor: ['#6E85B7'],
+      borderColor: ['#6E85B7'],
       maxBarThickness: 35,
       borderRadius: 3,
       data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      label: '사용량',
+    },
+
+    {
+      type: 'pie',
+      backgroundColor: ['#D8D8D8'],
+      borderColor: ['#D8D8D8'],
+      label: '예측값',
+    },
+    {
+      backgroundColor: ['#ff6666'],
+      borderColor: ['#ff6666'],
+      type: 'pie',
+      maxBarThickness: 35,
+      borderRadius: 3,
+      label: '실사용 > 예측',
+    },
+  ],
+};
+
+const monthlyInitDataCarbonAll: any = {
+  labels: monthCategory,
+  datasets: [
+    {
+      backgroundColor: ['#6E85B7'],
+      borderColor: ['#6E85B7'],
+      maxBarThickness: 35,
+      borderRadius: 3,
+      data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      label: '사용량',
     },
   ],
 };
@@ -77,6 +108,7 @@ const monthlyInitWaterData: any = {
       yAxisID: 'y-left',
       maxBarThickness: 35,
       borderRadius: 3,
+      label: '사용량',
       data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     },
     {
@@ -86,7 +118,16 @@ const monthlyInitWaterData: any = {
       borderColor: ['#9BA4B5'],
       maxBarThickness: 35,
       borderRadius: 3,
+      borderWidth: 1,
+      label: '요금',
       data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    },
+    {
+      type: 'pie',
+      yAxisID: 'y-left',
+      backgroundColor: ['#D8D8D8'],
+      borderColor: ['#D8D8D8'],
+      label: '예측값',
     },
   ],
 };
@@ -95,6 +136,17 @@ const monthlyInitAllData: any = {
   labels: monthCategory,
   datasets: [
     {
+      type: 'line',
+      yAxisID: 'y-right',
+      backgroundColor: ['#FFFFFF'],
+      borderColor: ['#9BA4B5'],
+      maxBarThickness: 35,
+      borderRadius: 3,
+      borderWidth: 1,
+      data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      label: '요금',
+    },
+    {
       backgroundColor: ['#6E85B7'],
       yAxisID: 'y-left',
       maxBarThickness: 35,
@@ -102,15 +154,13 @@ const monthlyInitAllData: any = {
       data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
       label: '사용량',
     },
+
     {
-      type: 'line',
-      yAxisID: 'y-right',
-      backgroundColor: ['#FFFFFF'],
-      borderColor: ['#9BA4B5'],
-      maxBarThickness: 35,
-      borderRadius: 3,
-      data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-      label: '요금',
+      type: 'pie',
+      yAxisID: 'y-left',
+      backgroundColor: ['#D8D8D8'],
+      borderColor: ['#D8D8D8'],
+      label: '예측값',
     },
   ],
 };
@@ -127,6 +177,19 @@ const monthlyInitDatas: any = {
 };
 
 const seasonInitData: any = {
+  labels: ['봄', '여름', '가을', '겨울'],
+  datasets: [
+    {
+      maxBarThickness: 35,
+      backgroundColor: ['#6E85B7'],
+      borderColor: ['#6E85B7'],
+      borderRadius: 3,
+      data: [],
+    },
+  ],
+};
+
+const seasonInitDataDoughnut: any = {
   labels: ['봄', '여름', '가을', '겨울'],
   datasets: [
     {
@@ -292,7 +355,45 @@ const optionsWater: any = {
       display: false,
     },
     legend: {
-      display: false,
+      display: true,
+      onClick: (click: any, legendItem: any, legend: any) => {
+        const datasets = legend.legendItems.map(
+          (dataset: any, index: number) => {
+            return dataset.text;
+          }
+        );
+
+        const index = datasets.indexOf(legendItem.text);
+        if (legend.chart.isDatasetVisible(index) === true)
+          legend.chart.hide(index);
+        else legend.chart.show(index);
+      },
+      labels: {
+        usePointStyle: true,
+        generateLabels: function (chart: any) {
+          let visibility: any = [];
+          for (let i = 0; i < chart.data.datasets.length; i++) {
+            if (chart.isDatasetVisible(i) === true) visibility.push(false);
+            else visibility.push(true);
+          }
+
+          let pointStyle: any = [];
+          chart.data.datasets.forEach((dataset: any) => {
+            if (dataset.type === 'line') pointStyle.push('line');
+            else pointStyle.push('rect');
+          });
+
+          return chart.data.datasets.map((dataset: any, idx: number) => ({
+            text: dataset.label,
+            fillStyle: dataset.backgroundColor
+              ? dataset?.backgroundColor[0]
+              : null,
+            strokeStyle: dataset.borderColor,
+            pointStyle: pointStyle[idx],
+            hidden: visibility[idx],
+          }));
+        },
+      },
     },
     tooltip: {
       callbacks: {
@@ -342,13 +443,51 @@ const optionsElectricityAll: any = {
     },
     legend: {
       display: true,
+      onClick: (click: any, legendItem: any, legend: any) => {
+        const datasets = legend.legendItems.map(
+          (dataset: any, index: number) => {
+            return dataset.text;
+          }
+        );
+
+        const index = datasets.indexOf(legendItem.text);
+        if (legend.chart.isDatasetVisible(index) === true)
+          legend.chart.hide(index);
+        else legend.chart.show(index);
+      },
+      labels: {
+        usePointStyle: true,
+        generateLabels: function (chart: any) {
+          let visibility: any = [];
+          for (let i = 0; i < chart.data.datasets.length; i++) {
+            if (chart.isDatasetVisible(i) === true) visibility.push(false);
+            else visibility.push(true);
+          }
+
+          let pointStyle: any = [];
+          chart.data.datasets.forEach((dataset: any) => {
+            if (dataset.type === 'line') pointStyle.push('line');
+            else pointStyle.push('rect');
+          });
+
+          return chart.data.datasets.map((dataset: any, idx: number) => ({
+            text: dataset.label,
+            fillStyle: dataset.backgroundColor
+              ? dataset?.backgroundColor[0]
+              : null,
+            strokeStyle: dataset.borderColor,
+            pointStyle: pointStyle[idx],
+            hidden: visibility[idx],
+          }));
+        },
+      },
     },
     tooltip: {
       callbacks: {
         title: (context: any) => context[0].label + '월',
         label: (context: any) => {
           let targetLabel = '';
-          if (context.datasetIndex === 0)
+          if (context.datasetIndex === 1)
             targetLabel = context.parsed.y.toLocaleString('ko-KR') + 'Mwh';
           else targetLabel = context.parsed.y.toLocaleString('ko-KR') + '만원';
           let label = context.dataset.label + '' || '';
@@ -388,14 +527,52 @@ const optionsGasAll: any = {
       display: false,
     },
     legend: {
-      display: false,
+      display: true,
+      onClick: (click: any, legendItem: any, legend: any) => {
+        const datasets = legend.legendItems.map(
+          (dataset: any, index: number) => {
+            return dataset.text;
+          }
+        );
+
+        const index = datasets.indexOf(legendItem.text);
+        if (legend.chart.isDatasetVisible(index) === true)
+          legend.chart.hide(index);
+        else legend.chart.show(index);
+      },
+      labels: {
+        usePointStyle: true,
+        generateLabels: function (chart: any) {
+          let visibility: any = [];
+          for (let i = 0; i < chart.data.datasets.length; i++) {
+            if (chart.isDatasetVisible(i) === true) visibility.push(false);
+            else visibility.push(true);
+          }
+
+          let pointStyle: any = [];
+          chart.data.datasets.forEach((dataset: any) => {
+            if (dataset.type === 'line') pointStyle.push('line');
+            else pointStyle.push('rect');
+          });
+
+          return chart.data.datasets.map((dataset: any, idx: number) => ({
+            text: dataset.label,
+            fillStyle: dataset.backgroundColor
+              ? dataset?.backgroundColor[0]
+              : null,
+            strokeStyle: dataset.borderColor,
+            pointStyle: pointStyle[idx],
+            hidden: visibility[idx],
+          }));
+        },
+      },
     },
     tooltip: {
       callbacks: {
         title: (context: any) => context[0].label + '월',
         label: (context: any) => {
           let targetLabel = '';
-          if (context.datasetIndex === 0)
+          if (context.datasetIndex === 1)
             targetLabel = context.parsed.y.toLocaleString('ko-KR') + 'm3';
           else targetLabel = context.parsed.y.toLocaleString('ko-KR') + '만원';
           let label = context.dataset.label + '' || '';
@@ -413,7 +590,7 @@ const optionsGasAll: any = {
     'y-left': {
       type: 'linear',
       position: 'left',
-      grace: '200%',
+      grace: '100%',
       grid: {
         display: false,
       },
@@ -421,6 +598,7 @@ const optionsGasAll: any = {
     'y-right': {
       type: 'linear',
       position: 'right',
+      grace: '50',
       grid: {
         display: false,
       },
@@ -434,6 +612,79 @@ const options: any = {
     datalabels: {
       display: false,
     },
+
+    legend: {
+      display: true,
+      onClick: (click: any, legendItem: any, legend: any) => {
+        const datasets = legend.legendItems.map(
+          (dataset: any, index: number) => {
+            return dataset.text;
+          }
+        );
+
+        const index = datasets.indexOf(legendItem.text);
+        if (legend.chart.isDatasetVisible(index) === true)
+          legend.chart.hide(index);
+        else legend.chart.show(index);
+      },
+      labels: {
+        usePointStyle: true,
+        generateLabels: function (chart: any) {
+          let visibility: any = [];
+          for (let i = 0; i < chart.data.datasets.length; i++) {
+            if (chart.isDatasetVisible(i) === true) visibility.push(false);
+            else visibility.push(true);
+          }
+
+          let pointStyle: any = [];
+          chart.data.datasets.forEach((dataset: any) => {
+            if (dataset.type === 'line') pointStyle.push('line');
+            else pointStyle.push('rect');
+          });
+
+          return chart.data.datasets.map((dataset: any, idx: number) => ({
+            text: dataset.label,
+            fillStyle: dataset.backgroundColor
+              ? dataset?.backgroundColor[0]
+              : null,
+            strokeStyle: dataset.borderColor,
+            pointStyle: pointStyle[idx],
+            hidden: visibility[idx],
+          }));
+        },
+      },
+    },
+
+    tooltip: {
+      callbacks: {
+        title: (context: any) => context[0].label + '월',
+        label: (context: any) => {
+          let label = context.dataset.label + '' || '';
+          return context.parsed.y !== null ? context.parsed.y + 'Mwh' : null;
+        },
+      },
+    },
+  },
+  scales: {
+    x: {
+      grid: {
+        display: false,
+      },
+    },
+    y: {
+      grid: {
+        display: false,
+      },
+    },
+  },
+};
+
+const optionsBuildingElectricitiy: any = {
+  reponsive: false,
+  plugins: {
+    datalabels: {
+      display: false,
+    },
     legend: {
       display: false,
     },
@@ -442,7 +693,44 @@ const options: any = {
         title: (context: any) => context[0].label + '월',
         label: (context: any) => {
           let label = context.dataset.label + '' || '';
-          return context.parsed.y !== null ? context.parsed.y + 'Mwh' : null;
+          return context.parsed.y !== null
+            ? context.parsed.y.toLocaleString('ko-KR') + 'Mwh'
+            : null;
+        },
+      },
+    },
+  },
+  scales: {
+    x: {
+      grid: {
+        display: false,
+      },
+    },
+    y: {
+      grid: {
+        display: false,
+      },
+    },
+  },
+};
+
+const optionsBuildingGas: any = {
+  reponsive: false,
+  plugins: {
+    datalabels: {
+      display: false,
+    },
+    legend: {
+      display: false,
+    },
+    tooltip: {
+      callbacks: {
+        title: (context: any) => context[0].label + '월',
+        label: (context: any) => {
+          let label = context.dataset.label + '' || '';
+          return context.parsed.y !== null
+            ? context.parsed.y.toLocaleString('ko-KR') + 'm3'
+            : null;
         },
       },
     },
@@ -494,6 +782,39 @@ const optionsSeason: any = {
   },
 };
 
+const optionsSeasonGas: any = {
+  reponsive: false,
+  plugins: {
+    datalabels: {
+      display: false,
+    },
+    legend: {
+      display: false,
+    },
+    tooltip: {
+      callbacks: {
+        title: (context: any) => context[0].label,
+        label: (context: any) => {
+          let label = context.dataset.label + '' || '';
+          return context.parsed.y !== null ? context.parsed.y + 'm3' : null;
+        },
+      },
+    },
+  },
+  scales: {
+    x: {
+      grid: {
+        display: false,
+      },
+    },
+    y: {
+      grid: {
+        display: false,
+      },
+    },
+  },
+};
+
 const optionsDoughnut: any = {
   layout: {
     padding: {
@@ -504,10 +825,6 @@ const optionsDoughnut: any = {
   },
   cutout: '65%',
   plugins: {
-    title: {
-      display: false,
-      text: '월별 에너지 사용량 비율',
-    },
     tooltips: {
       callbacks: {
         title: (context: any) => context[0].label + '월',
@@ -688,8 +1005,47 @@ const optionsGas: any = {
       display: false,
     },
     legend: {
-      display: false,
+      display: true,
+      onClick: (click: any, legendItem: any, legend: any) => {
+        const datasets = legend.legendItems.map(
+          (dataset: any, index: number) => {
+            return dataset.text;
+          }
+        );
+
+        const index = datasets.indexOf(legendItem.text);
+        if (legend.chart.isDatasetVisible(index) === true)
+          legend.chart.hide(index);
+        else legend.chart.show(index);
+      },
+      labels: {
+        usePointStyle: true,
+        generateLabels: function (chart: any) {
+          let visibility: any = [];
+          for (let i = 0; i < chart.data.datasets.length; i++) {
+            if (chart.isDatasetVisible(i) === true) visibility.push(false);
+            else visibility.push(true);
+          }
+
+          let pointStyle: any = [];
+          chart.data.datasets.forEach((dataset: any) => {
+            if (dataset.type === 'line') pointStyle.push('line');
+            else pointStyle.push('rect');
+          });
+
+          return chart.data.datasets.map((dataset: any, idx: number) => ({
+            text: dataset.label,
+            fillStyle: dataset.backgroundColor
+              ? dataset?.backgroundColor[0]
+              : null,
+            strokeStyle: dataset.borderColor,
+            pointStyle: pointStyle[idx],
+            hidden: visibility[idx],
+          }));
+        },
+      },
     },
+
     tooltip: {
       callbacks: {
         title: (context: any) => context[0].label + '월',
@@ -984,6 +1340,7 @@ export {
   yearCategory,
   indicateCategory,
   seasonInitData,
+  seasonInitDataDoughnut,
   gasChartCategory,
   buildingSrc,
   seasonIdx,
@@ -1011,4 +1368,8 @@ export {
   optionsElectricityAll,
   optionsGasAll,
   monthlyInitAllData,
+  optionsBuildingElectricitiy,
+  monthlyInitDataCarbonAll,
+  optionsBuildingGas,
+  optionsSeasonGas,
 };

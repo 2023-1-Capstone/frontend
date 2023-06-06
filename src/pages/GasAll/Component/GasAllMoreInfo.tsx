@@ -13,6 +13,7 @@ import { findMostWasteIdx } from '../../BuildingElectricity/util';
 import { BuildingGasPlugin } from '../../../store/chartPlugin';
 import TransItem from '../../Indicate/Component/TrasnItem/TransItem';
 import { SummaryFrame, Li } from '../../../components/Summary/Summary.style';
+import { findTargetData } from '../util';
 
 ChartJS.register(Tooltip, Legend, ChartDataLabels);
 
@@ -35,20 +36,29 @@ const MonthlyMoreInfo = ({
   useEffect(() => {
     // 도넛 차트에 물 정보 세팅
     const chartStateCopy = JSON.parse(JSON.stringify(chartData));
-    chartStateCopy.datasets[0].data = chartState.datasets[0].data;
-    chartStateCopy.datasets[0].borderColor = doughnutColor;
+    const targetData = findTargetData(curYear, gasInfo)?.feeResponses;
+    const validColor = doughnutColor.map((color: string, idx: number) => {
+      if (targetData && targetData[idx]?.usages) return color;
+      return 'rgb(0,0,0,0.1)';
+    });
+    chartStateCopy.datasets[0].data = chartState.datasets[1].data;
+    chartStateCopy.datasets[0].backgroundColor = validColor;
+    chartStateCopy.datasets[0].borderColor = validColor;
     chartStateCopy.labels = monthCategory.map((item: any) => item + '월');
 
+    console.log(targetData);
+
     //총 사용량 prediction이 들어오면 가스와 함께 수정 해줘야한다.
-    const totalGasWaste = chartStateCopy?.datasets[0].data?.reduce(
-      (acc: number, cur: number) => acc + cur,
+    const totalGasWaste = targetData?.reduce(
+      (acc: any, cur: any) =>
+        cur?.usages ? acc + cur?.usages : acc + cur?.prediction,
       0
     );
 
     /**
      * 총 요금 사용량 prediction이 들어오면 수정 해줘야한다.
      */
-    const totalFee = chartState?.datasets[1].data?.reduce(
+    const totalFee = chartState?.datasets[0]?.data?.reduce(
       (acc: number, cur: number) => {
         if (cur) return acc + cur;
         return acc;

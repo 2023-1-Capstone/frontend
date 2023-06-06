@@ -55,9 +55,9 @@ const Water = () => {
       ?.filter(
         (item: chartInfoType) => item.year === parseInt(rightCategory)
       )[0]
-      ?.usages.map((item: chartInfoUsageType) => {
+      ?.usages?.map((item: chartInfoUsageType) => {
         if (item?.data) return 'rgb(91,125,177,0.9)';
-        return 'rgb(0,0,0,0.1)';
+        return '#D8D8D8';
       });
   };
 
@@ -79,13 +79,16 @@ const Water = () => {
 
     // 요금 리스트 뽑기
     const feeList = targetData?.usages.map((item: any) =>
-      Math.floor(item.fee / 10000)
+      item?.fee
+        ? Math.floor(item.fee / 10000)
+        : Math.floor(item.fee_prediction / 10000)
     );
 
     //요금 리스트 세팅
     chartStateCopy.datasets[1].data = feeList;
+    chartStateCopy.datasets[1].backgroundColor = backgroundColor;
     setChartState(chartStateCopy);
-    setRightDropDown(yearList);
+    setRightDropDown(yearList?.reverse());
   }, [waterInfo, rightCategory]);
 
   useEffect(() => {

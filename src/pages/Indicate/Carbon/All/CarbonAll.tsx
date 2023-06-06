@@ -3,7 +3,10 @@ import { useState } from 'react';
 import { WrapperInner } from '../../../../components/Wrapper/Wrapper.style';
 import { Chart as ChartJS, Tooltip, Legend } from 'chart.js/auto';
 import { Bar } from 'react-chartjs-2';
-import { optionsCarbonAll, monthlyInitData } from '../../../../store/store';
+import {
+  optionsCarbonAll,
+  monthlyInitDataCarbonAll,
+} from '../../../../store/store';
 import downArrow from '../../../../assets/svg/downArrow.svg';
 import * as S from './CarbonAll.style';
 import { Dropdown } from '../../../../components/Dropdown/Dropdown';
@@ -25,7 +28,7 @@ const CarbonAll = () => {
 
   const [mostWasteSeasonIdx, setMostWasteSeasonIdx] = useState<number>(0);
   const [mostWaste, setMostWaste] = useState<number>(0);
-  const [chartData, setChartData] = useState(monthlyInitData);
+  const [chartData, setChartData] = useState(monthlyInitDataCarbonAll);
   const [isDropdownOn, setIsDropdownOn] = useState<Boolean>(false);
   const [curYear, setCurYear] = useState<string>('2023');
   const [totalCarbon, setTotalCarbon] = useState(0);
@@ -35,7 +38,7 @@ const CarbonAll = () => {
     const chartCopyData = JSON.parse(JSON.stringify(chartData));
     const usages = chartInfo
       ?.filter((item: any) => item.year === parseInt(curYear))[0]
-      .usages.map((item: number) => item / 1000);
+      .usages.map((item: any) => (item ? item?.data / 1000 : 0));
     chartCopyData.datasets[0].data = usages;
     const totalUsage = usages?.reduce(
       (acc: number, cur: number) => acc + cur,
@@ -50,6 +53,8 @@ const CarbonAll = () => {
   };
 
   useEffect(() => {
+    console.log(carbonData);
+
     if (carbonData) {
       setCurYearChart(carbonData);
     }
@@ -113,10 +118,10 @@ const CarbonAll = () => {
           </SummaryFrame>
           <TransItem
             type={'carbon'}
-            waste={totalCarbon}
+            waste={totalCarbon * 1000}
             curYear={curYear}
           ></TransItem>
-          <TreeTransItem carbonWaste={totalCarbon}></TreeTransItem>
+          <TreeTransItem carbonWaste={totalCarbon * 1000}></TreeTransItem>
         </S.BottomWrapper>
       </S.SeasonWrapper>
     </WrapperInner>

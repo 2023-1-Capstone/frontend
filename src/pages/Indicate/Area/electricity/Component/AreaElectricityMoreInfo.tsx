@@ -77,7 +77,7 @@ const AreaElectricityMoreInfo = ({
         </Li>
         <Li>
           1㎡당{' '}
-          {(chartState?.datasets[0].data[mostWasteIdx] * 7000).toLocaleString(
+          {(chartState?.datasets[0].data[mostWasteIdx] * 120).toLocaleString(
             'ko-KR'
           )}
           원 정도를 사용하였습니다.

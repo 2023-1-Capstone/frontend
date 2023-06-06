@@ -58,11 +58,12 @@ const MonthlyMoreInfo = ({
 
   useEffect(() => {
     if (chartState) {
-      const chartStateCopy = JSON.parse(JSON.stringify(chartState));
+      const chartStateCopy = JSON.parse(JSON.stringify(chartData));
       const validColor = doughnutColor.map((color: string, idx: number) => {
         if (predictArray && predictArray[idx]?.data) return color;
         return 'rgb(0,0,0,0.1)';
       });
+      chartStateCopy.datasets[0].data = chartState.datasets[0].data;
       chartStateCopy.datasets[0].backgroundColor = validColor;
       chartStateCopy.datasets[0].borderColor = validColor;
       chartStateCopy.labels = monthCategory.map((item: any) => item + '월');

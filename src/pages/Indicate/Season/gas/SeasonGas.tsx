@@ -2,12 +2,11 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { WrapperInner } from '../../../../components/Wrapper/Wrapper.style';
 import { Chart as ChartJS, Tooltip, Legend } from 'chart.js/auto';
-import { Bar, Doughnut } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 import {
-  optionsGas,
+  optionsSeasonGas,
   seasonInitData,
-  season,
-  optionsDoughnut,
+  seasonInitDataDoughnut,
 } from '../../../../store/store';
 import downArrow from '../../../../assets/svg/downArrow.svg';
 import * as S from './SeasonGas.style';
@@ -16,11 +15,8 @@ import { dropdownInfoCreater } from '../../../BuildingElectricity/util';
 import { useQuery } from '@tanstack/react-query';
 import { getAverageFee, findMostWasteIdx } from '../util';
 import api from '../../../../api/api';
-import TransItem from '../../Component/TrasnItem/TransItem';
 import informationSVG from '../../../../assets/svg/information.svg';
-import { getUniqueNumberList } from '../util';
-import { BuildingGasPlugin } from '../../../../store/chartPlugin';
-import { SummaryFrame, Li } from '../../../../components/Summary/Summary.style';
+import SeasonGasMoreInfo from './SeasonGasMoreInfo/SeasonGasMoreInfo';
 
 ChartJS.register(Tooltip, Legend);
 
@@ -46,14 +42,14 @@ const SeasonGas = () => {
 
   const [mostWasteSeasonIdx, setMostWasteSeasonIdx] = useState<number>(0);
   const [chartData, setChartData] = useState(seasonInitData);
+  const [chartDataDoughnut, setChartDataDoughtnut] = useState(
+    seasonInitDataDoughnut
+  );
   const [yearList, setYearList] = useState([]);
   const [isDropdownOn, setIsDropdownOn] = useState<Boolean>(false);
   const [curYear, setCurYear] = useState<string>('2023');
   const [infoData, setInfoData] = useState({ watt: 0, fee: 0 });
   const [infoModalState, setInfoModalState] = useState<string>('hidden');
-  const [randomIdxList, setRandomIdxList] = useState<number[]>(
-    getUniqueNumberList(4, 6)
-  );
 
   const getPercent = (usageArr: number[], targetUsage: number) => {
     let numOfNotNullSeason = 0;
@@ -76,8 +72,14 @@ const SeasonGas = () => {
       );
       // 차트 정보 세팅
       const chartDataCopy = JSON.parse(JSON.stringify(chartData));
+      const chartDataDoughnutCopy = JSON.parse(
+        JSON.stringify(chartDataDoughnut)
+      );
       const usageList = validData[validData.length - 1].usages;
       chartDataCopy.datasets[0].data = usageList.filter(
+        (val: number) => val !== 0
+      );
+      chartDataDoughnut.datasets[0].data = usageList.filter(
         (val: number) => val !== 0
       );
       setChartData(chartDataCopy);
@@ -219,38 +221,15 @@ const SeasonGas = () => {
             width="350"
             height="250"
             data={chartData}
-            options={optionsGas}
+            options={optionsSeasonGas}
           ></Bar>
         </S.Container>
-        <S.BottomWrapper>
-          <S.BuildingMoreInfoTitle>요약 정보</S.BuildingMoreInfoTitle>
-          <S.ChartIndicatorLine></S.ChartIndicatorLine>
-          <Doughnut
-            options={optionsDoughnut}
-            data={chartData}
-            plugins={[BuildingGasPlugin]}
-          ></Doughnut>
-          <SummaryFrame>
-            <Li>
-              해당년도 사용 1위는 '{season[mostWasteSeasonIdx]}'이며 계절 평균
-              대비 &nbsp;
-              {getPercent(chartData?.datasets[0].data, infoData?.watt)}%가
-              높습니다.
-            </Li>
-            <Li>
-              총 사용량은 {infoData.watt.toLocaleString('ko-KR')}m3 입니다.
-            </Li>
-            <Li>
-              예상 사용 요금은 &nbsp;
-              {Math.floor(infoData.fee).toLocaleString('ko-KR')}원 입니다.
-            </Li>
-          </SummaryFrame>
-          <TransItem
-            type={'resource'}
-            waste={infoData.fee}
-            curYear={curYear}
-          ></TransItem>
-        </S.BottomWrapper>
+        <SeasonGasMoreInfo
+          chartState={chartData}
+          curYear={curYear}
+          mostWasteSeasonIdx={mostWasteSeasonIdx}
+          infoData={infoData}
+        ></SeasonGasMoreInfo>
       </S.SeasonWrapper>
     </WrapperInner>
   );

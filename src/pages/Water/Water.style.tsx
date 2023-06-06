@@ -116,7 +116,7 @@ const ChartCategoryBox = styled.div`
   align-items: center;
 
   color: #000000;
-
+  opacity: 0.7;
   /* Inside auto layout */
 
   flex: none;
@@ -126,7 +126,7 @@ const ChartCategoryBox = styled.div`
 
 const ChartYearBox = styled.div`
   position: absolute;
-  width: fit-content;
+  width: 7.5rem;
   height: 2.7rem;
   padding: 5px;
 
@@ -153,7 +153,7 @@ const ChartYearBox = styled.div`
   text-align: center;
 
   color: #000000;
-
+  opacity: 0.7;
   /* Inside auto layout */
 
   flex: none;
