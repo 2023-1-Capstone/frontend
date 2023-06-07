@@ -19,10 +19,6 @@ const DropdownFrame = styled.div<{
   width: fit-content;
   height: ${(props) => props.height};
 
-  ::-webkit-scrollbar {
-    display: none;
-  }
-
   background: #f7f7f7;
 
   border-radius: 0.3rem;
