@@ -4,7 +4,6 @@ const HeaderFrame = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
   padding: 0px;
   gap: 6.6rem;
   position: absolute;
@@ -16,9 +15,11 @@ const HeaderFrame = styled.div`
 `;
 
 const HeaderTitleFrame = styled.div`
-  position: relative;
+  position: absolute;
   display: flex;
   flex-direction: row;
+
+  left: 8rem;
 
   align-items: center;
   padding: 0px;
@@ -26,7 +27,7 @@ const HeaderTitleFrame = styled.div`
 
   width: fit-content;
   height: 5.8rem;
-
+  cursor: pointer;
   /* Inside auto layout */
 
   flex: none;
@@ -77,12 +78,13 @@ const HeaderBackArrow = styled.img`
   flex: none;
   order: 0;
   flex-grow: 0;
+  cursor: pointer;
 `;
 
 const HeaderMenu = styled.img`
   /* Black/600 */
-  position: relative;
-  right: 0.3rem;
+  position: absolute;
+  left: 31rem;
   width: 3rem;
 
   background: url(${(props) => props.src});

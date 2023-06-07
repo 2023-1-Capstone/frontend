@@ -16,11 +16,17 @@ const Header = () => {
     window.location.href = 'http://localhost:3000';
   };
 
+  const moveBack = () => {
+    navigate(-1);
+  };
+
   return (
     <>
       <S.HeaderFrame>
-        <S.HeaderBackArrow src={back}></S.HeaderBackArrow>
-        <S.HeaderTitleFrame>
+        {window.location.pathname !== '/home' ? (
+          <S.HeaderBackArrow src={back} onClick={moveBack}></S.HeaderBackArrow>
+        ) : null}
+        <S.HeaderTitleFrame onClick={() => navigate('/home')}>
           <S.HeaderTitleSymbol src={symbolMark}></S.HeaderTitleSymbol>
           <S.HeaderTitleText>Carbon live</S.HeaderTitleText>
         </S.HeaderTitleFrame>
