@@ -16,6 +16,7 @@ import {
 } from '../../store/store';
 import WaterMoreInfo from './Component/GasAllMoreInfo';
 import { findTargetData, getBackgroundColor } from './util';
+import { gasYearAllData, optionsGasAllYear } from './GasChartOption';
 
 const waterCategory = ['월별 가스 사용량', '연간 가스 사용량'];
 
@@ -23,7 +24,7 @@ ChartJS.register(Tooltip, Legend);
 
 const GasAll = () => {
   const [chartState, setChartState] = useState(monthlyInitAllData);
-  const [yearChartState, setYearChartState] = useState(monthlyInitData);
+  const [yearChartState, setYearChartState] = useState(gasYearAllData);
   const [chartCategory, setChartCategory] =
     useState<string>('월별 가스 사용량');
   const [rightCategory, setRightCategory] = useState<string>('2023');
@@ -66,20 +67,34 @@ const GasAll = () => {
   };
 
   const setYearChart = () => {
-    const yearList = gasInfo?.map((item: any) => item.year).reverse();
+    const yearList = gasInfo?.map((item: any) => item.year);
     const copyChartState = JSON.parse(JSON.stringify(yearChartState));
     const yearUsageList = gasInfo?.map((item: any) => {
       return item.feeResponses?.reduce((acc: any, cur: any) => {
         if (cur?.usages) return acc + cur?.usages;
-        return acc;
+        return cur ? acc + cur?.prediction : 0;
       }, 0);
     });
+    const yearFeeList = gasInfo?.map((item: any) => {
+      return item.feeResponses?.reduce((acc: any, cur: any) => {
+        if (cur?.fee) return acc + cur?.fee;
+        return acc + cur?.fee_prediction;
+      }, 0);
+    });
+
+    const validYearFeeList = yearFeeList?.map((item: any) =>
+      item ? item : null
+    );
+
     copyChartState.labels = yearList;
     copyChartState.datasets[0].data = yearUsageList;
+    copyChartState.datasets[1].data = validYearFeeList;
     setYearChartState(copyChartState);
   };
 
   useEffect(() => {
+    console.log(gasInfo);
+
     setMonthChart();
     const yearList = gasInfo?.map((item: any) => item.year).reverse();
     setYearChart();
@@ -124,7 +139,12 @@ const GasAll = () => {
           </S.ChartCategoryBox>
         </S.ChartTopFrame>
         <S.YearWaterChartContainer>
-          <Bar data={yearChartState} options={optionsGasAll}></Bar>
+          <Bar
+            width={1500}
+            height={500}
+            data={yearChartState}
+            options={optionsGasAllYear}
+          ></Bar>
         </S.YearWaterChartContainer>
       </S.ScrollChart>
     ),
