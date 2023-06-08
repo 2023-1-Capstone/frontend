@@ -403,13 +403,13 @@ const Calculate = styled.div`
   margin-top: -1rem;
   color: #fff;
   font-weight: 400;
+  cursor: pointer;
 `;
 
 const InfoImage = styled.img`
   width: 2rem;
   height: 2rem;
   background: url(${(props) => props.src});
-  cursor: pointer;
 `;
 
 const Li = styled.li`

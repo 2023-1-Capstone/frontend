@@ -120,18 +120,19 @@ const AreaGas = () => {
             })}
           </S.BuildingInfoItem>
         </S.BuildingInfoFrame>
-        <S.Calculate>
+        <S.Calculate
+          onMouseEnter={() => {
+            setInfoModalState('visible');
+          }}
+          onMouseLeave={() => {
+            setInfoModalState('hidden');
+          }}
+        >
           건물정보
           <S.InfoImage
             width="20px"
             height="20px"
             src={informationSVG}
-            onMouseEnter={() => {
-              setInfoModalState('visible');
-            }}
-            onMouseLeave={() => {
-              setInfoModalState('hidden');
-            }}
           ></S.InfoImage>
         </S.Calculate>
 
