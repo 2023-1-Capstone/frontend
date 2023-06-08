@@ -40,7 +40,7 @@ api.interceptors.response.use(
 
     if (error?.response?.status === 404) {
       alert('세션이 만료되었습니다. 다시 로그인 해주세요');
-      window.location.href = 'http://localhost:3000';
+      window.location.href = `${process.env.REACT_APP_SERVICE_URL}`;
     }
 
     if (error?.response?.status === 401) {
@@ -61,7 +61,7 @@ api.interceptors.response.use(
         }
       } catch (e) {
         console.log(e);
-        window.location.href = 'http://localhost:3000';
+        window.location.href = `${process.env.REACT_APP_SERVICE_URL}`;
       }
     }
   }

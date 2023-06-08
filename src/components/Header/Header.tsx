@@ -12,8 +12,8 @@ const Header = () => {
 
   const logout = async () => {
     const response = await postLogout();
-    console.log(response);
-    window.location.href = 'http://localhost:3000';
+    if (response?.status === 200)
+      window.location.href = `${process.env.REACT_APP_SERVICE_URL}`;
   };
 
   const moveBack = () => {
