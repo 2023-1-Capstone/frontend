@@ -9,13 +9,13 @@ import { Dropdown } from '../../components/Dropdown/Dropdown';
 import { dropdownInfoCreater } from './util';
 import api from '../../api/api';
 import {
-  monthlyInitData,
   optionsElectricityAll,
   monthlyInitAllData,
   yearCategory,
 } from '../../store/store';
 import WaterMoreInfo from './Component/ElectricityAllMoreInfo';
 import { getBackgroundColor, findTargetData } from './util';
+import { elecAllData, optionsElecAllYear } from './ElecChartOption';
 
 const waterCategory = ['월별 전기 사용량', '연간 전기 사용량'];
 
@@ -23,7 +23,7 @@ ChartJS.register(Tooltip, Legend);
 
 const ElectricityAll = () => {
   const [chartState, setChartState] = useState(monthlyInitAllData);
-  const [yearChartState, setYearChartState] = useState(monthlyInitData);
+  const [yearChartState, setYearChartState] = useState(elecAllData);
   const [chartCategory, setChartCategory] =
     useState<string>('월별 전기 사용량');
   const [rightCategory, setRightCategory] = useState<string>('2023');
@@ -75,17 +75,23 @@ const ElectricityAll = () => {
     const yearUsageList = electricityInfo?.map((item: any) => {
       return item.feeResponses?.reduce((acc: any, cur: any) => {
         if (cur?.usages) return acc + cur?.usages;
-        return acc;
+        return cur ? acc + cur?.prediction : 0;
+      }, 0);
+    });
+    const yearFeeList = electricityInfo?.map((item: any) => {
+      return item.feeResponses?.reduce((acc: any, cur: any) => {
+        if (cur?.fee) return acc + cur?.fee;
+        return acc + cur?.fee_prediction;
       }, 0);
     });
     copyChartState.labels = yearList;
     copyChartState.datasets[0].data = yearUsageList;
+    copyChartState.datasets[1].data = yearFeeList;
     setYearChartState(copyChartState);
   };
 
   useEffect(() => {
     setMonthChart();
-    console.log(electricityInfo);
     const yearList = electricityInfo?.map((item: any) => item.year).reverse();
     setYearChart();
     setRightDropDown(yearList);
@@ -129,7 +135,12 @@ const ElectricityAll = () => {
           </S.ChartCategoryBox>
         </S.ChartTopFrame>
         <S.YearWaterChartContainer>
-          <Bar data={yearChartState} options={optionsElectricityAll}></Bar>
+          <Bar
+            width={1500}
+            height={700}
+            data={yearChartState}
+            options={optionsElecAllYear}
+          ></Bar>
         </S.YearWaterChartContainer>
       </S.ScrollChart>
     ),
