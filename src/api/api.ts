@@ -36,6 +36,8 @@ api.interceptors.response.use(
     return response;
   },
   async (error) => {
+    console.log(error.response.data.message);
+
     if (error?.response?.status === 404) {
       alert('세션이 만료되었습니다. 다시 로그인 해주세요');
       window.location.href = 'http://localhost:3000';

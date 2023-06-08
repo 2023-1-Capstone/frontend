@@ -19,6 +19,8 @@ const postSignUp = async (signUpInfo: any) => {
     //   body: JSON.stringify(signUpInfo),
     // });
 
+    console.log(response);
+
     return response;
   } catch (error) {
     console.log(error);
