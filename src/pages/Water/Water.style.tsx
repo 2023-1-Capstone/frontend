@@ -191,7 +191,7 @@ const ScrollChart = styled.div`
   overflow-x: scroll;
   background-color: #fff;
   margin-top: 10px;
-  height: 30rem;
+  height: fit-content;
   width: 36em;
   left: 50%;
   border-radius: 0.5rem;
@@ -212,8 +212,8 @@ const ScrollChart = styled.div`
 `;
 
 const YearWaterChartContainer = styled.div`
-  width: 60rem;
-  height: 25rem;
+  width: 75rem;
+  height: fit-content;
 `;
 
 const UnitTone = styled.span`

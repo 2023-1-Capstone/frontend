@@ -5,10 +5,9 @@ import Header from '../../components/Header/Header';
 import NavigationBar from '../../components/NavigationBar/NavigationBar';
 import * as S from './Water.style';
 import { Chart as ChartJS, Tooltip, Legend } from 'chart.js/auto';
-import { Bar, Line } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 import downArrow from '../../assets/svg/downArrow.svg';
 import { Dropdown } from '../../components/Dropdown/Dropdown';
-
 import { dropdownInfoCreater } from './util';
 import { chartInfoType, chartInfoUsageType } from '../../type/Types';
 import api from '../../api/api';
@@ -20,6 +19,7 @@ import {
   yearCategory,
 } from '../../store/store';
 import WaterMoreInfo from './Component/WaterMoreInfo';
+import { optionsWaterAllYear, waterYearAllData } from './WaterChartOption';
 
 const waterCategory = ['월별 수도 사용량', '연간 수도 사용량'];
 
@@ -27,7 +27,7 @@ ChartJS.register(Tooltip, Legend);
 
 const Water = () => {
   const [chartState, setChartState] = useState(monthlyInitWaterData);
-  const [yearChartState, setYearChartState] = useState(monthlyInitData);
+  const [yearChartState, setYearChartState] = useState(waterYearAllData);
   const [chartCategory, setChartCategory] =
     useState<string>('월별 수도 사용량');
   const [rightCategory, setRightCategory] = useState<string>('2023');
@@ -78,7 +78,7 @@ const Water = () => {
     chartStateCopy.datasets[0].backgroundColor = backgroundColor;
 
     // 요금 리스트 뽑기
-    const feeList = targetData?.usages.map((item: any) =>
+    const feeList = targetData?.usages?.map((item: any) =>
       item?.fee
         ? Math.floor(item.fee / 10000)
         : Math.floor(item.fee_prediction / 10000)
@@ -94,15 +94,28 @@ const Water = () => {
   useEffect(() => {
     const chartStateCopy = JSON.parse(JSON.stringify(yearChartState));
     const yearList = waterInfo?.map((item: chartInfoType) => item.year);
+
     const usageList = waterInfo?.map((item: chartInfoType) => {
-      return item.usages.reduce((acc: any, cur: chartInfoUsageType) => {
+      return item.usages?.reduce((acc: any, cur: chartInfoUsageType) => {
         if (!cur) return acc;
         if (cur?.data) return acc + cur?.data;
         return acc + cur?.prediction;
       }, 0);
     });
+
+    const feeList = waterInfo?.map((item: chartInfoType) => {
+      return item.usages?.reduce((acc: any, cur: any) => {
+        if (!cur) return acc;
+        if (cur?.fee) return acc + cur?.fee;
+        return acc + cur?.fee_prediction;
+      }, 0);
+    });
+
+    const validFeeList = feeList?.map((item: any) => (item ? item : null));
+
     chartStateCopy.labels = yearList;
     chartStateCopy.datasets[0].data = usageList;
+    chartStateCopy.datasets[1].data = validFeeList;
     setYearChartState(chartStateCopy);
   }, [waterInfo]);
 
@@ -122,7 +135,7 @@ const Water = () => {
           <S.ChartContainer>
             <Bar
               width="350"
-              height="250"
+              height="300"
               data={chartState}
               options={optionsWater}
             ></Bar>
@@ -140,7 +153,12 @@ const Water = () => {
           </S.ChartCategoryBox>
         </S.ChartTopFrame>
         <S.YearWaterChartContainer>
-          <Bar data={yearChartState} options={optionsWater}></Bar>
+          <Bar
+            width={1500}
+            height={700}
+            data={yearChartState}
+            options={optionsWaterAllYear}
+          ></Bar>
         </S.YearWaterChartContainer>
       </S.ScrollChart>
     ),
