@@ -104,7 +104,7 @@ const gasYearAllData: any = {
     {
       type: 'line',
       yAxisID: 'y-right',
-      backgroundColor: ['#FFFFFF'],
+      backgroundColor: ['#DFDFDF'],
       borderColor: ['#9BA4B5'],
       maxBarThickness: 35,
       borderRadius: 3,

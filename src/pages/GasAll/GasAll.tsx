@@ -141,7 +141,7 @@ const GasAll = () => {
         <S.YearWaterChartContainer>
           <Bar
             width={1500}
-            height={500}
+            height={700}
             data={yearChartState}
             options={optionsGasAllYear}
           ></Bar>
