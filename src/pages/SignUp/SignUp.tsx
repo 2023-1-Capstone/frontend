@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { Wrapper, WrapperInner } from '../../components/Wrapper/Wrapper.style';
+import { Wrapper } from '../../components/Wrapper/Wrapper.style';
 import * as S from './SignUp.style';
 import postSignUp from '../../api/postSignUp';
-
+import Back from '../../components/Header/Back';
 const signUpKey = ['username', 'password', 'email', 'name'];
 
 const SignUp = () => {
@@ -42,6 +41,7 @@ const SignUp = () => {
 
   return (
     <Wrapper color={'#99bfcf'}>
+      <Back></Back>
       <S.StartInner>
         <S.LoginWrapper>
           <S.SignUpTitle>회원가입</S.SignUpTitle>

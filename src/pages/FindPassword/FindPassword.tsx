@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { Wrapper, WrapperInner } from '../../components/Wrapper/Wrapper.style';
 import * as S from './FindPassword.style';
 import postFindPassword from '../../api/getFindPassword';
+import Back from '../../components/Header/Back';
 
 const FindPassword = () => {
   const navigator = useNavigate();
@@ -48,6 +49,7 @@ const FindPassword = () => {
 
   return (
     <Wrapper color={'#99bfcf'}>
+      <Back></Back>
       <S.StartInner>
         <S.LoginWrapper>
           <S.SignUpTitle>비밀번호 찾기</S.SignUpTitle>
